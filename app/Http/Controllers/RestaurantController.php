@@ -48,6 +48,8 @@ class RestaurantController extends Controller
     public function show($id)
     {
         //
+        $restaurant = Restaurant::find($id);
+        return view('restaurants.show',compact('restaurant'));
     }
 
     /**
