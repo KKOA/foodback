@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/restaurants');
 });
+// Restaurant CRUD routes
+Route::resource('/restaurants','RestaurantController');
