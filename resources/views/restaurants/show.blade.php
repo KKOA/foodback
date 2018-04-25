@@ -55,6 +55,7 @@
                     </a>
                   </div> --}}
             {{--  --}}
+            {{$restaurant->full_address()}}
             <div class='row' style='margin-left:0; margin-right:0'>
                 <ul class='more-info'>
                   <li class="clearfix col-sm-11 col-sm-center-offset-1">
