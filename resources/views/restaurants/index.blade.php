@@ -41,7 +41,7 @@
                                 <li class="clearfix ">
                                     <span class="pull-left field-name">Location:</span>
                                     <span class="qty pull-right">
-                                        {{--{{$restaurant->full_address()}}--}}
+                                        {{$restaurant->full_address()}}
                                     </span>
                                 </li>
                             </ul>
