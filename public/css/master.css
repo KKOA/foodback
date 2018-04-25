@@ -1,0 +1,190 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);/* ===========================================
+ Colours
+============================================= */
+
+/* ==========================================================
+! mixins
+========================================================== */
+
+/* ===========================================
+ Generic
+============================================= */
+
+body {
+  background: #ecf0f5;
+  color: #666;
+  font-size: 16px;
+}
+
+@media (min-width: 768px) {
+  .col-sm-center-offset-1 {
+    margin-left: 4.165%;
+    margin-right: 4.165%;
+  }
+}
+
+.btn-primary {
+  background: #006FF5;
+}
+
+.btn-primary:hover {
+  background: #286090;
+}
+
+.btn-success {
+  background: #317231;
+}
+
+.btn-success:hover {
+  background: #204b20;
+}
+
+.btn-danger {
+  background: #a80000;
+}
+
+.btn-danger:hover {
+  background: #800000;
+}
+
+.url {
+  letter-spacing: 1px;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+/* ===========================================
+ Main
+============================================= */
+
+.result {
+  margin-top: 20px;
+}
+
+.restaurants {
+  margin: auto;
+  padding-left: 0;
+}
+
+.restaurants li {
+  list-style: none;
+}
+
+.restaurant {
+  background: #fff;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  min-height: 260px;
+  padding: 15px;
+}
+
+.more-info {
+  padding-left: 0;
+}
+
+.more-info li {
+  border-bottom: 1px dashed #d9d9d9;
+  list-style: none;
+}
+
+.more-info li:last-child {
+  border-bottom: 0;
+}
+
+.more-info .field-name {
+  font-weight: bold;
+}
+
+.desc-value {
+  word-break: break-word;
+}
+
+.more-btn {
+  margin-top: 5px;
+  width: 100%;
+}
+
+#delete-restaurant,
+#edit-restaurant {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* ==========================================================
+! RestaurantForm
+========================================================== */
+
+textarea {
+  resize: vertical;
+}
+
+.required {
+  color: #a80000;
+  font-weight: bold;
+}
+
+#slug-group {
+  margin-bottom: 60px;
+}
+
+/* ==========================================================
+! Tooltip - forms
+========================================================== */
+
+[role="tooltip"] {
+  display: none;
+  padding: 6px 12px;
+  width: 100%;
+  z-index: 2;
+  background: white;
+  border: 1px solid #000;
+}
+
+input:focus + [role="tooltip"] {
+  display: block;
+  position: absolute;
+  top: 100%;
+}
+
+/* ==========================================================
+! Scroll to top link
+========================================================== */
+
+#return-to-top {
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  bottom: 20px;
+  display: none;
+  height: 50px;
+  position: fixed;
+  right: 50%;
+  text-decoration: none;
+  -webkit-transition: all .3s linear;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  width: 50px;
+  z-index: 5;
+}
+
+#return-to-top i {
+  color: #fff;
+  font-size: 19px;
+  left: 16px;
+  margin: 0;
+  position: relative;
+  top: 13px;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+#return-to-top:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+#return-to-top:hover i {
+  color: #fff;
+}
+
