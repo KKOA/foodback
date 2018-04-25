@@ -72,6 +72,8 @@ class RestaurantController extends Controller
     public function edit($id)
     {
         //
+        $restaurant = Restaurant::find($id);
+        return view('restaurants.edit', compact('restaurant'));
     }
 
     /**
@@ -81,9 +83,19 @@ class RestaurantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    //public function update(Request $request, $id)
+    public function update(Request $request,Restaurant $restaurant)
     {
-        //
+                
+        // return $restaurant->id;
+        $validatedData = $request->validate([
+            'name' => 'required|min:3|max:255|unique:restaurants,name,'.$restaurant->id,
+            'description' => 'required|min:3',
+            ]);
+            $restaurant->name= $request->name;
+            $restaurant->description = $request->description;
+            $restaurant->save();  
+            return redirect()->route('restaurants.show',['restaurant' => $restaurant])->with('success',$restaurant->name." restaurant updated ");
     }
 
     /**
