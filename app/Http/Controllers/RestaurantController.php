@@ -99,9 +99,17 @@ class RestaurantController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|min:3|max:255|unique:restaurants,name,'.$restaurant->id,
             'description' => 'required|min:3',
+            'address1' => 'required|min:3|max:255',
+            'city' => 'required|min:3|max:255',
+            'postcode' => 'required|min:3|max:10',
             ]);
             $restaurant->name= $request->name;
             $restaurant->description = $request->description;
+            $restaurant->address1 = $request->address1;
+            $restaurant->address2 = $request->address2;
+            $restaurant->city = $request->city;
+            $restaurant->county = $request->county;
+            $restaurant->postcode = $request->postcode;
             $restaurant->save();  
             return redirect()->route('restaurants.show',['restaurant' => $restaurant])->with('success',$restaurant->name." restaurant updated ");
     }
