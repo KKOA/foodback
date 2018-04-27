@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Restaurant extends Model
 {
-    //
+    // MASS ASSIGNMENT -------------------------------------------------------
+    // define which attributes are mass assignable (for security)
     protected $fillable =[
         'name',
         'description',
@@ -32,6 +33,12 @@ class Restaurant extends Model
         ];
         $address = array_filter($parts, [$this,'not_blank']);
         return implode(', ',$address);
+    }
+
+    // DEFINE RELATIONSHIPS --------------------------------------------------
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');
     }
 }
 
