@@ -16,7 +16,7 @@ class DeleteRestaurantTest extends DuskTestCase
      */
     use DatabaseMigrations;
 
-    public function testExample()
+    public function test_user_can_delete_restaurant()
     {
         $this->browse(function (Browser $browser) {
             //$restaurant1 = Restaurant::create(['name' => 'Benny','description' => 'Benny Text']);
