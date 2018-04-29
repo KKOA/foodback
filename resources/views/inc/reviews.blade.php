@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <span class='star-rating' data-score={{$review->rating}}></span><span class='rating'> ( {{$review->rating}} )</span><br><br>
+                <span class='star-rating' data-score={{$review->rating}}></span><span class='text-rating'> ( {{$review->rating}} )</span><br><br>
                 {{$review->comment}}
             </div>
             <div class="panel-footer">
