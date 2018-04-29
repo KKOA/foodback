@@ -126,6 +126,10 @@
                     {!!Form::close()!!}
                 </div>
             </div>
+            <br>
+            {{-- Review form --}}
+            @include('inc.reviewform')
+            {{--  Reviews--}}
             @include('inc.reviews')
         </div>
         <div class='col-sm-4' style='padding:10px;' >
@@ -138,7 +142,6 @@
 @endsection
 
 @section('script')
-{{-- <script src="{{asset('/js/jquery.raty.js)'}}"></script> --}}
 <script src="{{asset('js/jquery.raty.js')}}"></script>
 <script>
     $(document).ready(function(){
