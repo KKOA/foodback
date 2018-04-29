@@ -19,60 +19,57 @@ body {
     color: $body-color;
 	// font-size: 12px;
 	font-size:16px;
-  }
+}
   
-  @media (min-width: 768px) {
-    .col-sm-center-offset-1 {
+@media (min-width: 768px) {
+	.col-sm-center-offset-1 
+	{
       margin-left: 4.165%;
       margin-right: 4.165%;
     }
-  }
+}
 
-  .btn-primary
-  {
-    //   background: #337ab7;
-    background: #006FF5;
-  }
+.btn-primary {
+	//   background: #337ab7;
+	background: #006FF5;
+}
 
-  .btn-primary:hover
-  {
-    //   background: #337ab7;
-				// background: #0000b3;
-					background:#286090;
-  }
+.btn-primary:hover {
+	//   background: #337ab7;
+	// background: #0000b3;
+	background:#286090;
+}
 
-  .btn-success
-  {
-	// background: #5cb85c;
-    background: #317231;
-  }
+.btn-success {
+// background: #5cb85c;
+background: #317231;
+}
 
-  .btn-success:hover
-  {
+.btn-success:hover {
 	// background: #398439; 
 	background: #204b20;
-  }
+}
 
-  .btn-danger
-  {
-    background: $red;
-  }
+.btn-danger {
+	background: $red;
+}
 
-  .btn-danger:hover
-  {
-	background: #800000;
-  }
+.btn-danger:hover {
+background: #800000;
+}
 
-  .url
-  {
+.btn {
+	padding:10px;
+}
+
+.url {
 	letter-spacing: 1px;
-  }
+}
 
-  .row
-  {
-	  margin-right:0;
-	  margin-left:0;
-  }
+.row {
+	margin-right:0;
+	margin-left:0;
+}
 
   //@import 'header';
 
@@ -80,8 +77,7 @@ body {
  Main
 ============================================= */
 
-.result
-{
+.result {
 	margin-top:20px;
 }
 
@@ -130,8 +126,7 @@ body {
 }
 
 #delete-restaurant,
-#edit-restaurant
-{
+#edit-restaurant {
 	margin-top:10px;
 	width:100%;
 }
@@ -140,26 +135,23 @@ body {
 ! RestaurantForm
 ========================================================== */
 
-textarea{
+textarea {
 	resize:vertical;
 }
 
-.required
-{
+.required {
 	color:$red;
 	font-weight:bold;
 }
 
-#slug-group
-{
+#slug-group {
 	margin-bottom: 60px;
 }
 
 /* ==========================================================
 ! Tooltip - forms
 ========================================================== */
-[role="tooltip"]
-{
+[role="tooltip"] {
 	display:none;
 	padding:6px 12px;
 	width:100%;
@@ -168,8 +160,7 @@ textarea{
 	border:1px solid #000;
 }
 
-input:focus + [role="tooltip"]
-{
+input:focus + [role="tooltip"] {
 	display:block;
 	position:absolute;
 	top:100%;

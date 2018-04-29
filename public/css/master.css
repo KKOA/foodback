@@ -47,6 +47,10 @@ body {
   background: #800000;
 }
 
+.btn {
+  padding: 10px;
+}
+
 .url {
   letter-spacing: 1px;
 }
@@ -54,11 +58,6 @@ body {
 .row {
   margin-right: 0;
   margin-left: 0;
-}
-
-.btn
-{
-  padding:10px;
 }
 
 /* ===========================================
