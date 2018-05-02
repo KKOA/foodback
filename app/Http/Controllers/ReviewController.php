@@ -97,8 +97,10 @@ class ReviewController extends Controller
      * @param  \DummyFullModelClass  $DummyModelVariable
      * @return \Illuminate\Http\Response
      */
-    public function destroy(/*Review $review*/)
+    public function destroy(Restaurant $restaurant,Review $review)
     {
-        //
+        //$restaurant = $review->restaurant->first();
+        $review->delete();
+        return redirect()->route('restaurants.show',$restaurant->id)->with('success',"Review deleted");
     }
 }
