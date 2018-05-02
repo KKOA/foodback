@@ -10,7 +10,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class DeleteRestaurantTest extends DuskTestCase
+class DeleteRestaurantReviewTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
@@ -56,20 +56,13 @@ class DeleteRestaurantTest extends DuskTestCase
             //$name = $restaurant1->name;
             $browser->resize(1920, 1080);
             $browser->visit('/restaurants/'.$restaurant1->id)
-                    //->clickLink('Delete Restaurant')
-                    //->press('Delete Restaurant')
                     ->click('#delete-review'.$review1->id)
                     ->assertSee("Review deleted")
                     ->assertPresent('#review2')
                     ->assertSeeIn('#review2',$review2->comment)
                     ->assertSeeIn('#review2',$review2->rating)
-                    // ->assertSee($review2->comment)
-                    // ->assertSee($review2->rating)
                     ->assertMissing('#review1')
-
                     ->assertSeeIn('.no-of-reviews','1')
-                    //->assertDontSee($review1->comment)
-                    //->assertDontSee($review1->rating)
                     ;
         });
     }

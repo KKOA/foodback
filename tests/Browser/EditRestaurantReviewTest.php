@@ -11,7 +11,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class CreateRestaurantReviewTest extends DuskTestCase
+class EditRestaurantReviewTest extends DuskTestCase
 {
     /**
      * A Dusk test example.
