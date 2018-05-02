@@ -6,7 +6,7 @@
 @if($reviews->count() > 0)
 
     @foreach($reviews as $review)
-        <div id='{{$review->id}}' class="panel panel-default review">
+        <div id='review{{$review->id}}' class="panel panel-default review">
             <div class="panel-heading">
                 <div class='row'>
                     <div class='col-xs-12 col-sm-6'>
@@ -25,13 +25,13 @@
                 {{--  --}}
                 <div class='row'>
                 <div class='col-xs-12 col-sm-6 col-lg-5'>
-                        <a href='{{route('restaurants.edit',[$restaurant->id])}}' id="edit-review{{$review->id}}" class='btn btn-primary review-btn' title='Modify current restaurant'>
+                        <a href='{{route('restaurants.reviews.edit',[$restaurant->id,$review->id])}}' id="edit-review{{$review->id}}" class='btn btn-primary review-btn' title='Modify current restaurant'>
                             Edit Review <i class='glyphicon glyphicon-pencil'></i>
                         </a>
                     </div>
     
                     <div class='col-xs-12 col-sm-6 col-lg-offset-2 col-lg-5'>
-                        {!!Form::open(['action'=>['RestaurantController@destroy',$restaurant->id],'method'=>'POST'])!!}
+                        {!!Form::open(['action'=>['ReviewController@destroy',$restaurant->id,$review->id],'method'=>'POST'])!!}
                             {!! Form::button('Delete Review <i class="glyphicon glyphicon-trash"></i>', ['id'=>"delete-review$review->id",'class' => 'btn btn-danger review-btn','type' => 'submit']) !!}
                             {{Form::hidden('_method','DELETE')}}
                         {!!Form::close()!!}
