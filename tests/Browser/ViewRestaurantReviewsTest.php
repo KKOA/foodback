@@ -114,6 +114,7 @@ class ViewRestaurantReviewsTest extends DuskTestCase
             ->assertSee($review1->comment)
             ->assertSee($review1->rating)
             ->assertSee($review1->updated_at)
+            ->assertSeeIn('.no-of-reviews','1')
             ->assertDontSee($review2->comment)
             ->assertDontSee($review2->updated_at)
             ->assertDontSee('No reviews avaliable for this restaurant')

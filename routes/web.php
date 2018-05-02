@@ -17,5 +17,5 @@ Route::get('/', function () {
 // Restaurant CRUD routes
 Route::resource('/restaurants','RestaurantController');
 
-//Route::resource('/restaurants','RestaurantController');
-Route::resource('restaurants.reviews', 'ReviewController',['only' => ['store', 'update','destroy']]);
+// Restaurant Review CRUD routes
+Route::resource('restaurants.reviews', 'ReviewController',['except' => ['index','show']]);
