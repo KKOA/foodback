@@ -126,10 +126,12 @@
                     {!!Form::close()!!}
                 </div>
             </div>
-            <br>
-            {{-- Review form --}}
-            @include('inc.reviewform')
-            {{--  Reviews--}}
+            <hr>
+            {{--  Reviews --}}
+            <h3>Reviews (<span class='no-of-reviews'>{{$restaurant->reviews->count()}}</span>)</h3>
+            <a href='{{route('restaurants.reviews.create',[$restaurant->id])}}' id='write-restaurant' class='btn btn-primary' title='Write new review'>
+                Write Restaurant <i class='glyphicon glyphicon-plus'></i>
+            </a>
             @include('inc.reviews')
         </div>
         <div class='col-sm-4' style='padding:10px;' >
