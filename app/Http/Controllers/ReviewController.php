@@ -4,9 +4,24 @@ namespace App\Http\Controllers;
 
 //use App\Review;
 use Illuminate\Http\Request;
+use App\Restaurant as Restaurant;
+use App\Review as Review;
 
 class ReviewController extends Controller
 {
+
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create($id)
+    {
+        $restaurant = Restaurant::find($id);
+        $review = new Review();
+        return view('reviews.create', compact('review','restaurant'));
+    }
 
 
     /**
