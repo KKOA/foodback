@@ -37,13 +37,14 @@ class CreateRestaurantReviewTest extends DuskTestCase
             );
 
             $comment = 'a';
-            //$rating = 3;
             $browser->visit('restaurants/'.$restaurant1->id.'/reviews/create')
                     ->type('comment',$comment)
                     ->click('.add-review')
                     ->assertSee('The comment must be at least 3 characters.')
                     ->assertSee('The rating field is required');
-                    
+            $browser->visit('restaurants/'.$restaurant1->id)
+                    ->assertMissing('#review1') 
+                    ->assertSeeIn('.no-of-reviews','0');     
         });
     }
 
@@ -67,12 +68,15 @@ class CreateRestaurantReviewTest extends DuskTestCase
 
             $comment = 'My text';
             $rating = 3;
+            $browser->resize(1920, 1080);
             $browser->visit('restaurants/'.$restaurant1->id.'/reviews/create')
                     ->type('comment',$comment)
                     ->type('rating', $rating)
                     ->click('.add-review')
-                    ->assertSee($comment)
-                    ->assertSee($rating);
+                    ->assertPresent('#review1')
+                    ->assertSeeIn('.no-of-reviews','1') 
+                    ->assertSeeIn('#review1',$comment)
+                    ->assertSeeIn('#review1',$rating);
         });
     }
 }
