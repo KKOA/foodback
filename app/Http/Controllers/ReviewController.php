@@ -48,6 +48,20 @@ class ReviewController extends Controller
         return redirect('/restaurants/'.$id)->with('success',"Review created");
     }
 
+        /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($restaurant_id,$review_id)
+    {
+        //
+        //dd($id,$id2);
+        $review = Review::find($review_id);
+        //dd($review->restaurant->first()->name);
+        return view('reviews.edit', compact('review'));
+    }
 
 
     /**
@@ -58,9 +72,22 @@ class ReviewController extends Controller
      * @param  \DummyFullModelClass  $DummyModelVariable
      * @return \Illuminate\Http\Response
      */
-    public function update(/*Request $request, Review $review*/)
+    public function update(Request $request,Restaurant $restaurant, $id)
     {
-        //
+        //return 'hope';
+        //dd($request,$restaurant, $id);
+        // //
+        $validatedData = $request->validate([
+            'comment' => 'required|min:3',
+            'rating' => 'required|between:0,5',
+        ]);
+
+        $review = Review::find($id);
+        $review->restaurant_id=$restaurant->id;
+        $review->comment = $request->comment;
+        $review->rating = intval($request->rating);
+        $review->save();
+        return redirect('/restaurants/'.$restaurant->id)->with('success',"Review updated");
     }
 
     /**
