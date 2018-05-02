@@ -15,7 +15,7 @@
         {!! Form::label('rating', "Rating : ") !!} <span class="required">*</span>
     </div>
     <div class='col-sm-9'>
-        <input id='rating' class='form-control' name='rating' type="number" step="0.5" min='0.0' max='5.0'/>
+        <input id='rating' class='form-control' name='rating' type="number" step="0.5" min='0.0' max='5.0' value='{{$review->rating}}'/>
         <small>Min: 0, Max: 5, only number</small>
     </div>
 </div>
