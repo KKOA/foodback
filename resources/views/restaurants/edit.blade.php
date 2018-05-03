@@ -20,7 +20,7 @@
             </div>
         <div class='form-group'>
             <div class='col-sm-offset-2 col-sm-9'>
-                    <a href='{{route('restaurants.show',[$restaurant->id])}}' link_to restaurants_path, class='btn btn-primary btn-lg pull-left' title='See all restaurants'>
+                    <a href='{{route('restaurants.show',[$restaurant->id])}}' link_to restaurants_path, class='btn btn-warning btn-lg pull-left' title='See all restaurants'>
                             Cancel <i class='glyphicon glyphicon-remove-circle'></i>
                     </a>
                 {!! Form::button('Update Restaurant <i class="glyphicon glyphicon-save"></i>', ['class' => 'btn btn-success btn-lg pull-right','type' => 'submit']) !!}
