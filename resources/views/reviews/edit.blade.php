@@ -12,7 +12,7 @@
 <?php 
 $restaurant = $review->restaurant->first(); ?>
 {{--$review->restaurant->first()->name--}}
-<h3 class='text-center'>Edit Review</h3>
+<h3 class='text-center'>Edit Review for {{$review->restaurant->first()->name}}</h3>
 <div class='row'>
 	<div class='col-sm-12'>
     {!! Form::model($restaurant, ['route' => ['restaurants.reviews.update', $restaurant->id,$review->id],'class'=>'form-horizontal']) !!}
