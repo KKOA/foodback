@@ -5,8 +5,9 @@ $database = getenv('DB_DATABASE');
 $username = getenv('DB_USERNAME');
 $password = getenv('DB_PASSWORD');
 
+
 if (getenv('APP_ENV') == 'production') {
-    $url = parse_url(env("CLEARDB_DATABASE_URL"));
+    $url = env("CLEARDB_DATABASE_URL_STAGE") ?  parse_url(env("CLEARDB_DATABASE_URL_STAGE")) : parse_url(env("CLEARDB_DATABASE_URL_PROD"));
     $host = $url["host"];
     $username = $url["user"];
     $password = $url["pass"];
