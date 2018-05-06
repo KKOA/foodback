@@ -91,6 +91,7 @@ body {
 
 .more-info li {
   border-bottom: 1px dashed #d9d9d9;
+  padding: 5px 0;
   list-style: none;
 }
 
