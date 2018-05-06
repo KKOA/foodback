@@ -14,7 +14,8 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::all();
+        //$restaurants = Restaurant::all();
+        $restaurants = Restaurant::paginate(6);
         return view('restaurants.index',compact('restaurants'));
     }
 
@@ -55,7 +56,7 @@ class RestaurantController extends Controller
         $restaurant->county = $request->county;
         $restaurant->postcode = $request->postcode;
         $restaurant->save();
-        return redirect('/restaurants')->with('success',$restaurant->name ." restaurant created");
+        return redirect('/restaurants/'.$restaurant->id)->with('success',$restaurant->name ." restaurant created");
     }
 
     /**

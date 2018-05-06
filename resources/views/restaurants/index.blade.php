@@ -15,6 +15,16 @@
     </div>
 
     @if(count($restaurants))
+    <div class='text-center' style='font-weight:bold; margin-top:20px;'>
+        <strong>
+            Showing 
+            <span class='first-item'>{{$restaurants->firstItem()}}</span>
+            - 
+            <span class='last-item'>{{$restaurants->lastItem()}}</span>
+            of 
+            <span class='total-restaurants'>{{$restaurants->total()}}</span>
+        </strong>
+    </div>
     <div class='row result'>
         <ul class='restaurants'>
             @foreach($restaurants as $restaurant)
@@ -34,9 +44,27 @@
                                         Italien
                                     </span>
                                 </li>
+
                                 <li class="clearfix">
                                     <span class="pull-left field-name">Avg Rating:</span>
-                                    <span class="qty pull-right">4</span>
+                                    <span class="qty pull-right avg-rating">
+                                        @if($restaurant->reviews->count())
+                                            <span class='star-rating' data-score={{$restaurant->reviews->avg('rating')}}></span>
+                                            <span class='text-rating sr-only'>{{$restaurant->reviews->avg('rating')}}</span>
+                                        @else
+                                            No reviews yet.
+                                        @endif
+                                    </span>
+                                </li>
+                                <li class="clearfix id='average-rating-output'">
+                                    <span class="pull-left field-name">Reviews:</span>
+                                    <span class="qty pull-right no-of-reviews">
+                                        @if($restaurant->reviews->count())
+                                            {{$restaurant->reviews->count()}} <span class='glyphicon glyphicon-comment'></span>
+                                        @else
+                                            No reviews yet.
+                                        @endif
+                                    </span>
                                 </li>
                                 <li class="clearfix ">
                                     <span class="pull-left field-name">Location:</span>
@@ -52,7 +80,7 @@
         </ul>
     </div>
     <div class='text-center'>
-        {{--{{$restaurants->links()}}--}}
+        {{$restaurants->links()}}
     </div>
     @else
     <div class='row result'>  
@@ -63,4 +91,21 @@
             </div>
         </div>
     @endif
+@endsection
+
+@section('script')
+<script src="{{asset('js/jquery.raty.js')}}"></script>
+<script>
+    $(document).ready(function(){
+        $('.star-rating').raty({
+             path:     "{{asset('/imgs/rating')}}",
+            //path:     "/imgs/rating/",
+            readOnly: true,
+            numberMax: 5,
+            score:    function(){
+            return $(this).attr('data-score');
+            }
+        });
+    });
+</script>
 @endsection
