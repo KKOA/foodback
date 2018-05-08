@@ -11,7 +11,7 @@ Constructed a clone of Yelp using following technology
 
 
 ## Screen shots
-
+![Home screen](https://github.com/KKOA/foodback/blob/master/restaurants.jpg)
 
 ## Live version
 <a href="http://foodback-laravel.herokuapp.com/">Foodback</a>
