@@ -36,15 +36,20 @@ class CreateRestaurantReviewTest extends DuskTestCase
                 ]
             );
 
-            $comment = 'a';
+            $review1 = new Review(
+                [
+                    'comment'   => 'a'
+                ]
+            );
+
             $browser->visit('restaurants/'.$restaurant1->id.'/reviews/create')
-                    ->type('comment',$comment)
+                    ->type('comment',$review1->comment)
                     ->click('.add-review')
                     ->assertSee('The comment must be at least 3 characters.')
                     ->assertSee('The rating field is required');
             $browser->visit('restaurants/'.$restaurant1->id)
                     ->assertMissing('#review1') 
-                    ->assertSeeIn('.no-of-reviews','0');     
+                    ->assertSee('No reviews avaliable for this restaurant');     
         });
     }
 
@@ -66,17 +71,22 @@ class CreateRestaurantReviewTest extends DuskTestCase
                 ]
             );
 
-            $comment = 'My text';
-            $rating = 3;
-            $browser->resize(1920, 1080);
+            $review1 = new Review(
+                [
+                    'comment'   => 'My text',
+                    'rating'    => '3'
+                ]
+            );
+
             $browser->visit('restaurants/'.$restaurant1->id.'/reviews/create')
-                    ->type('comment',$comment)
-                    ->type('rating', $rating)
+                    ->type('comment',$review1->comment)
+                    ->type('rating', $review1->rating)
                     ->click('.add-review')
                     ->assertPresent('#review1')
                     ->assertSeeIn('.no-of-reviews','1') 
-                    ->assertSeeIn('#review1',$comment)
-                    ->assertSeeIn('#review1',$rating);
+                    ->assertSeeIn('#review1',$review1->comment)
+                    ->assertSeeIn('#review1',$review1->rating)
+                    ->assertDontSee('No reviews avaliable for this restaurant');
         });
     }
 }

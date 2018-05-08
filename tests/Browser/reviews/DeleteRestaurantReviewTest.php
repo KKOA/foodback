@@ -19,11 +19,10 @@ class DeleteRestaurantReviewTest extends DuskTestCase
      */
     use DatabaseMigrations;
 
-    public function test_user_can_delete_restaurant()
+    public function test_review_owner_can_delete_their_own_review()
     {
         $this->browse(function (Browser $browser) {
-            //$restaurant1 = Restaurant::create(['name' => 'Benny','description' => 'Benny Text']);
-            //$restaurant2 = Restaurant::create(['name' => 'Jimmy','description' => 'Jimmy Text']);
+
             $faker = \Faker\Factory::create();
             $restaurant1 = Restaurant::create(
                 [
@@ -54,7 +53,6 @@ class DeleteRestaurantReviewTest extends DuskTestCase
             );
 
             //$name = $restaurant1->name;
-            $browser->resize(1920, 1080);
             $browser->visit('/restaurants/'.$restaurant1->id)
                     ->click('#delete-review'.$review1->id)
                     ->assertSee("Review deleted")
@@ -64,6 +62,10 @@ class DeleteRestaurantReviewTest extends DuskTestCase
                     ->assertMissing('#review1')
                     ->assertSeeIn('.no-of-reviews','1')
                     ;
+            $browser->visit('/restaurants/')
+                ->assertSeeIn('#restaurant1 .no-of-reviews',$restaurant1->reviews->count())
+                ->assertSeeIn('#restaurant1 .avg-rating',$restaurant1->reviews->avg('rating'))
+            ;
         });
     }
 }

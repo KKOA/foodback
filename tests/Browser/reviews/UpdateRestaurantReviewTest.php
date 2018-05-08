@@ -20,7 +20,7 @@ class EditRestaurantReviewTest extends DuskTestCase
      */
     use DatabaseMigrations;
     
-    public function test_user_cannot_create_restaurant_review_with_invalid_details()
+    public function test_review_owner_cannot_update_their_own_review_with_invalid_details()
     {
         $this->browse(function (Browser $browser) {
             //Create Restaurants
@@ -67,13 +67,15 @@ class EditRestaurantReviewTest extends DuskTestCase
                     ->assertSeeIn('#review'.$review2->id,$review2->comment)
                     ->assertSeeIn('#review'.$review2->id,$review2->rating)
                     //Check number of reviews count for restaurant
-                    ->assertSeeIn('.no-of-reviews','2');
+                    ->assertSeeIn('.no-of-reviews','2')
+                    ->assertDontSee('No reviews avaliable for this restaurant')
+                    ;
                     
         });
     }
 
 
-    public function test_user_can_create_restaurant_review_with_valid_details()
+    public function test_review_owner_can_update_their_own_review_with_valid_details()
     {
         $this->browse(function (Browser $browser) {
             //Create Restaurants
@@ -118,7 +120,8 @@ class EditRestaurantReviewTest extends DuskTestCase
                     ->assertSeeIn('#review'.$review2->id,$review2->comment)
                     ->assertSeeIn('#review'.$review2->id,$review2->rating)
                     //Check number of reviews count for restaurant
-                    ->assertSeeIn('.no-of-reviews','2');
+                    ->assertSeeIn('.no-of-reviews','2')
+                    ->assertDontSee('No reviews avaliable for this restaurant');
         });
     }
 }

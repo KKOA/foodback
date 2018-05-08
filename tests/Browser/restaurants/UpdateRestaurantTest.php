@@ -16,7 +16,7 @@ class UpdateRestaurantTest extends DuskTestCase
      */
     use DatabaseMigrations;
 
-    public function test_user_cannot_update_restaurant_with_invalid_details()
+    public function test_owner_cannot_update_their_own_restaurant_with_invalid_details()
     {
         $this->browse(function (Browser $browser) {
 
@@ -54,7 +54,7 @@ class UpdateRestaurantTest extends DuskTestCase
         });
     }
 
-    public function test_user_can_update_restaurant_with_valid_details()
+    public function test_owner_can_update_their_own_restaurant_with_valid_details()
     {
         $this->browse(function (Browser $browser) {
             $restaurant1 = Restaurant::create(
@@ -89,7 +89,7 @@ class UpdateRestaurantTest extends DuskTestCase
                     ->assertSee($name ." restaurant updated");
         });
     }
-    public function test_user_cannot_update_restaurant_with_non_unquie_name()
+    public function test_owner_cannot_update_their_own_restaurant_with_non_unquie_name()
     {
         $this->browse(function (Browser $browser) {
             //Create Restaurant
