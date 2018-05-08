@@ -1,9 +1,26 @@
 
-{{--$restaurant->reviews--}}
+
 <?php $reviews = $restaurant->reviews->sortByDesc('updated_at'); 
-    //dd($reviews->sortBy('updated_at'));
 ?>
 @if($reviews->count() > 0)
+
+    
+    <h3>
+        <span class="no-of-reviews">
+            {{$restaurant->reviews->count()}} {{$restaurant->name}} review{{$restaurant->reviews->count() > 1 ? 's': '' }}
+        </span>
+    </h3>
+    <h4>  
+        <span class="restaurant-avg-rating">
+                <span title='average'>Average Rating : </span>
+                <span class='star-rating' data-score={{$restaurant->reviews->avg('rating')}}></span>
+                <span class='text-rating sr-only'>{{$restaurant->reviews->avg('rating')}}</span>
+        </span>
+    </h4>
+
+    <a href='{{route('restaurants.reviews.create',[$restaurant->id])}}' id='write-restaurant' class='btn btn-primary' title='Write new review'>
+        Write a Review <i class='glyphicon glyphicon-star'></i>
+    </a>
 
     @foreach($reviews as $review)
         <div id='review{{$review->id}}' class="panel panel-default review">
@@ -42,7 +59,11 @@
         </div>
     @endforeach
 @else
-    <p>No reviews avaliable for this restaurant</p> 
+    <h3>No reviews avaliable for this restaurant</h3> 
+    <a href='{{route('restaurants.reviews.create',[$restaurant->id])}}' id='write-restaurant' class='btn btn-primary' title='Write new review'>
+        Write a Review <i class='glyphicon glyphicon-star'></i>
+    </a>
+    
 @endif
 
 <style>
@@ -58,14 +79,3 @@
         margin-bottom:10px;
     }
     </style>
-<!-- <div id='review<%= review.id %>'class='review'>
-      <p>
-      <strong>Comment:</strong>
-      <%= review.comment %>
-      </p>
-
-      <p>
-      <strong>Rating:</strong>
-      <%= review.rating %>
-      </p>
-    </div> -->
