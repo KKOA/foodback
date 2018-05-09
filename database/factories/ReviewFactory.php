@@ -2,6 +2,8 @@
 
 use Faker\Generator as Faker;
 Use Carbon\Carbon as Carbon;
+
+use App\Restaurant as Restaurant;
 use App\Review as Review;
 
 /*
@@ -15,9 +17,14 @@ use App\Review as Review;
 |
 */
 
+
 $factory->define(Review::class, function (Faker $faker) {
+
+    $restaurants = Restaurant::all()->pluck('id')->toArray();//
+    array_shift ( $restaurants );// Remove the first entry
+    
     return [
-        'restaurant_id' =>  $faker->numberBetween($min=2, $max=15),
+        'restaurant_id' =>  $faker->randomElement($restaurants),
         'comment'       =>  $faker->paragraph($nbSentences = $faker->numberBetween($min=3, $max=8), $variableNbSentences = true),
         'rating'        =>  $faker->numberBetween($min=0, $max=5),
         'updated_at'    =>  Carbon::now()->subMinute($faker->numberBetween($min=0, $max=200))
