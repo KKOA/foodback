@@ -74,7 +74,7 @@ class CreateRestaurantReviewTest extends DuskTestCase
             $review1 = new Review(
                 [
                     'comment'   => 'My text',
-                    'rating'    => '3'
+                    'rating'    => '3.0'
                 ]
             );
 
