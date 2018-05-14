@@ -15,9 +15,10 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
-            //$table->integer(restaurant_id);
+            //$table->integer('restaurant_id');
             $table->text('comment');
-            $table->integer('rating');
+            //$table->integer('rating');
+            $table->float('rating', 2, 1);
             $table->timestamps();
         });
     }
