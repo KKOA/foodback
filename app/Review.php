@@ -20,6 +20,18 @@ class Review extends Model
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('h:i A l jS F Y');
     }
 
+
+    public function setRatingAtAttribute($input)
+    {
+        $temp = floor($input);
+        $input -= $temp;
+        if ($input >= 0.5)
+        { 
+            return $temp + 0.5;
+        }
+        return $temp;
+    }
+
     // // DEFINE RELATIONSHIPS --------------------------------------------------
     public function restaurant() {
         return $this->belongsTo('App\Restaurant');
