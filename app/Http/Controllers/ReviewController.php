@@ -43,7 +43,7 @@ class ReviewController extends Controller
         $review = new Review();
         $review->restaurant_id=$id;
         $review->comment = $request->comment;
-        $review->rating = intval($request->rating);
+        $review->rating = floatval($request->rating);
         $review->save();
         return redirect('/restaurants/'.$id)->with('success',"Review created");
     }
@@ -74,9 +74,7 @@ class ReviewController extends Controller
      */
     public function update(Request $request,Restaurant $restaurant, $id)
     {
-        //return 'hope';
         //dd($request,$restaurant, $id);
-        // //
         $validatedData = $request->validate([
             'comment' => 'required|min:3',
             'rating' => 'required|between:0,5',
@@ -85,7 +83,7 @@ class ReviewController extends Controller
         $review = Review::find($id);
         $review->restaurant_id=$restaurant->id;
         $review->comment = $request->comment;
-        $review->rating = intval($request->rating);
+        $review->rating = floatval($request->rating);
         $review->save();
         return redirect('/restaurants/'.$restaurant->id)->with('success',"Review updated");
     }
