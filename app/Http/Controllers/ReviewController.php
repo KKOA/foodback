@@ -56,10 +56,8 @@ class ReviewController extends Controller
      */
     public function edit($restaurant_id,$review_id)
     {
-        //
-        //dd($id,$id2);
+
         $review = Review::find($review_id);
-        //dd($review->restaurant->first()->name);
         return view('reviews.edit', compact('review'));
     }
 
@@ -74,7 +72,6 @@ class ReviewController extends Controller
      */
     public function update(Request $request,Restaurant $restaurant, $id)
     {
-        //dd($request,$restaurant, $id);
         $validatedData = $request->validate([
             'comment' => 'required|min:3',
             'rating' => 'required|between:0,5',
@@ -83,7 +80,7 @@ class ReviewController extends Controller
         $review = Review::find($id);
         $review->restaurant_id=$restaurant->id;
         $review->comment = $request->comment;
-        $review->rating = floatval($request->rating);
+        $review->rating = intval($request->rating);
         $review->save();
         return redirect('/restaurants/'.$restaurant->id)->with('success',"Review updated");
     }
@@ -97,7 +94,6 @@ class ReviewController extends Controller
      */
     public function destroy(Restaurant $restaurant,Review $review)
     {
-        //$restaurant = $review->restaurant->first();
         $review->delete();
         return redirect()->route('restaurants.show',$restaurant->id)->with('success',"Review deleted");
     }
