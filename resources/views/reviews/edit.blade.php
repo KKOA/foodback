@@ -10,9 +10,9 @@
 @section('content')
 
 <?php 
-$restaurant = $review->restaurant->first(); ?>
+$restaurant = $review->restaurant; ?>
 {{--$review->restaurant->first()->name--}}
-<h3 class='text-center'>Edit Review for {{$review->restaurant->first()->name}}</h3>
+<h3 class='text-center'>Edit Review for {{$restaurant->name}}</h3>
 <div class='row'>
 	<div class='col-sm-12'>
     {!! Form::model($restaurant, ['route' => ['restaurants.reviews.update', $restaurant->id,$review->id],'class'=>'form-horizontal']) !!}
