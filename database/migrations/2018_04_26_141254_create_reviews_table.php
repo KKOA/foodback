@@ -17,8 +17,8 @@ class CreateReviewsTable extends Migration
             $table->increments('id');
             //$table->integer('restaurant_id');
             $table->text('comment');
-            //$table->integer('rating');
-            $table->float('rating', 2, 1);
+            $table->integer('rating');
+            //$table->float('rating', 2, 1);
             $table->timestamps();
         });
     }
