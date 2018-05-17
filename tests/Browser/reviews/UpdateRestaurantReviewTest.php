@@ -41,7 +41,7 @@ class EditRestaurantReviewTest extends DuskTestCase
                 [
                     'restaurant_id' => $restaurant1->id,
                     'comment'       =>  $faker->paragraph,
-                    'rating'        =>  3.0
+                    'rating'        =>  3
                 ]
             );
 
@@ -96,7 +96,7 @@ class EditRestaurantReviewTest extends DuskTestCase
                 [
                     'restaurant_id' => $restaurant1->id,
                     'comment'       =>  $faker->paragraph,
-                    'rating'        =>  3.0
+                    'rating'        =>  3
                 ]
             );
 
@@ -104,7 +104,7 @@ class EditRestaurantReviewTest extends DuskTestCase
                 [
                     'restaurant_id' => $restaurant1->id,
                     'comment'       => $faker->paragraph,
-                    'rating'        =>  4.0,
+                    'rating'        =>  4,
                     'updated_at'    =>  Carbon::now()->subMinute(90) //Set date to now - 90 minutes
                 ]
             );
