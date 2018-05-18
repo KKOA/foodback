@@ -38,6 +38,7 @@ class Restaurant extends Model
 
     // DEFINE Mutators --------------------------------------------------
 
+    // Getter
     public function getNameAttribute($value)
     {
         return ucwords($value);
@@ -72,6 +73,45 @@ class Restaurant extends Model
     {
         return strtoupper($value);
     }
+
+    // Setter
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
+
+    public function setDescriptionAttribute($value)
+    {
+        $this->attributes['description'] = ucfirst($value);
+    }
+
+    public function setAddress1Attribute($value)
+    {
+        $this->attributes['address1'] = ucwords($value);
+    }
+
+    public function setAddress2Attribute($value)
+    {
+        $this->attributes['address2'] = ucwords($value);
+    }
+
+    public function setCityAttribute($value)
+    {
+        $this->attributes['city'] = ucwords($value);
+    }
+
+    public function setCountyAttribute($value)
+    {
+        $this->attributes['county'] = ucwords($value);
+    }
+
+    public function setPostcodeAttribute($value)
+    {
+        $this->attributes['postcode'] = strtoupper($value);
+    }
+
+
 
     // DEFINE RELATIONSHIPS --------------------------------------------------
     public function reviews()
