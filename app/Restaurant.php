@@ -35,6 +35,16 @@ class Restaurant extends Model
         return implode(', ',$address);
     }
 
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function getDescriptionAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
     // DEFINE RELATIONSHIPS --------------------------------------------------
     public function reviews()
     {
