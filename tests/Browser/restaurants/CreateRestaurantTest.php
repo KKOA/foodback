@@ -46,7 +46,6 @@ class CreateRestaurantTest extends DuskTestCase
             $browser->visit('/restaurants/create')
                     ->type('name', $restaurant2->name)
                     ->type('description',$restaurant2->description)
-                    ->type('address1',$restaurant2->address1)
                     ->type('city',$restaurant2->city)
                     ->type('postcode',$restaurant2->postcode)
                     ->click('button[type="submit"]')
@@ -54,7 +53,8 @@ class CreateRestaurantTest extends DuskTestCase
                     ->assertSee('The description must be at least 3 characters.')
                     ->assertSee('The address1 field is required.')
                     ->assertSee('The city must be at least 3 characters.')
-                    ->assertSee('The postcode may not be greater than 10 characters.');
+                    ->assertSee('The postcode may not be greater than 10 characters.')
+                    ->assertDontSee($restaurant2->name ." restaurant created");
             //Visit homepage
             $browser->visit('/restaurants')
                     ->assertSeeIn('.total-restaurants',1)
@@ -128,9 +128,7 @@ class CreateRestaurantTest extends DuskTestCase
                     'name'          =>  'Bear & Billet',
                     'description'   =>  'some description',
                     'address1'      =>  '94 Lower Bridge Street',
-                    'address2'      =>  '',
                     'city'          =>  'Chester',
-                    'county'        =>  '',
                     'postcode'      =>  'CH1 1RU'
                 ]
             );
@@ -142,7 +140,6 @@ class CreateRestaurantTest extends DuskTestCase
                     'address1'      =>  '28 Church Road',
                     'address2'      =>  'Rackton',
                     'city'          =>  'Hove',
-                    'county'        =>  '',
                     'postcode'      =>  'BN3 2FN'
                 ]
             );
@@ -156,7 +153,9 @@ class CreateRestaurantTest extends DuskTestCase
                     ->type('city',$restaurant2->city)
                     ->type('postcode',$restaurant2->postcode)
                     ->click('button[type="submit"]')
-                    ->assertSee('The name has already been taken.');
+                    ->assertSee('The name has already been taken.')
+                    ->assertDontSee($restaurant2->name ." restaurant created")
+                    ;
             //Visit homepage
             $browser->visit('/restaurants')
             ->assertPresent('#restaurant1')
