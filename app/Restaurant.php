@@ -35,6 +35,9 @@ class Restaurant extends Model
         return implode(', ',$address);
     }
 
+
+    // DEFINE Mutators --------------------------------------------------
+
     public function getNameAttribute($value)
     {
         return ucwords($value);
@@ -43,6 +46,31 @@ class Restaurant extends Model
     public function getDescriptionAttribute($value)
     {
         return ucfirst($value);
+    }
+
+    public function getAddress1Attribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function getAddress2Attribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function getCityAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function getCountyAttribute($value)
+    {
+        return ucwords($value);
+    }
+
+    public function getPostcodeAttribute($value)
+    {
+        return strtoupper($value);
     }
 
     // DEFINE RELATIONSHIPS --------------------------------------------------
