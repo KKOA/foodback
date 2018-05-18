@@ -15,6 +15,17 @@ class Review extends Model
         'comment', 'rating', 'restaurant_id','updated_at'
     ];
 
+    // DEFINE Mutators --------------------------------------------------
+    public function getCommentAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setCommentAttribute($value)
+    {
+        $this->attributes['comment'] = ucfirst($value);
+    }
+
     public function getUpdatedAtAttribute($date)
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('h:i A l jS F Y');
