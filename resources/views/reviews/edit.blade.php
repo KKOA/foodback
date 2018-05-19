@@ -10,24 +10,81 @@
 @section('content')
 
 <?php 
-$restaurant = $review->restaurant; ?>
+$restaurant = $review->restaurant; 
+
+$form = [
+        'url'=> ['restaurants.reviews.update', $restaurant->id,$review->id],
+        'method'=>'PATCH',
+        'submission' => [
+          'text'=>'Update Review <i class="glyphicon glyphicon-save"></i>',
+          'class'=>'edit-review'
+        ]
+];
+
+?>
 {{--$review->restaurant->first()->name--}}
 <h3 class='text-center'>Edit Review for {{$restaurant->name}}</h3>
-<div class='row'>
-	<div class='col-sm-12'>
-    {!! Form::model($restaurant, ['route' => ['restaurants.reviews.update', $restaurant->id,$review->id],'class'=>'form-horizontal']) !!}
-    {{Form::hidden('_method','PATCH')}}
-        @include('inc.reviewform')
-        <div class='form-group'>
-            <div class='col-sm-offset-2 col-sm-9'>
-                <a href='{{route('restaurants.show',[$restaurant->id])}}' link_to restaurants_path, class='btn btn-warning btn-lg pull-left' title='See all reviews'>
-                    Cancel <i class='glyphicon glyphicon-remove-circle'></i>
-                </a>
-                {!! Form::button('Update Review <i class="glyphicon glyphicon-save"></i>', ['class' => 'btn btn-success btn-lg pull-right edit-review','type' => 'submit']) !!}
-            </div>
-        </div>
-		{!! Form::close() !!}
-	</div>
-</div>
+
+@include('inc.newreviewform')
+@endsection
+
+
+@section('script')
+<script src="{{asset('js/jquery.raty.js')}}"></script>
+<script>
+   $(document).ready(function(){
+
+        $(document).on("blur",".input-rating-text",function(event)
+        {
+            $this = $(this);
+            var currentRating = parseInt($this.val());
+
+            //Prevent user enter value greater than max
+            var maxRating = parseInt($this.attr("max"));
+            if(currentRating > maxRating)
+            {
+                $this.val(maxRating);
+            }
+
+            //Prevent user enter value greater than max
+            var minRating = parseInt($this.attr("min"));
+            if(currentRating < minRating)
+            {
+                $this.val(minRating);
+            }
+
+            $(".input-rating-star").attr("data-score", currentRating); //Update data-score attribute
+            $(".input-rating-star").raty("score",currentRating);  // Update star selected
+
+        });
+
+        $(".input-rating-star").raty({
+            cancel:         true,
+            cancelHint:     'Reset to previous value',
+            cancelOff:    "reset.png",
+            cancelOn:    "reset.png",
+            cancelPlace: "left",
+            click : function(score,event)
+            {
+                $(".input-rating-text").val(score);
+                $(".input-rating-star").attr("data-score", score);
+            },
+            numberMax:5,
+            path:     "{{asset('/imgs/rating')}}",
+            start:0.0 //set default starting value
+        });
+
+        $(document).on("click",".raty-cancel",function(event)
+        {
+            var oldRating = {{ json_encode($review->rating)}};
+            oldRating = oldRating ? oldRating :  0; // Set value to 0 if value is consider falsy
+            $(".input-rating-text").val(oldRating); // Update input rating field
+
+            $(".input-rating-star").attr("data-score", oldRating); //Update data-score attribute
+            $(".input-rating-star").raty("score",oldRating);  // Update star selected
+
+        });
+    });
+</script>
 @endsection
 
