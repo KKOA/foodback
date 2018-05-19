@@ -25,7 +25,7 @@ $form = [
 {{--$review->restaurant->first()->name--}}
 <h3 class='text-center'>Edit Review for {{$restaurant->name}}</h3>
 
-@include('inc.newreviewform')
+@include('inc.reviewform')
 @endsection
 
 

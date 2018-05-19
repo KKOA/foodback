@@ -22,7 +22,7 @@ $form = [
 
 ?>
 
-@include('inc.newreviewform')
+@include('inc.reviewform')
 
 @endsection
 
