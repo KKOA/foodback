@@ -1,6 +1,14 @@
 <div class='row'>
-        <div class='col-sm-12'>
+        <div class='col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6'>
             {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal']) !!}
+
+            <header class='formHeader'>
+                <h3 class='text-center'>
+                    {{-- {{$form['formHeader']}}<br>{{$restaurant->name}} --}}
+                    {{$form['formHeader']}} review for <br>{{$restaurant->name}}
+                </h3>
+            </header>
+            <hr>
                 @if(isset($form['method']))
                     {{Form::hidden('_method',$form['method'])}}
                 @endif
@@ -47,16 +55,73 @@
     </div>
     
     <style>
+        form
+        {
+            margin-top:30px;
+            margin-bottom:30px;
+            background:#eee;
+            /* padding-top:30px; */
+            padding-bottom:30px;
+            border-radius:10px;
+            border: 1px solid #ccc;
+            /* box-shadow:  */
+            /* 0 0 30px rgba(0,0,0,.15) inset, */
+                      /* 0 6px 10px rgba(0,0,0,.15); */
+            /* box-shadow: 
+                      0 6px 10px rgba(0,0,0,.15); */
+            -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),
+             0 3px 1px -2px rgba(0,0,0,0.12),
+              0 1px 5px 0 rgba(0,0,0,0.2);
+        }
+
+        
+
+        .formHeader
+        {
+            background:#3c8dbc;
+            /* background:#4464cc; */
+            border-top-right-radius:10px;
+            border-top-left-radius:10px;
+            border-bottom:1px solid #aaa;
+        }
+
+        .formHeader > h3{
+            color:white;
+            font-family: Arvo;
+            font-weight: bold;
+            line-height: 1.2em;
+            letter-spacing: 0.1em;
+            margin-top:0px;
+            /* margin-bottom:30px; */
+            padding-top:20px;
+            padding-bottom:20px;
+            text-align: center;
+            text-shadow:
+            -2px -2px 0 #3c8dbc,
+            2px -2px 0 #3c8dbc,
+            -2px 2px 0 #3c8dbc,
+            2px 2px 0 #3c8dbc,
+            2px 3px 0 #ddd,
+            3px 4px 0 #ddd;
+            text-align: center;
+        }
+
         .input-rating-text
         {
             display: inline-block;
             width: auto;
             margin-right:20px;
         }
+
         .input-rating-star
         {
             display:inline-block;
             padding:12px 6px;
         }
+
+
+        /*  */
+
+        
     </style>
     

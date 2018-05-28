@@ -9,10 +9,9 @@
 
 @section('content')
 
-<h3 class='text-center'>Create Review for {{$restaurant->name}}</h3>
 <?php 
-//dd($review->restaurant->first()->name); 
 $form = [
+        'formHeader'=>"Create",
         'url'=> ['restaurants.reviews.store', $restaurant->id],
         'submission' => [
           'text'=>'Add Review <i class="glyphicon glyphicon-save"></i>',

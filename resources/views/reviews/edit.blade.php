@@ -13,6 +13,7 @@
 $restaurant = $review->restaurant; 
 
 $form = [
+        'formHeader'=>"Edit",
         'url'=> ['restaurants.reviews.update', $restaurant->id,$review->id],
         'method'=>'PATCH',
         'submission' => [
@@ -22,8 +23,6 @@ $form = [
 ];
 
 ?>
-{{--$review->restaurant->first()->name--}}
-<h3 class='text-center'>Edit Review for {{$restaurant->name}}</h3>
 
 @include('inc.reviewform')
 @endsection
