@@ -8,6 +8,13 @@ body {
   font-size: 16px;
 }
 
+@media (max-width: 767px) {
+  .col-xs-center-offset-1 {
+    margin-left: 4.165%;
+    margin-right: 4.165%;
+  }
+}
+
 @media (min-width: 768px) {
   .col-sm-center-offset-1 {
     margin-left: 4.165%;
@@ -17,26 +24,42 @@ body {
 
 .btn-primary {
   background: #006FF5;
+  border-color: #286090;
 }
 
 .btn-primary:hover {
   background: #286090;
+  border-color: #286090;
 }
 
 .btn-success {
   background: #317231;
+  border-color: #204b20;
 }
 
 .btn-success:hover {
   background: #204b20;
+  border-color: #204b20;
 }
 
 .btn-danger {
   background: #a80000;
+  border-color: #800000;
 }
 
 .btn-danger:hover {
   background: #800000;
+  border-color: #800000;
+}
+
+.btn-warning {
+  background: #A4670F;
+  border-color: #774B0D;
+}
+
+.btn-warning:hover {
+  background: #774B0D;
+  border-color: #774B0D;
 }
 
 .btn {

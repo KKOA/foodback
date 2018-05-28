@@ -20,7 +20,14 @@ body {
 	// font-size: 12px;
 	font-size:16px;
 }
-  
+
+@media (max-width: 767px) {
+	.col-xs-center-offset-1
+	{
+		margin-left: 4.165%;
+		margin-right: 4.165%;
+	}
+}
 @media (min-width: 768px) {
 	.col-sm-center-offset-1 
 	{
@@ -30,32 +37,44 @@ body {
 }
 
 .btn-primary {
-	//   background: #337ab7;
-	background: #006FF5;
-}
+	background: $blue;
+	border-color: $dark-blue;
 
-.btn-primary:hover {
-	//   background: #337ab7;
-	// background: #0000b3;
-	background:#286090;
+	&:hover {
+		background: $dark-blue;
+		border-color: $dark-blue;
+	}
 }
 
 .btn-success {
-// background: #5cb85c;
-background: #317231;
-}
+	background: $green;
+	border-color: $dark-green;
 
-.btn-success:hover {
-	// background: #398439; 
-	background: #204b20;
+	&:hover {
+		background: $dark-green;
+		border-color: $dark-green;
+	}
 }
 
 .btn-danger {
 	background: $red;
+	border-color: $dark-red;
+
+	&:hover {
+	background: $dark-red;
+	border-color: $dark-red;
+	}
 }
 
-.btn-danger:hover {
-background: #800000;
+.btn-warning
+{
+	background: $brown;
+	border-color: $dark-brown;
+
+	&:hover{
+		background: $dark-brown;
+		border-color: $dark-brown;
+	}
 }
 
 .btn {
