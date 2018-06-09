@@ -15,27 +15,25 @@
         <link rel="manifest" href="{{ asset('imgs/favicon/site.webmanifest') }}">
         <link rel="mask-icon" href="{{ asset('imgs/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
         
+        
         <!-- Custom Meta -->
         @section('meta')
         <meta name="description" content="Restaurant review written by chef, food taster and you">
         @endsection
         @yield('meta')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <title>Foodreview @yield('title')</title>
 
         <!-- Styles -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="{{asset('css/master.css')}}">
         @yield('style')
 
 
         <!-- Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         {{-- <script src="{{asset('js/master.js')}}"></script> --}}
 
-        <title>Foodreview @yield('title')</title>
     </head>
     <body>
         {{--@include('inc.header')--}}
@@ -45,6 +43,7 @@
             @yield('content')
         </div>
         {{--@include('inc.footer')--}}
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         @yield('script')
         {{--<script src="{{asset('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>--}}
         <script>
@@ -55,6 +54,7 @@
             //     }
             // });
         </script>
+        
 
 
     </body>
