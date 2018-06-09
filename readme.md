@@ -32,6 +32,26 @@ php artisan key:generate
 npm install
 ```
 
+Next, copy the '.env.example' as '.env'
+
+Change the following lines in .env to match your database configurations:
+```
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret
+```
+
+Open a MySQL connection and create a database with the same name as the value of DB_DATABASE in your .env file.
+
+In the terminal, enter the following:
+
+```
+php artisan migrate
+```
+This will setup the migrations and the database.
+
+
+
 ## Run Application
 ```
 cd foodback
@@ -59,7 +79,6 @@ php artisan key:generate --env=dusk.local
 
 To run the dusk test enter the following:
 ```
-php artisan key:generate --env=dusk.local
 php artisan dusk
 ```
 
