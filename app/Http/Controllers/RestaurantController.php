@@ -224,6 +224,16 @@ class RestaurantController extends Controller
     //public function destroy($id)
     public function destroy(Restaurant $restaurant)
     {
+        
+        //Check restaurant image directory exists
+        $path = storage_path().'/app/public/upload/restaurants/'.$restaurant->id;
+        if(File::exists($path))
+        {
+            //Delete directory
+            File::deleteDirectory($path);
+        }
+
+        // return 'hope';
         $name = $restaurant->name;
         $restaurant->delete();
         return redirect()->route('restaurants.index')->with('success'," $name restaurant Deleted");
