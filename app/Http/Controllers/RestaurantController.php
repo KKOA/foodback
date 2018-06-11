@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Restaurant as Restaurant;
+use Image;
+use Storage;
+use File;
 
 class RestaurantController extends Controller
 {
@@ -44,6 +47,7 @@ class RestaurantController extends Controller
             'address1' => 'required|min:3|max:255',
             'city' => 'required|min:3|max:255',
             'postcode' => 'required|min:3|max:10',
+            'cover_image' => 'sometimes|max:1999|mimes:jpeg,jpg,bmp,png'
         ]);
 
 
@@ -56,6 +60,53 @@ class RestaurantController extends Controller
         $restaurant->county = $request->county;
         $restaurant->postcode = $request->postcode;
         $restaurant->save();
+
+        // Check has file been uploaded
+        if(request()->hasFile('cover_image'))
+        {
+
+            //Check directory exist
+            $path = storage_path().'/app/public/upload/restaurants/'.$restaurant->id;
+            if(!File::exists($path))
+            {
+                //Create directory
+                File::makeDirectory($path , 0777, false, true);
+            }
+
+            //Get file
+            $originalImage = $request->file('cover_image');
+
+            //Get file extension
+            $ext = $originalImage->getClientOriginalName();
+            
+            //Open  an image file
+            $img = Image::make($originalImage);
+
+            echo $img->mime();
+            //Change extension jpeg to jpg
+            if($ext === 'jpeg')
+            {
+                $ext = 'jpg';
+                $img->encode($ext);
+            }
+
+
+            //Generate new filename from current timestamp
+            $newFileName = time().'.'.$ext;
+
+            //resize the instance
+            // $img->resize(800,454);
+            $img->fit(800,454);
+            
+            //save file to /upload/restaurant/{restaurant->id}/
+            $img->save($path.'/'.$newFileName);
+
+            // Save filename to restaurant
+            $restaurant->cover_image = $newFileName;
+            $restaurant->save();
+
+        }
+
         return redirect('/restaurants/'.$restaurant->id)->with('success',$restaurant->name ." restaurant created");
     }
 
@@ -103,7 +154,9 @@ class RestaurantController extends Controller
             'address1' => 'required|min:3|max:255',
             'city' => 'required|min:3|max:255',
             'postcode' => 'required|min:3|max:10',
+            'cover_image' => 'sometimes|max:1999|mimes:jpeg,jpg,bmp,png'
             ]);
+
             $restaurant->name= $request->name;
             $restaurant->description = $request->description;
             $restaurant->address1 = $request->address1;
@@ -111,6 +164,53 @@ class RestaurantController extends Controller
             $restaurant->city = $request->city;
             $restaurant->county = $request->county;
             $restaurant->postcode = $request->postcode;
+
+            // Check has file been uploaded
+            if(request()->hasFile('cover_image'))
+            {
+
+                //Check directory exist
+                $path = storage_path().'/app/public/upload/restaurants/'.$restaurant->id;
+                if(!File::exists($path))
+                {
+                    //Create directory
+                    File::makeDirectory($path , 0777, false, true);
+                }
+
+                //Get file
+                $originalImage = $request->file('cover_image');
+
+                //Get file extension
+                $ext = $originalImage->getClientOriginalName();
+                
+                //Open  an image file
+                $img = Image::make($originalImage);
+
+                echo $img->mime();
+                //Change extension jpeg to jpg
+                if($ext === 'jpeg')
+                {
+                    $ext = 'jpg';
+                    $img->encode($ext);
+                }
+
+
+                //Generate new filename from current timestamp
+                $newFileName = time().'.'.$ext;
+
+                //resize the instance
+                // $img->resize(800,454);
+                $img->fit(800,454);
+                
+                //save file to /upload/restaurant/{restaurant->id}/
+                $img->save($path.'/'.$newFileName);
+
+                // Save filename to restaurant
+                $restaurant->cover_image = $newFileName;
+                // $restaurant->save();
+
+            }
+
             $restaurant->save();  
             return redirect()->route('restaurants.show',['restaurant' => $restaurant])->with('success',$restaurant->name." restaurant updated ");
     }
