@@ -1,6 +1,6 @@
 <div class='row'>
     <div class='col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6'>
-        {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal restaurant-form']) !!}
+        {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal restaurant-form','files'=>'true']) !!}
             <header class='formHeader'>
                 <h3 class='text-center'>
                     {{$form['formHeader']}} restaurant
@@ -80,6 +80,43 @@
                 {!! Form::text('postcode', $restaurant->postcode, ['rows' => 10,'class' => 'form-control','placeholder'=>'EN1 DG2']) !!}
                 </div>
             </div>
+            {{-- Preview Image & cover_image text --}}
+
+            <div class='form-group'>
+                <div class='control-label col-sm-3'>
+                    {!! Form::label('cover_image', "Preview image : ") !!}
+                </div>
+                <div class='col-sm-8'>
+                    @if($restaurant->cover_image)
+                        <img src="{{asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image)}}" alt="{{$restaurant->name.' cover image'}}"
+                        id='imgPreview'>
+                    @else
+                        <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image avaliable" alt="No image avaliable" id='imgPreview'>
+                    @endif
+                </div>
+            </div>
+
+            {{-- cover_image --}}
+            <div class='form-group'>
+                <div class='control-label col-sm-3'>
+                    {!! Form::label('cover_image', "Cover image : ") !!}
+                </div>
+                <div class='col-sm-8'>
+                {{-- {!! Form::text('postcode', $restaurant->postcode, ['rows' => 10,'class' => 'form-control','placeholder'=>'EN1 DG2']) !!} --}}
+                    <input type='file' name='cover_image' id='cover_image' >
+
+                    <div><small>Image types only (jpg, png, gif)</small></div>
+                    <a href="#" id="clear" class='btn btn-default'>Reset</a>
+                </div>
+            </div>
+            <style>
+                input[type=file]
+                {
+                    margin:5px;
+                    font-weight:bold;
+                }
+            </style>
+
             <div class='form-group'>
                 {{-- <div class='col-sm-offset-2 col-sm-9'> --}}
                 <div class='col-sm-offset-1 col-sm-10'>
