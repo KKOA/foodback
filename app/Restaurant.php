@@ -15,7 +15,10 @@ class Restaurant extends Model
         'address2',
         'city',
         'county',
-        'postcode'];
+        'postcode',
+        'cover_image'
+    
+    ];
 
     public function not_blank($element)
     {
