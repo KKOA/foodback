@@ -25,6 +25,24 @@
             <span class='total-restaurants'>{{$restaurants->total()}}</span>
         </strong>
     </div>
+
+{{--  --}}
+{{-- <div class="holder">
+    <a class="overlay" title="property title" href="#">
+        <span class="more"></span>
+        <img alt="image" src="images/02.jpg" class="media-object">
+    </a>
+    <span class="prop-tag">For Rent</span>
+    <div class="prop-info">
+        <h3 class="prop-title">8745 Annox Avenue Orlando 33139 FL</h3>
+        <ul class="more-info clearfix">
+            <li class="info-label clearfix"><span class="pull-left">Beds:</span> <span class="qty pull-right">4</span></li>
+            <li class="info-label clearfix"><span class="pull-left">Baths:</span> <span class="qty pull-right">2</span></li>
+        </ul>
+    </div>
+</div> --}}
+{{--  --}}
+
     <div class='row result'>
         <ul class='restaurants'>
             @foreach($restaurants as $restaurant)
@@ -36,7 +54,22 @@
                                     {{$restaurant->name}}
                                 </a>
                             </h3>
+                        </div>
+                        <a class="overlay" title="View {{$restaurant->name}}" href="{{route('restaurants.show',[$restaurant->id])}}">
+                            <span class="more"></span>
+                            @if($restaurant->cover_image)
+                                <img src="{{asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image)}}" alt="{{$restaurant->name.' cover image'}}">
+                            @else
+                                <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image avaliable" alt="No image avaliable">
+                            @endif
+                        </a>
+                        <div class="prop-info">
                             <ul class='more-info'>
+                                <li class="clearfix location">
+                                    <div class='address'>
+                                        {{$restaurant->full_address()}}
+                                    </div>
+                                </li>
                                 <li class="clearfix">
                                     <span class="pull-left field-name">Category:</span>
                                     <span class="qty pull-right">
@@ -66,12 +99,12 @@
                                         @endif
                                     </span>
                                 </li>
-                                <li class="clearfix ">
-                                    <span class="pull-left field-name">Location:</span>
-                                    <span class="qty pull-right">
+                                {{-- <li class="clearfix "> --}}
+                                    {{-- <span class="pull-left field-name">Location:</span> --}}
+                                    {{-- <span class="qty">
                                         {{$restaurant->full_address()}}
-                                    </span>
-                                </li>
+                                    </span> --}}
+                                {{-- </li> --}}
                             </ul>
                         </div>
                     </div>
