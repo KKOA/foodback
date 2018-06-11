@@ -14,7 +14,8 @@ Constructed a clone of Yelp using following technology
 ![Home screen](https://github.com/KKOA/foodback/blob/master/restaurants.jpg)
 
 ## Live version
-<a href="http://foodback-laravel.herokuapp.com/">Foodback</a>
+<a href="http://foodback-laravel.herokuapp.com/">Foodback</a><br>
+( Image upload not function )
 
 ## Set up Application
 This installation assumes have 
@@ -50,6 +51,20 @@ php artisan migrate
 ```
 This will setup the migrations and the database.
 
+For restaurant image upload you will need create
+<br>directory(**/storage/app/public/upload/restaurants**)<br> 
+using the following commands
+```
+cd storage/app/public
+mkdir upload
+cd upload
+mkdir restaurants
+```
+
+Afterwards link storage directory to public directory
+```
+php artisan storage:link
+```
 
 
 ## Run Application
