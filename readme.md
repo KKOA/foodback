@@ -15,7 +15,7 @@ Constructed a clone of Yelp using following technology
 
 ## Live version
 <a href="http://foodback-laravel.herokuapp.com/">Foodback</a><br>
-( Image upload not function )
+( Image upload not function for live version)
 
 ## Set up Application
 This installation assumes have 
