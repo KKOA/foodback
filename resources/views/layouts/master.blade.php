@@ -32,7 +32,7 @@
 
         <!-- Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        {{-- <script src="{{asset('js/master.js')}}"></script> --}}
+        <script src="{{asset('js/master.js')}}"></script>
 
     </head>
     <body>
@@ -57,5 +57,9 @@
         
 
 
+    <a href="javascript:" id="return-to-top" title="Scroll to top">
+        {{-- <i class="glyphicon glyphicon-chevron-up"></i> --}}
+        <img src="{{ asset('imgs/up-chevron-min.png')}}" alt='Up arrow'>
+    </a>
     </body>
 </html>
