@@ -19,7 +19,18 @@
             <h2 class='text-center restaurant-name'>{{$restaurant->name}}</h2>
             {{-- Image<br>[image here]<br> --}}
             {{--  --}}
-            <a class="overlay" title="View fullsize photo" href="{{asset('imgs/placeholder/restaurant.png')}}">
+            <a class="overlay" title="View fullsize photo" href="
+            <?php 
+                if($restaurant->cover_image)
+                {
+                    echo asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image);
+                }
+                else
+                {
+                    echo asset('imgs/placeholder/restaurant.png');
+                }
+            ?>">
+            {{-- {{asset('imgs/placeholder/restaurant.png')}} --}}
                 <span class="more"></span>
                 @if($restaurant->cover_image)
                 <img src="{{asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image)}}" alt="{{$restaurant->name.' cover image'}}">
