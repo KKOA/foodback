@@ -121,5 +121,10 @@ class Restaurant extends Model
     {
         return $this->hasMany('App\Review');
     }
+
+    public function photos()
+    {
+        return $this->hasMany('App\RestaurantPhoto');
+    }
 }
 

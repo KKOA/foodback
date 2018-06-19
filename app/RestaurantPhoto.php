@@ -13,4 +13,7 @@ class RestaurantPhoto extends Model
     // DEFINE Mutators --------------------------------------------------
         
     // DEFINE RELATIONSHIPS --------------------------------------------------
+    public function restaurant() {
+        return $this->belongsTo('App\Restaurant');
+    }
 }
