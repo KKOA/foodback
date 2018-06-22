@@ -80,6 +80,83 @@
                 {!! Form::text('postcode', $restaurant->postcode, ['rows' => 10,'class' => 'form-control','placeholder'=>'EN1 DG2']) !!}
                 </div>
             </div>
+
+            
+            {{-- Category --}}
+            <div class='form-group text-center'>
+                <h4>Categories</h4>
+                <div class='col-sm-10 col-sm-offset-1'>
+                    @foreach($cuisines as $cuisine)
+                        <label class='cuisine' id='{{$cuisine->name}}'>
+                            {{Form::checkbox('cuisines[]', $cuisine->id , $restaurant->cuisines->contains($cuisine->id))}}   
+                            <span class="label-text">
+                                {{ $cuisine->name}}
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+            <style>
+                @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+                .category{
+                    position: relative;
+                    cursor: pointer;
+                    /* color: #666; */
+                    font-size: 16px;
+                    margin-right:10px;
+                    margin-bottom:5px;
+                    letter-spacing: 1px;
+                    /* border:1px solid #000; */
+                    padding:5px;
+                }
+
+                input[type="checkbox"], input[type="radio"]{
+                    position: absolute;
+                    right: 9000px;
+                }
+
+                /*Check box*/
+                input[type="checkbox"] + .label-text:before{
+                    content: "\f096";
+                    font-family: "FontAwesome";
+                    speak: none;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-variant: normal;
+                    text-transform: none;
+                    line-height: 1;
+                    -webkit-font-smoothing:antialiased;
+                    width: 1em;
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+
+                input[type="checkbox"]:checked + .label-text:before{
+                    content: "\f14a";
+                    /* color: #2980b9; */
+                    color:#286090;
+                    animation: effect 250ms ease-in;
+                }
+
+                input[type="checkbox"]:disabled + .label-text{
+                    color: #aaa;
+                }
+
+                input[type="checkbox"]:disabled + .label-text:before{
+                    content: "\f0c8";
+                    color: #ccc;
+                }
+
+                @keyframes effect{
+                    0%{transform: scale(0);}
+                    25%{transform: scale(1.3);}
+                    75%{transform: scale(1.4);}
+                    100%{transform: scale(1);}
+                }
+            </style>
+
+
             {{-- Preview Image & cover_image text --}}
 
             <div class='form-group'>
@@ -116,6 +193,7 @@
                     font-weight:bold;
                 }
             </style>
+
 
             <div class='form-group'>
                 {{-- <div class='col-sm-offset-2 col-sm-9'> --}}
