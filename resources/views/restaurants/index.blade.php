@@ -13,7 +13,7 @@
             New Restaurant <i class="glyphicon glyphicon-plus"></i>
         </a>
     </div>
-
+    {{--phpinfo()--}}
     @if(count($restaurants))
     <div class='text-center' style='font-weight:bold; margin-top:20px;'>
         <strong>
@@ -71,11 +71,27 @@
                                     </div>
                                 </li>
                                 <li class="clearfix">
-                                    <span class="pull-left field-name">Category:</span>
-                                    <span class="qty pull-right">
+                                    {{-- <span class="pull-left field-name">Category:</span>
+                                    <span class="qty pull-right"> --}}
                                         {{-- <%= render 'category', categories: restaurant.categories %> --}}
-                                        Italien
-                                    </span>
+                                        {{-- <br>
+                                        @foreach($restaurant->cuisines as $cuisine)
+                                            {{$cuisine->name}}
+                                        @endforeach
+                                    </span>--}}
+                                    <div class="field-name">Cuisine Type:</div>
+                                    <div class='cuisine-value'>
+
+                                        @if($restaurant->cuisines()->count() > 0)
+                                           <?php //print_r($restaurant->cuisines()->get()->implode('name',', ')); ?>
+                                            {{-- @foreach($restaurant->cuisines as $cuisine)
+                                                {{$cuisine->name}}
+                                            @endforeach --}}
+                                            {{$restaurant->cuisines()->get()->implode('name',', ')}}
+                                        @else
+                                            Not specified
+                                        @endif
+                                    </div>
                                 </li>
 
                                 <li class="clearfix">

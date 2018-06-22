@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-<a href='{{route('restaurants.index')}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See all restaurants'>
+<a href='{{route('restaurants.index')}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See all restaurants' id='view-restaurants'>
    <i class='glyphicon glyphicon-arrow-left'></i> View Restaurants
 </a>
 <div class='row'>
@@ -46,10 +46,25 @@
                 <div class='col-sm-12'>
                     <ul class='more-info'>
                     <li class="clearfix col-sm-11 col-sm-center-offset-1">
-                        <span class="pull-left field-name">Type:</span>
-                        <span class="qty pull-right">
+                        {{-- <span class="pull-left field-name">Type:</span>
+                        <span class="qty pull-right cuisine-value"> --}}
                             {{-- <%= render 'category', categories: @restaurant.categories %> --}}
-                        </span>
+                        {{-- </span> --}}
+                        <div class="field-name">Cuisine Type:</div>
+                        <div class='cuisine-value'>
+
+                            @if($restaurant->cuisines()->count() > 0)
+                                <?php //print_r($restaurant->cuisines()->get()->implode('name',', ')); ?>
+                                {{-- @foreach($restaurant->cuisines as $cuisine)
+                                    {{$cuisine->name}}
+                                @endforeach --}}
+                                {{$restaurant->cuisines()->get()->implode('name',', ')}}
+                            @else
+                                Not specified
+                            @endif
+                        </div>
+                        
+
                     </li>
                         <li class="clearfix col-sm-5 col-sm-center-offset-1">
                             <span class="pull-left field-name">Parking:</span>
