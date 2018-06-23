@@ -18,8 +18,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        //$restaurants = Restaurant::all();
-        $restaurants = Restaurant::paginate(6);
+        $restaurants = Restaurant::with('reviews')->paginate(6);
         return view('restaurants.index',compact('restaurants'));
     }
 
@@ -95,7 +94,7 @@ class RestaurantController extends Controller
     public function show($id)
     {
         //
-        $restaurant = Restaurant::find($id);
+        $restaurant = Restaurant::with('reviews')->find($id);
         return view('restaurants.show',compact('restaurant'));
     }
 
