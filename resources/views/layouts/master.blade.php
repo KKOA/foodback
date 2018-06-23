@@ -36,6 +36,7 @@
 
     </head>
     <body>
+         {{--phpinfo()--}}
         {{--@include('inc.header')--}}
         <div class='container-fluid'>
         @include('inc.messages')

@@ -13,7 +13,6 @@
             New Restaurant <i class="glyphicon glyphicon-plus"></i>
         </a>
     </div>
-    {{--phpinfo()--}}
     @if(count($restaurants))
     <div class='text-center' style='font-weight:bold; margin-top:20px;'>
         <strong>
@@ -71,14 +70,6 @@
                                     </div>
                                 </li>
                                 <li class="clearfix">
-                                    {{-- <span class="pull-left field-name">Category:</span>
-                                    <span class="qty pull-right"> --}}
-                                        {{-- <%= render 'category', categories: restaurant.categories %> --}}
-                                        {{-- <br>
-                                        @foreach($restaurant->cuisines as $cuisine)
-                                            {{$cuisine->name}}
-                                        @endforeach
-                                    </span>--}}
                                     <div class="field-name">Cuisine Type:</div>
                                     <div class='cuisine-value'>
 
@@ -115,12 +106,6 @@
                                         @endif
                                     </span>
                                 </li>
-                                {{-- <li class="clearfix "> --}}
-                                    {{-- <span class="pull-left field-name">Location:</span> --}}
-                                    {{-- <span class="qty">
-                                        {{$restaurant->full_address()}}
-                                    </span> --}}
-                                {{-- </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -148,7 +133,6 @@
     $(document).ready(function(){
         $('.star-rating').raty({
              path:     "{{asset('/imgs/rating')}}",
-            //path:     "/imgs/rating/",
             readOnly: true,
             numberMax: 5,
             score:    function(){
