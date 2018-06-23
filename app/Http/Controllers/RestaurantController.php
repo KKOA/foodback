@@ -155,6 +155,7 @@ class RestaurantController extends Controller
     public function destroy(Restaurant $restaurant)
     {
         $name = $restaurant->name;
+        $restaurant->cuisines()->detach();
         $restaurant->delete();
         return redirect()->route('restaurants.index')->with('success'," $name restaurant Deleted");
     }
