@@ -132,11 +132,11 @@
 
                     @if(isset($form["cancel"]['parameter']))
                         <a href='{{route($form["cancel"]["url"], $form["cancel"]["parameter"])}}' link_to restaurants_path, class='btn btn-warning btn-lg pull-left' title='See all restaurants'>
-                                Cancel <i class='glyphicon glyphicon-remove-circle'></i>
+                                Cancel <i class='fas fa-times'></i>
                         </a>
                     @else
                         <a href='{{route($form["cancel"]["url"])}}' link_to restaurants_path, class='btn btn-warning btn-lg pull-left' title='See all restaurants'>
-                                Cancel <i class='glyphicon glyphicon-remove-circle'></i>
+                                Cancel <i class='fas fa-times'></i>
                         </a>
                     @endif
                     {!! Form::button($form['submission']['text'], ['class' => 'btn btn-success btn-lg pull-right','type' => 'submit']) !!}

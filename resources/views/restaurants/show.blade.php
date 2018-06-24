@@ -11,7 +11,7 @@
 
 @section('content')
 <a href='{{route('restaurants.index')}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See all restaurants' id='view-restaurants'>
-   <i class='glyphicon glyphicon-arrow-left'></i> View Restaurants
+        <i class="fas fa-hand-point-left"></i> View Restaurants
 </a>
 <div class='row'>
 
@@ -114,13 +114,13 @@
             <div class="row" style="margin-top:10px;">
                 <div class='col-xs-12 col-sm-6 col-lg-5'>
                     <a href='{{route('restaurants.edit',[$restaurant->id])}}' id='edit-restaurant' class='btn btn-primary' title='Modify current restaurant'>
-                        Edit Restaurant <i class='glyphicon glyphicon-pencil'></i>
+                        Edit Restaurant <i class="fas fa-pencil-alt"></i>
                     </a>
                 </div>
 
                 <div class='col-xs-12 col-sm-6 col-lg-offset-2 col-lg-5'>
                     {!!Form::open(['action'=>['RestaurantController@destroy',$restaurant->id],'method'=>'POST'])!!}
-                        {!! Form::button('Delete Restaurant <i class="glyphicon glyphicon-trash"></i>', ['id'=>'delete-restaurant','class' => 'btn btn-danger','type' => 'submit']) !!}
+                        {!! Form::button('Delete Restaurant <i class="fas fa-trash-alt"></i>', ['id'=>'delete-restaurant','class' => 'btn btn-danger','type' => 'submit']) !!}
                         {{Form::hidden('_method','DELETE')}}
                     {!!Form::close()!!}
                 </div>

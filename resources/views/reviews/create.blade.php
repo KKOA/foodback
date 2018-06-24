@@ -14,7 +14,7 @@ $form = [
         'formHeader'=>"Create",
         'url'=> ['restaurants.reviews.store', $restaurant->id],
         'submission' => [
-          'text'=>'Add Review <i class="glyphicon glyphicon-save"></i>',
+          'text'=>'Add Review <i class="fas fa-save"></i>',
           'class'=>'add-review'
         ]
 ];

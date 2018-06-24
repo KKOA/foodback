@@ -20,8 +20,8 @@
                 'title'=>'View '
             ],
             'submission' => [
-            'text'=>'Update Restaurant <i class="glyphicon glyphicon-save"></i>'//,
-            //   'class'=>'add-review'
+            'text'=>'Update Restaurant <i class="fas fa-save"></i>',
+              'class'=>'edit-restaurant'
             ]
         ];
     ?>

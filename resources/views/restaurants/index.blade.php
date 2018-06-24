@@ -10,7 +10,7 @@
     <h1 class="text-center">Restaurants</h1>
     <div class="text-center">
         <a href="{{route('restaurants.create')}}" class="btn btn-primary btn-lg">
-            New Restaurant <i class="glyphicon glyphicon-plus"></i>
+            New Restaurant <i class="fa fa-plus"></i>
         </a>
     </div>
     @if(count($restaurants))
@@ -100,7 +100,10 @@
                                     <span class="pull-left field-name">Reviews:</span>
                                     <span class="qty pull-right no-of-reviews">
                                         @if($restaurant->reviews->count())
-                                            {{$restaurant->reviews->count()}} <span class='glyphicon glyphicon-comment'></span>
+                                            {{$restaurant->reviews->count()}} 
+                                            {{-- <span class='glyphicon glyphicon-comment'></span> --}}
+                                            {{-- <span class='fa fa-commenting-o'></span> --}}
+                                            <i class="far fa-comment-alt"></i>
                                         @else
                                             No reviews yet.
                                         @endif

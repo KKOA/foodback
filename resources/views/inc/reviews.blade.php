@@ -19,7 +19,7 @@
     </h4>
 
     <a href='{{route('restaurants.reviews.create',[$restaurant->id])}}' id='write-restaurant' class='btn btn-primary' title='Write new review'>
-        Write a Review <i class='glyphicon glyphicon-star'></i>
+        Write a Review <i class="fas fa-star"></i>
     </a>
 
     @foreach($reviews as $review)
@@ -43,13 +43,13 @@
                 <div class='row'>
                 <div class='col-xs-12 col-sm-6 col-lg-5'>
                         <a href='{{route('restaurants.reviews.edit',[$restaurant->id,$review->id])}}' id="edit-review{{$review->id}}" class='btn btn-primary review-btn' title='Modify this review'>
-                            Edit Review <i class='glyphicon glyphicon-pencil'></i>
+                            Edit Review <i class="fas fa-pencil-alt"></i>
                         </a>
                     </div>
     
                     <div class='col-xs-12 col-sm-6 col-lg-offset-2 col-lg-5'>
                         {!!Form::open(['action'=>['ReviewController@destroy',$restaurant->id,$review->id],'method'=>'POST'])!!}
-                            {!! Form::button('Delete Review <i class="glyphicon glyphicon-trash"></i>', ['id'=>"delete-review$review->id",'class' => 'btn btn-danger review-btn','type' => 'submit', 'title'=>'Delete this review']) !!}
+                            {!! Form::button('Delete Review <i class="fas fa-trash-alt"></i>', ['id'=>"delete-review$review->id",'class' => 'btn btn-danger review-btn','type' => 'submit', 'title'=>'Delete this review']) !!}
                             {{Form::hidden('_method','DELETE')}}
                         {!!Form::close()!!}
                     </div>

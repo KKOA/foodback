@@ -47,7 +47,7 @@
                     {{-- <div class='col-xs-center-offset-1 col-sm-offset-1 col-sm-10'> --}}
                     <div class='col-sm-offset-1 col-sm-10'>
                         <a href='{{route('restaurants.show',[$restaurant->id])}}' link_to restaurants_path, class='btn btn-warning btn-lg pull-left' title='See all reviews'>
-                            Cancel <i class='glyphicon glyphicon-remove-circle'></i>
+                            Cancel <i class='far fa-times-circle'></i>  
                         </a>
                         {!! Form::button($form['submission']['text'], ['class' => 'btn btn-success btn-lg pull-right '.$form['submission']['class'] ,'type' => 'submit']) !!}
                     </div>
