@@ -8,7 +8,10 @@
 @import "mymixins";
 
 // Bootstrap
-//@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+
+@import '~@fortawesome/fontawesome-free/css/all';
+// C:\Users\keith\Desktop\test\foodback\node_modules\@fortawesome\fontawesome-free\css\all.css
 
 /* ===========================================
  Generic
@@ -311,7 +314,7 @@ textarea {
 
 /* Checkbox */
 // source https://bootsnipp.com/snippets/featured/simple-css-custom-checkboxes-and-radios
-.category{
+.cuisine{
 	position: relative;
 	cursor: pointer;
 	font-size: 16px;
@@ -327,12 +330,15 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"] + .label-text:before {
-	content: "\f096"; //hollow square
-	font-family: "FontAwesome";
+	font-family: 'Font Awesome\ 5 Free';
+	content: "\f0c8"; //hollow square
+	// content: "\f096"; //hollow square
+	// font-family: "FontAwesome";
 	speak: none;
-	font-style: normal;
+	// font-weight: 900;
+	// font-style: normal;
 	font-weight: normal;
-	font-variant: normal;
+	// font-variant: normal;
 	text-transform: none;
 	line-height: 1;
 	-webkit-font-smoothing:antialiased;
@@ -342,6 +348,8 @@ input[type="checkbox"] + .label-text:before {
 }
 
 input[type="checkbox"]:checked + .label-text:before {
+	font-family: 'Font Awesome\ 5 Free';
+	font-weight: 900;
 	content: "\f14a"; // check-square
 	color:$dark-blue;
 	animation: effect 250ms ease-in;
@@ -352,9 +360,12 @@ input[type="checkbox"]:disabled + .label-text {
 }
 
 input[type="checkbox"]:disabled + .label-text:before {
+	font-family: 'Font Awesome\ 5 Free';
+	font-weight: 900;
 	content: "\f0c8"; // filled square
 	color: #ccc;
 }
+
 
 @keyframes effect {
 	0%{transform: scale(0);}
