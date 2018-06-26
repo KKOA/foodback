@@ -1,7 +1,6 @@
 // Fonts
 @import "myfonts";
 
-
 // Variables
 @import "myvariables";
 
@@ -13,11 +12,6 @@
 
 // @import '~@fortawesome/fontawesome-free/css/all';
 // C:\Users\keith\Desktop\test\foodback\node_modules\@fortawesome\fontawesome-free\css\all.css
-
-@import 'fontawesome/fontawesome';
-@import 'fontawesome/fa-solid';
-@import 'fontawesome/fa-regular';
-// @import 'fontawesome/fa-brand';
 
 
 /* ===========================================
@@ -262,10 +256,10 @@ img
 	padding-bottom:30px;
 	border-radius:10px;
 	border: 1px solid #ccc;
-	-moz-box-shadow: 0 2px 2px 0px rgba(0,0,0,0.14),
+	-webkit-box-shadow: 0 2px 2px 0px rgba(0,0,0,0.14),
 		0 3px 1px -2px rgba(0,0,0,0.12),
 		0 1px 5px 0 rgba(0,0,0,0.2);
-	-webkit-box-shadow: 0 2px 2px 0px rgba(0,0,0,0.14),
+	-moz-box-shadow: 0 2px 2px 0px rgba(0,0,0,0.14),
 		0 3px 1px -2px rgba(0,0,0,0.12),
 		0 1px 5px 0 rgba(0,0,0,0.2);
 	box-shadow: 0 2px 2px 0px rgba(0,0,0,0.14),
@@ -275,6 +269,7 @@ img
 
 .formHeader
 {
+	
 	background:#3c8dbc;
 	border-top-right-radius:10px;
 	border-top-left-radius:10px;
@@ -339,13 +334,8 @@ input[type="checkbox"] {
 input[type="checkbox"] + .label-text:before {
 	font-family: 'Font Awesome\ 5 Free';
 	content: "\f0c8"; //hollow square
-	// content: "\f096"; //hollow square
-	// font-family: "FontAwesome";
 	speak: none;
-	// font-weight: 900;
-	// font-style: normal;
 	font-weight: normal;
-	// font-variant: normal;
 	text-transform: none;
 	line-height: 1;
 	-webkit-font-smoothing:antialiased;
@@ -372,7 +362,6 @@ input[type="checkbox"]:disabled + .label-text:before {
 	content: "\f0c8"; // filled square
 	color: #ccc;
 }
-
 
 @keyframes effect {
 	0%{transform: scale(0);}
