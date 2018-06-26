@@ -5,6 +5,13 @@
 
 @import url("https://fonts.googleapis.com/css?family=Arvo:700");
 
-// @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+//Font Awesome
+//CDN
+//@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");// 4.7
+// @import url("https://use.fontawesome.com/releases/v5.1.0/css/all.css"); // 5.1.0
 
-
+// Locally
+@import 'fontawesome/fontawesome';
+@import 'fontawesome/fa-solid';
+@import 'fontawesome/fa-regular';
+// @import 'fontawesome/fa-brands'; // Use for exiting brand logos
