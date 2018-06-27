@@ -26,7 +26,7 @@ $form = [
 @endsection
 
 @section('script')
-<script src="{{asset('js/jquery.raty.js')}}"></script>
+<script src="{{mix('js/jquery.raty.js')}}"></script>
 <script>
     $(document).ready(function(){
 
