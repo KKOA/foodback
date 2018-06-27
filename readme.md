@@ -1,8 +1,8 @@
 # Foodback
 Constructed a clone of Yelp using following technology
 - Laravel
-- Bootstrap 3
-- JavaScript & Jquery
+- Bootstrap 3 & Fontawesome 5
+- JavaScript, Jquery & Jquery Raty
 - MySQL
 - CSS & SCSS
 - Sqlite (Testing only)
