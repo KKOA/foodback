@@ -153,6 +153,9 @@ return [
         //Intervention Image
         Intervention\Image\ImageServiceProvider::class,
 
+        //htmlmin/htmlmin (html minifer)
+        HTMLMin\HTMLMin\HTMLMinServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -221,6 +224,9 @@ return [
 
         //Intervention Image
         'Image' => Intervention\Image\Facades\Image::class,
+
+        //htmlmin/htmlmin( Html Minifer)
+        'HTMLMin' => HTMLMin\HTMLMin\Facades\HTMLMin::class,
     ],
 
 ];
