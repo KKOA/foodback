@@ -8,7 +8,7 @@
 @import "mymixins";
 
 // Bootstrap
-// @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
 // @import '~@fortawesome/fontawesome-free/css/all';
 // C:\Users\keith\Desktop\test\foodback\node_modules\@fortawesome\fontawesome-free\css\all.css
@@ -26,14 +26,26 @@ body {
 }
 
 @media (max-width: 767px) {
-	.col-xs-center-offset-1
+	.center-offset-xs-1
+	// .col-xs-center-offset-1
 	{
 		margin-left: 4.165%;
 		margin-right: 4.165%;
 	}
 }
+
+@media (min-width: 576px) {
+	.center-offset-sm-1
+	// .col-md-center-offset-1 
+	{
+      margin-left: 4.165%;
+      margin-right: 4.165%;
+    }
+}
+
 @media (min-width: 768px) {
-	.col-sm-center-offset-1 
+	.center-offset-md-1
+	// .col-md-center-offset-1 
 	{
       margin-left: 4.165%;
       margin-right: 4.165%;
@@ -72,11 +84,13 @@ body {
 
 .btn-warning
 {
-	background: $brown;
+	// color:$white;
+	// background: $brown;
 	border-color: $dark-brown;
 
 	&:hover{
-		background: $dark-brown;
+		// color:$white;
+		// background: $dark-brown;
 		border-color: $dark-brown;
 	}
 }
@@ -126,7 +140,7 @@ img
 	background: $white;
 	margin-bottom: 10px;
 	margin-top: 10px;
-	min-height: 270px;
+	// min-height: 270px;
 	padding: 15px;
 	-webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),
 	0 3px 1px -2px rgba(0,0,0,.12),
@@ -148,6 +162,8 @@ img
 	-o-transition: all 0.25s ease-out 0s;
 	transition: all 0.25s ease-out 0s;
 	margin-bottom : 10px;
+	margin-left:-15px;
+	margin-right:-15px;
 	
 	&:hover .more
 	 {
@@ -178,6 +194,7 @@ img
 	 img 
 	 {
 		display:block;
+		width:100%;
 	 }
  }
 // 
@@ -210,23 +227,23 @@ img
 	letter-spacing:1px;
 }
 
-@media only screen and (min-width:768px)
-{
-	.location
-	{
-		margin-top:0px;
-		position: relative;
-		min-height:84px;
-		letter-spacing:0.5px;
+// @media only screen and (min-width:768px)
+// {
+// 	.location
+// 	{
+// 		margin-top:0px;
+// 		position: relative;
+// 		min-height:84px;
+// 		letter-spacing:0.5px;
 
-		.address
-		{
-			position: absolute;
-			top: 50%;
-			transform: translateY(-50%);
-		}
-	}
-}
+// 		.address
+// 		{
+// 			position: absolute;
+// 			top: 50%;
+// 			transform: translateY(-50%);
+// 		}
+// 	}
+// }
 
 
 .desc-value {
@@ -428,7 +445,7 @@ input:focus + [role="tooltip"] {
 		left: 16px;
 		margin: 0;
 		position: relative;
-		top: 11px;
+		top: 10px;
 		-moz-transition: all .3s ease;
 		-ms-transition: all .3s ease;
 		-o-transition: all .3s ease;
