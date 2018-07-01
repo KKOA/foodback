@@ -23,31 +23,31 @@
     </a>
 
     @foreach($reviews as $review)
-        <div id='review{{$review->id}}' class="panel panel-default review">
-            <div class="panel-heading">
+        <div id='review{{$review->id}}' class="card panel-default review">
+            <div class="card-header">
                 <div class='row'>
-                    <div class='col-xs-12 col-sm-6'>
+                    <div class='col-12 col-md-6 text-center text-md-left'>
                         username
                     </div>
-                    <div class='col-xs-12 col-sm-6 text-right'>
+                    <div class='col-12 col-md-6 text-center text-md-right'>
                         {{$review->updated_at}}
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <span class='star-rating' data-score={{$review->rating}}></span><span class='text-rating'> ( {{$review->rating}} )</span><br><br>
                 {{$review->comment}}
             </div>
-            <div class="panel-footer">
+            <div class="card-footer">
                 {{--  --}}
                 <div class='row'>
-                <div class='col-xs-12 col-sm-6 col-lg-5'>
+                <div class='col-12 col-md-6 col-xl-5'>
                         <a href='{{route('restaurants.reviews.edit',[$restaurant->id,$review->id])}}' id="edit-review{{$review->id}}" class='btn btn-primary review-btn' title='Modify this review'>
                             Edit Review <i class="fas fa-pencil-alt"></i>
                         </a>
                     </div>
     
-                    <div class='col-xs-12 col-sm-6 col-lg-offset-2 col-lg-5'>
+                    <div class='col-12 col-md-6 offset-xl-2 col-xl-5'>
                         {!!Form::open(['action'=>['ReviewController@destroy',$restaurant->id,$review->id],'method'=>'POST'])!!}
                             {!! Form::button('Delete Review <i class="fas fa-trash-alt"></i>', ['id'=>"delete-review$review->id",'class' => 'btn btn-danger review-btn','type' => 'submit', 'title'=>'Delete this review']) !!}
                             {{Form::hidden('_method','DELETE')}}

@@ -20,7 +20,7 @@
                 'title'=>'View '
             ],
             'submission' => [
-            'text'=>'Update Restaurant <i class="fas fa-save"></i>',
+            'text'=>'Update <i class="fas fa-save"></i>',
               'class'=>'edit-restaurant'
             ]
         ];

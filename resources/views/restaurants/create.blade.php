@@ -17,7 +17,7 @@
                 'title'=>'See all restaurants'
             ],
             'submission' => [
-            'text'=>'Add Restaurant <i class="fas fa-save"></i>',
+            'text'=>'Save <i class="fas fa-save"></i>',
               'class'=>'add-restaurant'
             ]
         ];

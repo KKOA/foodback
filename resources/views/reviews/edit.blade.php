@@ -17,7 +17,7 @@ $form = [
         'url'=> ['restaurants.reviews.update', $restaurant->id,$review->id],
         'method'=>'PATCH',
         'submission' => [
-          'text'=>'Update Review <i class="fas fa-save"></i>',
+          'text'=>'Update <i class="fas fa-save"></i>',
           'class'=>'edit-review'
         ]
 ];
