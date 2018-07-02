@@ -82,7 +82,7 @@ class RestaurantController extends Controller
         $restaurant->save();
 
 
-        return redirect('/restaurants/'.$restaurant->id)->with('success',$restaurant->name ." restaurant created");
+        return redirect('/restaurants/'.$restaurant->id)->with('success',$restaurant->name ." restaurant created.");
     }
 
     /**
@@ -141,7 +141,7 @@ class RestaurantController extends Controller
             $restaurant->save();
             $cuisines = $request->cuisines === null ? [] : $request->cuisines;  
             $restaurant->cuisines()->sync($cuisines); 
-            return redirect()->route('restaurants.show',['restaurant' => $restaurant])->with('success',$restaurant->name." restaurant updated ");
+            return redirect()->route('restaurants.show',['restaurant' => $restaurant])->with('success',$restaurant->name." restaurant updated.");
     }
 
     /**
@@ -156,6 +156,6 @@ class RestaurantController extends Controller
         $name = $restaurant->name;
         $restaurant->cuisines()->detach();
         $restaurant->delete();
-        return redirect()->route('restaurants.index')->with('success'," $name restaurant Deleted");
+        return redirect()->route('restaurants.index')->with('success'," $name restaurant deleted.");
     }
 }
