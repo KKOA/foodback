@@ -6,7 +6,7 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{asset('css/jquery.raty.css')}}">
+    <link rel="stylesheet" href="{{mix('css/jquery.raty.css')}}">
 @endsection
 
 @section('content')
@@ -131,7 +131,6 @@
 
         $('.star-rating').raty({
              path:     "{{asset('/imgs/rating')}}",
-            //path:     "/imgs/rating/",
             readOnly: true,
             numberMax: 5,
             score:    function(){
