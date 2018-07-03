@@ -1,15 +1,8 @@
 <div class='row'>
-        <style>
-                .restaurant-form
-                {
-                    /* color:white; */
-                    /* background:#454f4f; */
-                }
-            </style>
-    <div class='col-12 col-md-offset-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6'>
+    <div class='col-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6'>
         {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal restaurant-form','files'=>'true']) !!}
             <header class='formHeader'>
-                <h3 class='text-center'>
+                <h2 class='text-center text-white'>
                     {{$form['formHeader']}} restaurant
                 </h3>
             </header>

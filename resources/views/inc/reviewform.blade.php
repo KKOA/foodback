@@ -1,13 +1,13 @@
 <div class='row'>
 
-        <div class='col-12 col-md-offset-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6'>
+        <div class='col-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6'>
             {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal review-form' ]) !!}
 
                 <header class='formHeader'>
-                    <h3 class='text-center'>
+                    <h2 class='text-center text-white'>
                         {{-- {{$form['formHeader']}}<br>{{$restaurant->name}} --}}
                         {{$form['formHeader']}} review for <br>{{$restaurant->name}}
-                    </h3>
+                    </h2>
                 </header>
                 
                 @if(isset($form['method']))
