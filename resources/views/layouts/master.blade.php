@@ -28,11 +28,8 @@
         <link rel="stylesheet" href="{{mix('css/master.css')}}">
         @yield('style')
 
-
         <!-- Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="{{mix('js/master.js')}}"></script>
-
     </head>
     <body>
          {{--phpinfo()--}}
@@ -40,8 +37,13 @@
         <div class='container-fluid'>
             @include('inc.messages')
             @yield('content')
+            <a href="javascript:" id="return-to-top" title="Scroll to top">
+                <img src="{{ asset('imgs/up-chevron-min.png')}}" alt='Up arrow'>
+            </a>
         </div>
+
         {{--@include('inc.footer')--}}
+        <script src="{{mix('js/master.js')}}"></script>
         @yield('script')
         {{--<script src="{{asset('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>--}}
         <script>
@@ -52,12 +54,5 @@
             //     }
             // });
         </script>
-        
-
-
-    <a href="javascript:" id="return-to-top" title="Scroll to top">
-        {{-- <i class="glyphicon glyphicon-chevron-up"></i> --}}
-        <img src="{{ asset('imgs/up-chevron-min.png')}}" alt='Up arrow'>
-    </a>
     </body>
 </html>
