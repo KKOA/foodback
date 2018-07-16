@@ -45,7 +45,7 @@ class ReviewController extends Controller
         $review->comment = $request->comment;
         $review->rating = floatval($request->rating);
         $review->save();
-        return redirect('/restaurants/'.$id)->with('success',"Review created");
+        return redirect('/restaurants/'.$id)->with('success',"Review created.");
     }
 
         /**
@@ -82,7 +82,7 @@ class ReviewController extends Controller
         $review->comment = $request->comment;
         $review->rating = intval($request->rating);
         $review->save();
-        return redirect('/restaurants/'.$restaurant->id)->with('success',"Review updated");
+        return redirect('/restaurants/'.$restaurant->id)->with('success',"Review updated.");
     }
 
     /**
@@ -95,6 +95,6 @@ class ReviewController extends Controller
     public function destroy(Restaurant $restaurant,Review $review)
     {
         $review->delete();
-        return redirect()->route('restaurants.show',$restaurant->id)->with('success',"Review deleted");
+        return redirect()->route('restaurants.show',$restaurant->id)->with('success',"Review deleted.");
     }
 }
