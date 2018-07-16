@@ -102,7 +102,7 @@
                     </a>
                 </div>
 
-                <div class='col-12 col-md-6 offset-xl col-xl-2 col-xl-5'>
+                <div class='col-12 col-md-6 offset-xl-2 col-xl-5'>
                     {!!Form::open(['action'=>['RestaurantController@destroy',$restaurant->id],'method'=>'POST','class'=>'delete'])!!}
                         {!! Form::button('Delete Restaurant <i class="fas fa-trash-alt"></i>', ['id'=>'delete-restaurant','class' => 'btn btn-danger','type' => 'submit']) !!}
                         {{Form::hidden('_method','DELETE')}}
