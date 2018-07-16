@@ -50,7 +50,8 @@ class DeleteRestaurantTest extends DuskTestCase
             $browser->visit('/restaurants/'.$restaurant1->id)
                     //->clickLink('Delete Restaurant')
                     ->press('Delete Restaurant')
-                    ->assertSee("$name restaurant Deleted")
+                    ->press('#delete-btn')
+                    ->assertSee("$name restaurant deleted")
                     ->assertSee($restaurant2->name)
                     ->assertDontSeeIn('.restaurants',$name);
         });
