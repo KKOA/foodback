@@ -18,94 +18,11 @@
  Generic
 ============================================= */
 
-body {
+body 
+{
     background: $body-bg;
     color: $body-color;
-	// font-size: 12px;
 	font-size:16px;
-}
-
-@media (max-width: 767px) {
-	.center-offset-xs-1
-	// .col-xs-center-offset-1
-	{
-		margin-left: 4.165%;
-		margin-right: 4.165%;
-	}
-}
-
-@media (min-width: 576px) {
-	.center-offset-sm-1
-	// .col-md-center-offset-1 
-	{
-      margin-left: 4.165%;
-      margin-right: 4.165%;
-    }
-}
-
-@media (min-width: 768px) {
-	.center-offset-md-1
-	// .col-md-center-offset-1 
-	{
-      margin-left: 4.165%;
-      margin-right: 4.165%;
-    }
-}
-
-.btn-primary {
-	background: $blue;
-	border-color: $dark-blue;
-
-	&:hover {
-		background: $dark-blue;
-		border-color: $dark-blue;
-	}
-}
-
-.btn-success {
-	background: $green;
-	border-color: $dark-green;
-
-	&:hover {
-		background: $dark-green;
-		border-color: $dark-green;
-	}
-}
-
-.btn-danger {
-	background: $red;
-	border-color: $dark-red;
-
-	&:hover {
-	background: $dark-red;
-	border-color: $dark-red;
-	}
-}
-
-.btn-warning
-{
-	// color:$white;
-	// background: $brown;
-	border-color: $dark-brown;
-
-	&:hover{
-		// color:$white;
-		// background: $dark-brown;
-		border-color: $dark-brown;
-	}
-}
-
-.btn {
-	padding:10px;
-}
-
-.url {
-	letter-spacing: 1px;
-}
-
-.row {
-	margin-right:0;
-	margin-left:0;
 }
 
 img
@@ -115,6 +32,100 @@ img
 	vertical-align: middle;
 	border: 0;
 }
+
+// Grid layout
+.row 
+{
+	margin-right:0;
+	margin-left:0;
+}
+
+@media (max-width: 767px) 
+{
+	.center-offset-xs-1
+	{
+		margin-left: 4.165%;
+		margin-right: 4.165%;
+	}
+}
+
+@media (min-width: 576px) 
+{
+	.center-offset-sm-1
+	{
+      margin-left: 4.165%;
+      margin-right: 4.165%;
+    }
+}
+
+@media (min-width: 768px) 
+{
+	.center-offset-md-1
+	{
+      margin-left: 4.165%;
+      margin-right: 4.165%;
+    }
+}
+
+// Bootstrap Buttons
+
+.btn 
+{
+	padding:10px;
+}
+
+.btn-primary 
+{
+	background: $blue;
+	border-color: $dark-blue;
+
+	&:hover 
+	{
+		background: $dark-blue;
+		border-color: $dark-blue;
+	}
+}
+
+.btn-success 
+{
+	background: $green;
+	border-color: $dark-green;
+
+	&:hover 
+	{
+		background: $dark-green;
+		border-color: $dark-green;
+	}
+}
+
+.btn-danger 
+{
+	background: $red;
+	border-color: $dark-red;
+
+	&:hover 
+	{
+		background: $dark-red;
+		border-color: $dark-red;
+	}
+}
+
+.btn-warning
+{
+	border-color: $dark-brown;
+
+	&:hover
+	{
+		border-color: $dark-brown;
+	}
+}
+
+
+.url 
+{
+	letter-spacing: 1px;
+}
+
 
 
   //@import 'header';
@@ -143,7 +154,7 @@ img
   text-shadow: -2px -2px 0 #C20000, 2px -2px 0 #c20000, -2px 2px 0 #c20000, 2px 2px 0 #c20000, 2px 3px 0 #ddd, 3px 4px 0 #ddd;
 }
 
-  .bg-success h2
+.bg-success h2
 {
   /* text-shadow: -2px -2px 0 #317231, 2px -2px 0 #317231, -2px 2px 0 #317231, 2px 2px 0 #317231, 2px 3px 0 #ddd, 3px 4px 0 #ddd; */
   text-shadow: -2px -2px 0 #255725, 2px -2px 0 #255725, -2px 2px 0 #255725, 2px 2px 0 #255725, 2px 3px 0 #ddd, 3px 4px 0 #ddd;
@@ -170,7 +181,7 @@ img
 			{
 				margin:0;
 				background:grey;
-				color:white;
+				color:$white;
 			}
 		
 			.fa-times 
@@ -181,7 +192,6 @@ img
 		}
 	}
 
-	
 	.modal-footer
     {
         border-top:none;
@@ -192,11 +202,13 @@ img
  Main
 ============================================= */
 
-.result {
+.result 
+{
 	margin-top:20px;
 }
 
-.restaurants {
+.restaurants 
+{
 	margin: auto;
 	padding-left: 0;
 
@@ -205,7 +217,8 @@ img
 	}
 }
 
-.restaurant {
+.restaurant 
+{
 	background: $white;
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -221,7 +234,7 @@ img
 
 // Hyperlink image overlay
  .overlay
- {
+{
 
 	position: relative;
 	display: block;
@@ -235,12 +248,12 @@ img
 	margin-right:-15px;
 	
 	&:hover .more
-	 {
+	{
 		-webkit-opacity: 0.5;
 		-moz-opacity: 0.5;
 		opacity: 0.5;
 		filter: alpha(opacity=50);
-	 }
+	}
 
 	 .more
 	 {
@@ -269,22 +282,24 @@ img
 // 
 
 
-
-.more-info {
+.more-info 
+{
 	padding-left: 0;
 
-	li {
+	li 
+	{
 			border-bottom: 1px dashed #d9d9d9;
 			padding:5px 0;
 			list-style: none;
 	}
 
-
-	li:last-child {
+	li:last-child 
+	{
 			border-bottom: 0;
 	}
 
-	.field-name {
+	.field-name 
+	{
 			font-weight: bold;
 	}
 
@@ -296,36 +311,20 @@ img
 	letter-spacing:1px;
 }
 
-// @media only screen and (min-width:768px)
-// {
-// 	.location
-// 	{
-// 		margin-top:0px;
-// 		position: relative;
-// 		min-height:84px;
-// 		letter-spacing:0.5px;
-
-// 		.address
-// 		{
-// 			position: absolute;
-// 			top: 50%;
-// 			transform: translateY(-50%);
-// 		}
-// 	}
-// }
-
-
-.desc-value {
+.desc-value 
+{
 	word-break: break-word;
 }
 
-.more-btn {
+.more-btn 
+{
 	margin-top: 5px;
 	width: 100%;
 }
 
 #delete-restaurant,
-#edit-restaurant {
+#edit-restaurant 
+{
 	margin-top:10px;
 	width:100%;
 }
@@ -335,7 +334,8 @@ img
 ========================================================== */
 
 
-.review-form, .restaurant-form
+.review-form, 
+.restaurant-form
 {
 	margin-top:30px;
 	margin-bottom:30px;
@@ -364,7 +364,8 @@ img
 	margin-bottom:40px;
 
 
-	& > h2{
+	& > h2
+	{
 		// color: $white;
 		font-family: Arvo;
 		font-weight: 700;
@@ -384,30 +385,33 @@ img
 }
 
 
-.form-horizontal .form-group
+.form-horizontal .form-group 
 {
 	margin-left:0px;
 	margin-right:0px;
 }
 
-.required {
+.required 
+{
 	color:$red;
 	font-weight:bold;
 }
 
-label
+label 
 {
 	font-weight:bold;
 }
 
 /* textarea */
-textarea {
+textarea 
+{
 	resize:vertical;
 }
 
 /* Checkbox */
 // source https://bootsnipp.com/snippets/featured/simple-css-custom-checkboxes-and-radios
-.cuisine{
+.cuisine 
+{
 	position: relative;
 	cursor: pointer;
 	font-size: 16px;
@@ -417,12 +421,14 @@ textarea {
 	padding:5px;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"] 
+{
 	position: absolute;
 	right: 9000px;
 }
 
-input[type="checkbox"] + .label-text:before {
+input[type="checkbox"] + .label-text:before 
+{
 	font-family: 'Font Awesome\ 5 Free';
 	content: "\f0c8"; //hollow square
 	speak: none;
@@ -435,7 +441,8 @@ input[type="checkbox"] + .label-text:before {
 	margin-right: 5px;
 }
 
-input[type="checkbox"]:checked + .label-text:before {
+input[type="checkbox"]:checked + .label-text:before 
+{
 	font-family: 'Font Awesome\ 5 Free';
 	font-weight: 900;
 	content: "\f14a"; // check-square
@@ -443,11 +450,13 @@ input[type="checkbox"]:checked + .label-text:before {
 	animation: effect 250ms ease-in;
 }
 
-input[type="checkbox"]:disabled + .label-text {
+input[type="checkbox"]:disabled + .label-text 
+{
 	color: #aaa;
 }
 
-input[type="checkbox"]:disabled + .label-text:before {
+input[type="checkbox"]:disabled + .label-text:before 
+{
 	font-family: 'Font Awesome\ 5 Free';
 	font-weight: 900;
 	content: "\f0c8"; // filled square
@@ -462,22 +471,31 @@ input[type="checkbox"]:disabled + .label-text:before {
 }
 
 /* file input */
-
-input[type=file]
+input[type=file] 
 {
 	margin:5px;
 	font-weight:bold;
 }
 
-#slug-group {
-	margin-bottom: 60px;
+// Rating
+.input-rating-text 
+{
+	display: inline-block;
+	width: auto;
+	margin-right:20px;
 }
 
+.input-rating-star 
+{
+	display:inline-block;
+	padding:12px 6px;
+}
 
 /* ==========================================================
 ! Tooltip - forms
 ========================================================== */
-[role="tooltip"] {
+[role="tooltip"] 
+{
 	display:none;
 	padding:6px 12px;
 	width:100%;
@@ -486,7 +504,8 @@ input[type=file]
 	border:1px solid #000;
 }
 
-input:focus + [role="tooltip"] {
+input:focus + [role="tooltip"] 
+{
 	display:block;
 	position:absolute;
 	top:100%;
@@ -496,7 +515,8 @@ input:focus + [role="tooltip"] {
 ! Scroll to top link
 ========================================================== */
 
-#return-to-top {
+#return-to-top 
+{
 	@include border-radius(50%);
 	background: rgba(0, 0, 0, .5);
 	bottom: 20px;
@@ -513,7 +533,8 @@ input:focus + [role="tooltip"] {
 	width: 50px;
 	z-index: 5;
 
-	img {
+	img 
+	{
 		color: $white;
 		font-size: 19px;
 		left: 16px;
@@ -528,8 +549,9 @@ input:focus + [role="tooltip"] {
 		opacity: 0.7;
 	}
 
-	&:hover {
-			background: rgba(0, 0, 0, .9);
+	&:hover 
+	{
+		background: rgba(0, 0, 0, .9);
 
 			img
 			{
@@ -538,7 +560,7 @@ input:focus + [role="tooltip"] {
 	}
 }
 
-.pagination
+.pagination 
 {
 	margin: 40px 0;
 }
