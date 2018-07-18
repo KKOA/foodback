@@ -1,0 +1,107 @@
+body 
+{
+    background: $body-bg;
+    color: $body-color;
+	font-size:16px;
+}
+
+img
+{
+	max-width: 100%;
+	height: auto;
+	vertical-align: middle;
+	border: 0;
+}
+
+// Grid layout
+.row 
+{
+	margin-right:0;
+	margin-left:0;
+}
+
+@media (max-width: 767px) 
+{
+	.center-offset-xs-1
+	{
+		margin-left: 4.165%;
+		margin-right: 4.165%;
+	}
+}
+
+@media (min-width: 576px) 
+{
+	.center-offset-sm-1
+	{
+      margin-left: 4.165%;
+      margin-right: 4.165%;
+    }
+}
+
+@media (min-width: 768px) 
+{
+	.center-offset-md-1
+	{
+      margin-left: 4.165%;
+      margin-right: 4.165%;
+    }
+}
+
+// Bootstrap Buttons
+
+.btn 
+{
+	padding:10px;
+}
+
+.btn-primary 
+{
+	background: $blue;
+	border-color: $dark-blue;
+
+	&:hover 
+	{
+		background: $dark-blue;
+		border-color: $dark-blue;
+	}
+}
+
+.btn-success 
+{
+	background: $green;
+	border-color: $dark-green;
+
+	&:hover 
+	{
+		background: $dark-green;
+		border-color: $dark-green;
+	}
+}
+
+.btn-danger 
+{
+	background: $red;
+	border-color: $dark-red;
+
+	&:hover 
+	{
+		background: $dark-red;
+		border-color: $dark-red;
+	}
+}
+
+.btn-warning
+{
+	border-color: $dark-brown;
+
+	&:hover
+	{
+		border-color: $dark-brown;
+	}
+}
+
+// Hyperlink
+.url 
+{
+	letter-spacing: 1px;
+}
