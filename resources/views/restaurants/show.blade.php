@@ -5,10 +5,6 @@
 -  {{$restaurant->name}}
 @endsection
 
-@section('style')
-    <link rel="stylesheet" href="{{mix('css/jquery.raty.css')}}">
-@endsection
-
 @section('content')
     <div class='row mt-3'>
         <a href='{{route('restaurants.index')}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See all restaurants' id='view-restaurants'>
