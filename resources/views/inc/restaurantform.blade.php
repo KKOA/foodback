@@ -1,4 +1,16 @@
-<div class='row'>
+<div class='row mt-4'>
+    @if(isset($form["cancel"]['parameter']))
+        <a href='{{route($form["cancel"]["url"], $form["cancel"]["parameter"])}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See {{$restaurant->name}} restaurants'>
+        <i class="fas fa-hand-point-left"></i> View {{$restaurant->name}} restaurant
+        </a>
+    @else
+        <a href='{{route($form["cancel"]["url"])}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See all restaurants'>
+                <i class="fas fa-hand-point-left"></i> View restaurants
+        </a>
+    @endif
+</div>
+
+<div class='row mt-4 mb-4'>
     <div class='col-12 offset-lg-1 col-lg-10 offset-xl-2 col-xl-8'>
         {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal restaurant-form','files'=>'true']) !!}
             <header class='formHeader'>
@@ -128,7 +140,7 @@
             <div class='form-group row'>
 
                 @if(isset($form["cancel"]['parameter']))
-                    <a href='{{route($form["cancel"]["url"], $form["cancel"]["parameter"])}}' link_to restaurants_path, class='btn btn-secondary btn-lg center-offset-xs-1 col center-offset-md-1 mb-3' title='See all restaurants'>
+            <a href='{{route($form["cancel"]["url"], $form["cancel"]["parameter"])}}' link_to restaurants_path, class='btn btn-secondary btn-lg center-offset-xs-1 col center-offset-md-1 mb-3' title='See {{$restaurant->name}} restaurants'>
                             Cancel <i class='fas fa-times'></i>
                     </a>
                 @else
