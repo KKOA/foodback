@@ -25,6 +25,7 @@
         <title>Foodreview @yield('title')</title>
 
         <!-- Styles -->
+        <link href="https://fonts.googleapis.com/css?family=Arvo:700|Raleway:100,300,600" rel="stylesheet">
         <link rel="stylesheet" href="{{mix('css/master.css')}}">
         @yield('style')
 
