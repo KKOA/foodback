@@ -57,7 +57,6 @@
                 let reader = new FileReader();
 
                 reader.onload = function(e) {
-                    console.log('wtf');
                     $('#imgPreview').attr('src', e.target.result);
                 }
 

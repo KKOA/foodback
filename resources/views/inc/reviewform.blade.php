@@ -1,4 +1,4 @@
-<div class='row'>
+<div class='row mt-4 mb-4'>
     <div class='col-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6'>
         {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal review-form' ]) !!}
 
