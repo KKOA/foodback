@@ -63,7 +63,7 @@ $form = [
             {
                 //setRatingStar(MIN_RATING);
                 currentRating = MIN_RATING;
-                setRatingText(currentRating);
+                // setRatingText(currentRating);
             }
 
             //Prevent user enter value greater than max
