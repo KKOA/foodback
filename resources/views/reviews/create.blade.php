@@ -30,56 +30,84 @@ $form = [
 <script>
     $(document).ready(function(){
 
-        $(document).on("blur",".input-rating-text",function(event)
+        function greaterThanMax(input,max)
         {
-            $this = $(this);
-            var currentRating = parseInt($this.val());
+            return input > max;
+        }
 
-            //Prevent user enter value greater than max
-            var maxRating = parseInt($this.attr("max"));
-            if(currentRating > maxRating)
+        function lessThanMin(input,min)
+        {
+            return input < min;
+        }
+
+        function setRatingText(value)
+        {
+            $(".input-rating-text").val(value);
+        }
+
+        function setRatingStar(value)
+        {
+            $(".input-rating-star").attr("data-score", value); //Update data-score attribute
+            $(".input-rating-star").raty("score", value);  // Update star selected
+        }
+
+        $(document).on("keyup change",".input-rating-text",function(event)
+        {
+            let $this = $(this);
+            const MAX_RATING = parseInt($this.attr('max'));
+            const MIN_RATING = parseInt($this.attr('min'));
+            let currentRating = parseInt($this.val());
+
+            //Not a number
+            if(isNaN(currentRating))
             {
-                $this.val(maxRating);
+                //setRatingStar(MIN_RATING);
+                currentRating = MIN_RATING;
+                setRatingText(currentRating);
             }
 
             //Prevent user enter value greater than max
-            var minRating = parseInt($this.attr("min"));
-            if(currentRating < minRating)
+            if(currentRating > MAX_RATING)
             {
-                $this.val(minRating);
+                currentRating = MAX_RATING;
+                setRatingText(currentRating);
             }
 
-            $(".input-rating-star").attr("data-score", currentRating); //Update data-score attribute
-            $(".input-rating-star").raty("score",currentRating);  // Update star selected
+            //Prevent user enter value greater than max
+            if(currentRating < MIN_RATING)
+            {
+                currentRating = MIN_RATING;
+                setRatingText(currentRating);
+            }
 
+            setRatingStar(currentRating);
+        });
+
+        $(document).on("click",".input-rating-clear",function(event)
+        {
+            const MIN_RATING = parseInt($('.input-rating-text').attr('min'));
+            $('.input-rating-star').raty('cancel');
+            setRatingStar(MIN_RATING);
+            setRatingText(MIN_RATING);
         });
 
         $(".input-rating-star").raty({
-            cancel:         true,
-            cancelHint:     'Reset to previous value',
-            cancelOff:    "reset.png",
-            cancelOn:    "reset.png",
-            cancelPlace: "left",
             click : function(score,event)
             {
-                $(".input-rating-text").val(score);
-                $(".input-rating-star").attr("data-score", score);
+                setRatingText(score);
+                setRatingStar(score);
             },
             numberMax:5,
             path:     "{{asset('/imgs/rating')}}",
             start:0.0 //set default starting value
         });
 
-        $(document).on("click",".raty-cancel",function(event)
+
+        $(document).on("click",".input-rating-reset",function(event)
         {
-            var oldRating = {{ json_encode($review->rating)}};
-            oldRating = oldRating ? oldRating :  0; // Set value to 0 if value is consider falsy
-            $(".input-rating-text").val(oldRating); // Update input rating field
-
-            $(".input-rating-star").attr("data-score", oldRating); //Update data-score attribute
-            $(".input-rating-star").raty("score",oldRating);  // Update star selected
-
+            $('.input-rating-star').raty('click', {{ json_encode($review->rating)}}); 
         });
+
     });
 </script>
 @endsection
