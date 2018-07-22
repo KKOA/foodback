@@ -141,6 +141,14 @@ input[type=file]
 }
 
 /* Rating */
+@media only screen and (max-width: 360px)
+{
+	.input-rating-text
+	{
+		max-width:60px;
+		margin-right:10px;
+	}
+}
 .input-rating-text 
 {
 	display: inline-block;
@@ -152,6 +160,13 @@ input[type=file]
 {
 	display:inline-block;
 	padding:12px 6px;
+}
+
+.input-rating-clear,
+.input-rating-reset
+{
+	padding:0px 5px;
+	border-radius:50%;
 }
 
 /* ==========================================================
