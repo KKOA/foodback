@@ -50,7 +50,6 @@ class CreateRestaurantTest extends DuskTestCase
 
             //visit create page
             $browser->visit('/restaurants/create')
-                    ->type('name', $restaurant2->name)
                     ->type('description',$restaurant2->description)
                     ->type('address2',$restaurant2->address2)
                     ->type('city',$restaurant2->city)
