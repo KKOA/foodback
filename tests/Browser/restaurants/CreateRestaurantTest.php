@@ -2,10 +2,13 @@
 
 namespace Tests\Browser;
 
+// use Faker\Generator as Faker;
+
 use App\Restaurant as Restaurant;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 
 class CreateRestaurantTest extends DuskTestCase
 {
@@ -21,6 +24,7 @@ class CreateRestaurantTest extends DuskTestCase
     {
         
         $this->browse(function (Browser $browser) {
+            $faker = \Faker\Factory::create();
             
             $restaurant1 = Restaurant::create(
                 [
@@ -37,7 +41,9 @@ class CreateRestaurantTest extends DuskTestCase
                     'name'          => '',
                     'description'   => 'a',
                     'address1'      =>  '',
+                    'address2'      => 'sa',
                     'city'          =>  'au',
+                    'county'      => $faker->paragraph(30,false),
                     'postcode'      =>  'sn5 5ef fe6'
                 ]
             );
@@ -46,13 +52,17 @@ class CreateRestaurantTest extends DuskTestCase
             $browser->visit('/restaurants/create')
                     ->type('name', $restaurant2->name)
                     ->type('description',$restaurant2->description)
+                    ->type('address2',$restaurant2->address2)
                     ->type('city',$restaurant2->city)
+                    ->type('county',$restaurant2->county)
                     ->type('postcode',$restaurant2->postcode)
                     ->click('button[type="submit"]')
                     ->assertSee('The name field is required.')
                     ->assertSee('The description must be at least 3 characters.')
                     ->assertSee('The address1 field is required.')
+                    ->assertSee('The address2 must be empty or atleast 3 characters long.')
                     ->assertSee('The city must be at least 3 characters.')
+                    ->assertSee('The county may not be greater than 255 characters.')
                     ->assertSee('The postcode may not be greater than 10 characters.')
                     ->assertDontSee($restaurant2->name ." restaurant created");
             //Visit homepage
