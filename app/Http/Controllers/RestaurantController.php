@@ -9,6 +9,8 @@ use Image;
 use File;
 use Storage;
 
+use App\Rules\NullOrGreaterThanMinLength as NullOrGreaterThanMinLength;
+
 class RestaurantController extends Controller
 {
     /**
@@ -46,9 +48,13 @@ class RestaurantController extends Controller
             'name' => 'required|unique:restaurants|min:3|max:255',
             'description' => 'required|min:3',
             'address1' => 'required|min:3|max:255',
+            'address2' => [new NullOrGreaterThanMinLength(3),'max:255'],         
             'city' => 'required|min:3|max:255',
-            'postcode' => 'required|min:3|max:10',
+            'county' => [new NullOrGreaterThanMinLength(3),'max:255'],
+            'postcode' => 'required|min:3|max:10'
         ]);
+
+        //dd($request);
 
         //dd($request->cuisines);
 
@@ -60,7 +66,6 @@ class RestaurantController extends Controller
         $restaurant->city = $request->city;
         $restaurant->county = $request->county;
         $restaurant->postcode = $request->postcode;
-
         $restaurant->save();
 
         //Cuisine
@@ -129,8 +134,11 @@ class RestaurantController extends Controller
             'description' => 'required|min:3',
             'address1' => 'required|min:3|max:255',
             'city' => 'required|min:3|max:255',
-            'postcode' => 'required|min:3|max:10',
+            'postcode' => 'required|min:3|max:10'
             ]);
+
+            // dd($request);
+
             $restaurant->name= $request->name;
             $restaurant->description = $request->description;
             $restaurant->address1 = $request->address1;
@@ -139,6 +147,7 @@ class RestaurantController extends Controller
             $restaurant->county = $request->county;
             $restaurant->postcode = $request->postcode;
             $restaurant->save();
+            
             $cuisines = $request->cuisines === null ? [] : $request->cuisines;  
             $restaurant->cuisines()->sync($cuisines); 
             return redirect()->route('restaurants.show',['restaurant' => $restaurant])->with('success',$restaurant->name." restaurant updated.");
