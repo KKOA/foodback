@@ -130,10 +130,12 @@ class RestaurantController extends Controller
                 
         // return $restaurant->id;
         $validatedData = $request->validate([
-            'name' => 'required|min:3|max:255|unique:restaurants,name,'.$restaurant->id,
+            'name' => 'required|unique:restaurants|min:3|max:255',
             'description' => 'required|min:3',
             'address1' => 'required|min:3|max:255',
+            'address2' => [new NullOrGreaterThanMinLength(3),'max:255'],         
             'city' => 'required|min:3|max:255',
+            'county' => [new NullOrGreaterThanMinLength(3),'max:255'],
             'postcode' => 'required|min:3|max:10'
             ]);
 
