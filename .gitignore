@@ -12,3 +12,14 @@ npm-debug.log
 yarn-error.log
 .env
 .DS_Store
+
+#Ignore generate css & javascript files in public directory
+/public/js/*
+/public/css/*
+
+# ignore generate json files
+/public/mix-manifest.json
+package-lock.json
+
+#ignore generated composer.lock file
+composer.lock 
