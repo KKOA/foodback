@@ -1,7 +1,7 @@
 # Foodback
 Constructed a clone of Yelp using following technology
 - Laravel
-- Bootstrap 3 & Fontawesome 5
+- Bootstrap 4 & Fontawesome 5
 - JavaScript, Jquery & Jquery Raty
 - MySQL
 - CSS & SCSS
@@ -25,15 +25,15 @@ This installation assumes have
 
 installed.
 
+In the terminal\command prompt enter the following:
 ```
 git clone https://github.com/KKOA/foodback.git
 cd foodback
 composer update
+copy '.env.example' '.env'
 php artisan key:generate
 npm install
 ```
-
-Next, copy the '.env.example' as '.env'
 
 Change the following lines in .env to match your database configurations:
 ```
@@ -44,7 +44,7 @@ DB_PASSWORD=secret
 
 Open a MySQL connection and create a database with the same name as the value of DB_DATABASE in your .env file.
 
-In the terminal, enter the following:
+In the terminal/command prompt, enter the following:
 
 ```
 php artisan migrate
@@ -91,10 +91,25 @@ Generate key for .env.dusk.local
 ```
 php artisan key:generate --env=dusk.local
 ```
+Start server and specify dusk.env. 
 
-To run the dusk test enter the following:
+```
+php artisan serve --host=dusk.local
+```
+
+**Running a server in terminal/command prompt will prevent you from execute other commands in same terminal until server is stopped.** 
+
+**If you want execute a command but keep the server running. You will need to open a new terminal/command prompt.**
+
+To run the dusk test enter the following command into the terminal/command prompt:
 ```
 php artisan dusk
 ```
 
-**Warning this may take a while to run all the tests**
+**Warning**
+
+All the test(s) will fail if
+- you have not start a server in right environment before running the test
+- you have two or more servers running that are using the same port and ip address
+
+This may take a while to run all the tests.
