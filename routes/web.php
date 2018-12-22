@@ -19,3 +19,7 @@ Route::resource('/restaurants','RestaurantController');
 
 // Restaurant Review CRUD routes
 Route::resource('restaurants.reviews', 'ReviewController',['except' => ['index','show']]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
