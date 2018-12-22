@@ -9,7 +9,12 @@
         @endsection
         @yield('meta')
 
-        <title>Foodreview @yield('title')</title>
+        <title>
+            {{config('app.name','Laravel')}}
+            @if(View::hasSection('title'))
+                | @yield('title')
+            @endif
+        </title>
 
         <!-- Styles -->
         <link href="https://fonts.googleapis.com/css?family=Arvo:700|Raleway:100,300,600" rel="stylesheet">

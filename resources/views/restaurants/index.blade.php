@@ -4,7 +4,7 @@
 @section('meta')
     <meta name="description" content="All Restaurants">
     @overwrite
-@section('title', '- Restaurants')
+@section('title', 'Find the restaurant for you')
 
 @section('content')
     <div class='row mb-3'>

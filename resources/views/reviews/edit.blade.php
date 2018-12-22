@@ -5,7 +5,9 @@
     <meta name="description" content="Edit review">
     @overwrite
 
-@section('title', ' - Edit Review')
+@section('title')
+    Edit your review for {{$review->restaurant->name}}
+@endsection
 
 @section('content')
 

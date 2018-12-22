@@ -5,7 +5,7 @@
     <meta name="description" content="Add a new restaurant">
     @overwrite
 
-@section('title', ' - Create Restaurants')
+@section('title', ' Add your restaurant')
 
 @section('content')
     <?php

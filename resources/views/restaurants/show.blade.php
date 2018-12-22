@@ -2,7 +2,7 @@
 @extends('layouts.master')
 
 @section("title")
--  {{$restaurant->name}}
+    {{$restaurant->name}}
 @endsection
 
 @section('content')
