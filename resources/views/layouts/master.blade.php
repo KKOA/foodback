@@ -25,14 +25,18 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
-         {{--phpinfo()--}}
-        {{--@include('inc.header')--}}
-        <div class='container-fluid'>
-            @include('inc.messages')
-            @yield('content')
-            <a href="javascript:" id="return-to-top" title="Scroll to top">
-                <img src="{{ asset('imgs/up-chevron-min.png')}}" alt='Up arrow'>
-            </a>
+        <div id="app">
+            {{--phpinfo()--}}
+            {{--@include('inc.header')--}}
+            <main class="py-4">
+                <div class='container-fluid'>
+                    @include('inc.messages')
+                    @yield('content')
+                    <a href="javascript:" id="return-to-top" title="Scroll to top">
+                        <img src="{{ asset('imgs/up-chevron-min.png')}}" alt='Up arrow'>
+                    </a>
+                </div>
+            </main>
         </div>
 
         {{--@include('inc.footer')--}}
