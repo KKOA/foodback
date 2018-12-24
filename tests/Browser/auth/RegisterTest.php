@@ -6,6 +6,8 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+use App\User as User;
+
 class RegisterTest extends DuskTestCase
 {
     use DatabaseMigrations;
@@ -19,18 +21,27 @@ class RegisterTest extends DuskTestCase
     public function user_can_register_with_valid_details()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/register')
-                    ->assertSee('Register')
-                    ->type('name','keith')
-                    ->type('email','keith@test.com')
-                    ->type('password','secret')
-                    ->type('password_confirmation','secret')
-                    ->click('button[type="submit"]')
-                    ->assertpathIs('/home')
-                    ->assertDontSeeIn('nav', 'Login')
-                    ->assertDontSeeIn('nav', 'Sign Up')
-                    ->logout()
-                    ;
+
+            $user1 = new User();
+            $user1->name = 'keith';
+            $user1->email = 'keith@test.com';
+            $user1->password = 'secret';
+
+            // $browser->visit('/')
+            $browser->visit('/')
+                ->click('#nav-register')
+                ->assertSee('Register')
+                ->type('name',$user1->name)
+                ->type('email',$user1->email)
+                ->type('password',$user1->password)
+                ->type('password_confirmation',$user1->password)
+                ->click('button[type="submit"]')
+                ->assertpathIs('/home')
+                ->assertSeeIn('#accountName',$user1->name)
+                ->assertDontSeeIn('nav', 'Login')
+                ->assertDontSeeIn('nav', 'Sign Up')
+                ->logout()
+                ;
         });
     }
 
@@ -42,23 +53,23 @@ class RegisterTest extends DuskTestCase
     public function user_cannot_register_with_invalid_details()
     {
         $this->browse(function (Browser $browser) {
-
-            $browser->visit('/register')
-                    ->assertSee('Register')
-                    ->type('name','al')
-                    ->type('email','h@t')
-                    ->type('password','secret')
-                    ->type('password_confirmation','Secret')
-                    ->click('button[type="submit"]')
-                     //Assertion not written
-                    ->assertpathIs('/register')
-                    ->assertSeeIn('#registerForm > div:nth-child(2) .invalid-feedback-content','The name must be at least 3 characters.')
-                    ->assertSeeIn('#registerForm > div:nth-child(3) .invalid-feedback-content','The email must be a valid email address.')
-                    ->assertSeeIn('#registerForm > div:nth-child(4) .invalid-feedback-content',
-                    'The password confirmation does not match.')
-                    ->assertDontSee('nav', 'Login')
-                    ->assertDontSee('nav', 'Sign Up')
-                    ;
+            $browser->visit('/')
+                ->click('#nav-register')
+                ->assertSee('Register')
+                ->type('name','al')
+                ->type('email','h@t')
+                ->type('password','secret')
+                ->type('password_confirmation','Secret')
+                ->click('button[type="submit"]')
+                    //Assertion not written
+                ->assertpathIs('/register')
+                ->assertSeeIn('#registerForm > div:nth-child(2) .invalid-feedback-content','The name must be at least 3 characters.')
+                ->assertSeeIn('#registerForm > div:nth-child(3) .invalid-feedback-content','The email must be a valid email address.')
+                ->assertSeeIn('#registerForm > div:nth-child(4) .invalid-feedback-content',
+                'The password confirmation does not match.')
+                ->assertDontSee('nav', 'Login')
+                ->assertDontSee('nav', 'Sign Up')
+                ;
 
         });
     }
@@ -79,19 +90,20 @@ class RegisterTest extends DuskTestCase
                 ]
             );
 
-            $browser->visit('/register')
-                    ->assertSee('Register')
-                    ->type('name',$user1->name)
-                    ->type('email',$user1->email)
-                    ->type('password','secret')
-                    ->type('password_confirmation','secret')
-                    ->click('button[type="submit"]')
-                     //Assertion not written
-                    ->assertSeeIn('form','The email has already been taken.')
-                    ->assertSeeIn('nav', 'Login')
-                    ->assertSeeIn('nav', 'Sign Up')
-                    ->assertpathIs('/register')
-                    ;
+            $browser->visit('/')
+                ->click('#nav-register')
+                ->assertSee('Register')
+                ->type('name',$user1->name)
+                ->type('email',$user1->email)
+                ->type('password','secret')
+                ->type('password_confirmation','secret')
+                ->click('button[type="submit"]')
+                    //Assertion not written
+                ->assertSeeIn('#registerForm > div:nth-child(3) .invalid-feedback-content','The email has already been taken.')
+                ->assertSeeIn('nav', 'Login')
+                ->assertSeeIn('nav', 'Sign Up')
+                ->assertpathIs('/register')
+                ;
         });
     }
 }
