@@ -23,11 +23,12 @@
 
         <!-- Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
     </head>
     <body>
         <div id="app">
             {{--phpinfo()--}}
-            {{--@include('inc.header')--}}
+            @include('inc.mainNav')
             <main class="py-4">
                 <div class='container-fluid'>
                     @include('inc.messages')
