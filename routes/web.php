@@ -11,10 +11,17 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     // return redirect('/restaurants');
     return view('welcome');
 })->name('root');
+
+Route::get('/', function () {
+    // return redirect('/restaurants');
+    $myTitle = 'Homepage';
+    return view('temp', compact('myTitle'));
+})->name('root');
+
 // Restaurant CRUD routes
 Route::resource('/restaurants','RestaurantController');
 
