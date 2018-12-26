@@ -189,3 +189,31 @@ body a
 {
 	letter-spacing: 1px
 }
+
+
+//
+/* hr-line -generic style */
+
+.hr-line::before {
+	margin: 0 0.5em 0 -55%;
+}
+
+.hr-line:after {
+	margin: 0 -55% 0 0.5em;
+}
+
+.hr-line {
+	width:95%;
+	margin:.7em auto;
+	overflow:hidden;
+	font-weight:300;
+}
+
+.hr-line:before,
+.hr-line:after {
+	content: "";
+	display: inline-block;
+	width: 50%;
+	vertical-align: middle;
+	border-bottom: 1px solid;
+}
