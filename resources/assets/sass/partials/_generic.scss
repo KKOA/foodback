@@ -47,11 +47,90 @@ img
     }
 }
 
-// Bootstrap Buttons
+// Buttons
+.btn, 
+input[type=submit],
+button
+{
+	// box-shadow: 0 2px 4px grey;
+	box-shadow: 0 6px 4px grey;
+	position: relative;
+}
 
+.btn:hover, 
+input[type=submit]:hover,
+button:hover
+{
+	// box-shadow: 0 2px 4px grey;
+	box-shadow: 0 2px 4px grey;
+	top:4px;
+}
+
+.btn:active, 
+input[type=submit]:active,
+button:active
+{
+	box-shadow: inset 2px 2px 5px #333;
+}
+
+// Social buttons
+.social-auth-links
+{
+	.btn-facebook,
+	.btn-google,
+	.btn-twitter
+	{
+		border-width: 2px;
+		border-style: solid;
+	}
+
+	.btn-facebook
+	{
+		background:#38538F;
+		color:white;
+		border-color:#26375F;
+	}
+
+	.btn-facebook:hover{
+		background:#26375F;
+		color:white;
+		border-color:#26375F;
+	}
+
+	.btn-google
+	{
+		background:#FF826B;
+		color:black;
+		border-color:#FF6447;
+	}
+
+	.btn-google:hover
+	{
+		background:#FF6447;
+		color:black;
+		border-color:#FF6447;
+	}
+
+	.btn-twitter
+	{
+		background:#2998FF;
+		color: black;
+		border-color: #5cB0FF;
+	}
+
+	.btn-twitter:hover
+	{
+		background: #5cB0FF;
+		color: black;
+		border-color: #5cB0FF;
+	}
+}
+
+// Bootstrap Buttons
 .btn 
 {
 	padding:10px;
+	letter-spacing: 1px;
 }
 
 .btn-primary 
@@ -104,4 +183,9 @@ img
 .url 
 {
 	letter-spacing: 1px;
+}
+
+body a
+{
+	letter-spacing: 1px
 }
