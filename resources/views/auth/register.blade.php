@@ -12,23 +12,33 @@
                     </div>
 
                     <div class="card-body">
-
+                        <p class="text-center offset-1-center">
+                            By registring you agree to Foodback’s
+                            <a href="{{route('legal.terms')}}" target="_blank">Terms of Service</a>,
+                            <a href="{{route('legal.privacy')}}" target="_blank">Privacy Policy</a>
+                            and <a href="{{route('legal.cookie')}}" target="_blank">Cookie policy</a>.
+                        </p>
                         <h3 class="text-center">Register with</h3>
-                        <div class="row social-auth-link justify-content-center">
+                        <div class="row social-auth-links justify-content-center">
                             <div class="col-12 col-sm-6 col-lg-4 my-2">
-                                <a class="btn btn-facebook btn-primary btn-block" href="#">
+                                <a class="btn btn-facebook btn-block" href="#">
                                     <i class="fab fa-facebook-f"></i> Facebok
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-4 my-2">
-                                <a class="btn btn-google btn-primary btn-block" href="#">
+                                <a class="btn btn-google btn-block" href="#">
                                     <i class="fab fa-google"></i> Google
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-4 my-2">
-                                <a class="btn btn-twitter btn-primary btn-block" href="#">
+                                <a class="btn btn-twitter  btn-block" href="#">
                                         <i class="fab fa-twitter"></i> Twitter
                                 </a>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-4 my-2">
+                                    <a class="btn btn-twitter btn-block" >
+                                        <i class="fab fa-twitter"></i> Twitter
+                                    </a>
                             </div>
                         </div>
 
@@ -134,14 +144,7 @@
 
                     </div>
                     <div class="card-footer">
-                        <p class="text-center offset-1-center">
-                            By click the join now you agree to Foodback’s
-                            <a href="{{route('legal.terms')}}" target="_blank">Terms of Service</a>,
-                            <a href="{{route('legal.privacy')}}" target="_blank">Privacy Policy</a>
-                            and <a href="{{route('legal.cookie')}}" target="_blank">Cookie policy</a>.
-                        </p>
-
-                        <p class="text-center">You have an account already?
+                        <p class="text-center">Already have an account already?
                             <a href="{{route('login')}}" class="login-link">Log in here</a>
                         </p>
                     </div>
@@ -193,13 +196,13 @@
 
     /* Social links */
 
-    .btn-facbook,
+    /*.btn-facebook,
     .btn-google,
     .btn-twitter
     {
         border-width: 2px;
         border-style: solid;
-        box-shadow: 0 2px 4px grey;
+        /* box-shadow: 0 2px 4px grey; *//*
     }
 
     .btn-facebook
@@ -231,7 +234,7 @@
 
     .btn-twitter
     {
-        /* background: #52ABFF; */
+        /* background: #52ABFF; *//*
         background:#2998FF;
         color: black;
         border-color: #5cB0FF;
@@ -239,11 +242,11 @@
 
     .btn-twitter:hover
     {
-        /* background: #3399FF; */
+        /* background: #3399FF; *//*
         background: #5cB0FF;
         color: black;
         border-color: #5cB0FF;
-    }
+    }*/
 
 
     /* hr-line -generic style */
@@ -276,24 +279,24 @@
 
     /* form */
 
-    #registerCard .card-content .card-body form
+    /* #registerCard .card-content .card-body form
     {
         margin-left:-1.25rem;
         margin-right:-1.25rem;
-    }
+    } */
 
-    .invalid-feedback-content 
+    /* .invalid-feedback-content 
     { 
         border:1px solid red;
         padding:5px;
         background: #FFEFE5;
 	    background: #FFF3B8;
-    }
+    } */
 
-    #registerCard .card-content .card-body form button
+    /* #registerCard .card-content .card-body form button
     {
         box-shadow: 0 2px 4px grey;
-    }
+    } */
 
     /* card footer */
 
