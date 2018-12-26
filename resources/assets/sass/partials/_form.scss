@@ -16,6 +16,12 @@
 		0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
+.card-content form
+{
+	margin-left:-1.25rem;
+	margin-right:-1.25rem;
+}
+
 .formHeader
 {
 	
@@ -46,6 +52,17 @@
 	}
 }
 
+form .form-group:first-of-type
+{
+	// border-top:solid 1px #000;
+	margin-top:2rem;
+}
+
+form .form-group:last-of-type
+{
+	// border-bottom:solid 1px #000;
+	margin-bottom:2rem;
+}
 
 .form-horizontal .form-group 
 {
@@ -188,3 +205,14 @@ input:focus + [role="tooltip"]
 	position:absolute;
 	top:100%;
 }
+
+// Form errors
+
+.invalid-feedback-content 
+{ 
+	border:1px solid red;
+	padding:5px;
+	background: #FFEFE5;
+	background: #FFF3B8;
+}
+
