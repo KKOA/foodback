@@ -18,14 +18,14 @@
 
         <!-- Styles -->
         <link href="https://fonts.googleapis.com/css?family=Arvo:700|Raleway:100,300,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel="stylesheet" href="{{mix('css/master.css')}}">
         @yield('style')
 
         <!-- Script -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script defer src="https://use.fontawesome.com/releases/v5.6.3/js/all.js" integrity="sha384-EIHISlAOj4zgYieurP0SdoiBYfGJKkgWedPHH4jCzpCXLmzVsw1ouK59MuUtP4a1" crossorigin="anonymous"></script>
     </head>
-    <body>
+    <body class="full-height">
         <div id="app">
             {{--phpinfo()--}}
             @include('inc.mainNav')
@@ -45,12 +45,15 @@
         @yield('script')
         {{--<script src="{{asset('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>--}}
         <script>
-            // $(document).ready(function(){
+            $(document).ready(function(){
             //     if($('#article-ckeditor').length)
             //     {
             //         CKEDITOR.replace( 'article-ckeditor' );
             //     }
-            // });
+                $(document).on('click','.hamburger',function(e){
+                    $(this).toggleClass("is-active");
+                });
+            });
         </script>
     </body>
 </html>
