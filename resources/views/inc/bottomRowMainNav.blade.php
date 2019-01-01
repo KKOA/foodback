@@ -51,25 +51,25 @@
                         <a class="nav-link dropdown-toggle" href="{{route('login')}}" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i> Account
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="aboutDropdown">
-                            <a class="dropdown-item" href="{{ route('login') }}">
+                        <div class="dropdown-menu" aria-labelledby="accountDropdown">
+                            <a class="dropdown-item" href="{{ route('login') }}" id="nav-login">
                                 <i class="fas fa-sign-in-alt"></i> Login
                             </a>
-                            <a class="dropdown-item" href="{{ route('register') }}">
+                            <a class="dropdown-item" href="{{ route('register') }}" id="nav-register">
                                 <i class="fas fa-user-plus"></i> Sign Up
                             </a>
                         </div>
                     </li>
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <span id="accountName">{{ Auth::user()->name }}</span>
+                        <a id="accountDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <i class="fas fa-user-circle"></i> <span id="accountName">{{ Auth::user()->name }}</span>
                             <span class="caret"></span>
                         </a>
     
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
                             <a class="dropdown-item" href="{{route('account')}}">
-                                    Your Account
+                                    <i class="far fa-id-card"></i> Your Account
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class=".d-none">
                                     @csrf
@@ -82,7 +82,7 @@
                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();"
                                                 >
-                                {{ __('Logout') }}
+                                <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                             </a>
     
 
