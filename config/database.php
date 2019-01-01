@@ -1,5 +1,6 @@
 <?php
 
+
 $host= getenv('DB_HOST');
 $database = getenv('DB_DATABASE');
 $username = getenv('DB_USERNAME');
@@ -49,7 +50,7 @@ return [
 
         'sqlite' => [
             'driver' => 'sqlite',
-            'database' => database_path(env('DB_DATABASE', 'database.sqlite')),
+            'database' => database_path(env('DB_DATABASE', 'foodback_dusk.sqlite')),
             'prefix' => '',
         ],
 
