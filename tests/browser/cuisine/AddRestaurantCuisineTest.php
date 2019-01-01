@@ -48,7 +48,7 @@ class AddRestaurantCuisineTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             
             $this->SetUpRestaurants();
-            $browser->visit('/')
+            $browser->visit('/restaurants')
             //Index
             ->assertSeeIn('#restaurant1 .cuisine-value','Not specified');
         });

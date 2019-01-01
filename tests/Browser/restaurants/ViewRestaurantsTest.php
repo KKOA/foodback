@@ -29,7 +29,7 @@ class ViewRestaurantsTest extends DuskTestCase
                     'postcode'      =>  'DH1 3ET'
                 ]
             );
-            $browser->visit('/')
+            $browser->visit('/restaurants')
                     ->assertPathIs('/restaurants')
                     ->assertSee('No restaurants avaliable.')
                     ->assertMissing('#restaurant1') 
@@ -64,7 +64,7 @@ class ViewRestaurantsTest extends DuskTestCase
                 ]
             );
 
-            $browser->visit('/')
+            $browser->visit('/restaurants')
                     ->assertPathIs('/restaurants')
                     ->assertSeeIn('#restaurant'.$restaurant1->id,e($restaurant1->name))
                     ->assertSeeIn('#restaurant'.$restaurant1->id,e($restaurant1->full_address()))
