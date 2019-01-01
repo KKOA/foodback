@@ -22,23 +22,24 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
             //Need create user account
+            $password = 'nisbets';
             $user1 = User::create(
                 [
                     'name'          =>  'Keith',
                     'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
+                    'password'  =>  bcrypt($password)
                 ]
             );
 
             $browser->visit('/')
-                ->click('#nav-login')
-                ->type('email',$user1->email)
-                ->type('password','nisbets')
-                ->click('button[type="submit"]')
-                ->assertSeeIn('#accountName', $user1->name)
+                ->element('#accountDropdown')->click();
+            $browser->element('#nav-login')->click();
+            $this->submitLoginForm($browser,['email'=>$user1->email,'password'=> $password]);
+            $browser->assertSeeIn('#accountName', $user1->name);
                 //Success login message - not yet implement
-                ->assertDontSeeIn('nav', 'Login')
-                ->assertDontSeeIn('nav', 'register')
+            $browser->element('#accountDropdown')->click();
+            $browser->assertDontSeeIn('.main-nav', 'Login')
+                ->assertDontSeeIn('.main-nav', 'register')
                 ->logout()
                 ;
         });
@@ -61,18 +62,37 @@ class LoginTest extends DuskTestCase
                 ]
             );
 
-            $browser->visit('/')
-                ->click('#nav-login')
-                ->type('email',$user1->email)
-                ->type('password','secret')
-                ->click('button[type="submit"]')
-                ->assertSeeIn('form','These credentials do not match our records.')
-                ->assertSeeIn('nav', 'Login')
-                ->assertSeeIn('nav', 'Sign Up')
-                ->assertDontSeeIn('nav', $user1->name)
-                //Error message - not yet implement
-                //Assertion not written
+            $browser->visit('/')->element('#accountDropdown')->click();
+            $browser->element('#nav-login')->click();
+            $this->submitLoginForm($browser,['email'=>$user1->email,'password'=> 'secret']);
+            $browser->assertSeeIn('form','These credentials do not match our records.');
+            $browser->element('#accountDropdown')->click();
+            $browser->assertSeeIn('.main-nav', 'Login')
+                ->assertSeeIn('.main-nav', 'Sign Up')
+                ->assertDontSeeIn('.main-nav', $user1->name)
                 ;
         });
+    }
+
+    /**
+     * fill the form with the second argument details
+     * @return void
+     */
+    public function fillLoginForm(Browser $browser, $userDetails)
+    {
+        foreach($userDetails as $key => $value)
+        {
+            $browser->type($key,$value);
+        }
+    }
+
+    /**
+     * Passes the details to fillLoginForm and click submit button on the form
+     * @return void
+     */
+    public function submitLoginForm(Browser $browser,$userDetails)
+    {
+        $this->fillLoginForm($browser,$userDetails);
+        $browser->click('button[type="submit"]');
     }
 }

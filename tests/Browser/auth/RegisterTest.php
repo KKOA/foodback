@@ -29,6 +29,10 @@ class RegisterTest extends DuskTestCase
 
             // $browser->visit('/')
             $browser->visit('/')
+                // ->click('#accountDropdown')
+                ->clickLink('Account')
+
+                ->waitFor('#nav-register')
                 ->click('#nav-register')
                 ->assertSee('Register')
                 ->type('name',$user1->name)
@@ -54,6 +58,8 @@ class RegisterTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $browser->visit('/')
+                // ->click('#accountDropdown')
+                ->clickLink('Account')
                 ->click('#nav-register')
                 ->assertSee('Register')
                 ->type('name','al')
@@ -67,6 +73,7 @@ class RegisterTest extends DuskTestCase
                 ->assertSeeIn('#registerForm > div:nth-child(3) .invalid-feedback-content','The email must be a valid email address.')
                 ->assertSeeIn('#registerForm > div:nth-child(4) .invalid-feedback-content',
                 'The password confirmation does not match.')
+                ->clickLink('Account')
                 ->assertDontSee('nav', 'Login')
                 ->assertDontSee('nav', 'Sign Up')
                 ;
@@ -91,6 +98,8 @@ class RegisterTest extends DuskTestCase
             );
 
             $browser->visit('/')
+                // ->click('#accountDropdown')
+                ->clickLink('Account')
                 ->click('#nav-register')
                 ->assertSee('Register')
                 ->type('name',$user1->name)
@@ -100,8 +109,9 @@ class RegisterTest extends DuskTestCase
                 ->click('button[type="submit"]')
                     //Assertion not written
                 ->assertSeeIn('#registerForm > div:nth-child(3) .invalid-feedback-content','The email has already been taken.')
-                ->assertSeeIn('nav', 'Login')
-                ->assertSeeIn('nav', 'Sign Up')
+                ->clickLink('Account')
+                ->assertSeeIn('.main-nav', 'Login')
+                ->assertSeeIn('.main-nav', 'Sign Up')
                 ->assertpathIs('/register')
                 ;
         });
