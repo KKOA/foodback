@@ -278,12 +278,15 @@ a[aria-expanded='true']::after {
             box-shadow: 0 2px 4px grey;
             width:100%;
         }
+
         .dropdown-menu.show:hover {
             border: solid 2px grey;
         }
 
         .dropdown-menu .dropdown-item {
             border-bottom:2px solid grey;
+            word-wrap: normal;
+            white-space: normal;
         }
 
         .dropdown-menu .dropdown-item:last-child
