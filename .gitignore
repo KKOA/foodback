@@ -14,12 +14,12 @@ yarn-error.log
 .DS_Store
 
 #Ignore generate css & javascript files in public directory
-/public/js/*
-/public/css/*
+# /public/js/*
+# /public/css/*
 
 # ignore generate json files
-/public/mix-manifest.json
-package-lock.json
+# /public/mix-manifest.json
+# package-lock.json
 
 #ignore generated composer.lock file
-composer.lock 
+# composer.lock 
