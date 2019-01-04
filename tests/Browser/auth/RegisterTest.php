@@ -40,7 +40,7 @@ class RegisterTest extends DuskTestCase
                 ->type('password',$user1->password)
                 ->type('password_confirmation',$user1->password)
                 ->click('button[type="submit"]')
-                ->assertpathIs('/home')
+                ->assertpathIs('/')
                 ->assertSeeIn('#accountName',$user1->name)
                 ->assertDontSeeIn('nav', 'Login')
                 ->assertDontSeeIn('nav', 'Sign Up')
@@ -108,11 +108,11 @@ class RegisterTest extends DuskTestCase
                 ->type('password_confirmation','secret')
                 ->click('button[type="submit"]')
                     //Assertion not written
+                ->assertpathIs('/register')
                 ->assertSeeIn('#registerForm > div:nth-child(3) .invalid-feedback-content','The email has already been taken.')
                 ->clickLink('Account')
                 ->assertSeeIn('.main-nav', 'Login')
                 ->assertSeeIn('.main-nav', 'Sign Up')
-                ->assertpathIs('/register')
                 ;
         });
     }
