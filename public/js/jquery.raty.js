@@ -36,12 +36,32 @@
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -59,34 +79,21 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
+/******/ ({
 
-__webpack_require__(11);
-__webpack_require__(12);
-module.exports = __webpack_require__(13);
-
-
-/***/ }),
-/* 11 */
+/***/ "./resources/assets/js/jquery.raty.js":
+/*!********************************************!*\
+  !*** ./resources/assets/js/jquery.raty.js ***!
+  \********************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /*!
  * jQuery Raty - A Star Rating Plugin
@@ -98,7 +105,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * version: 2.8.0
  *
  */
-
 (function ($) {
   'use strict';
 
@@ -106,13 +112,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     init: function init(options) {
       return this.each(function () {
         this.self = $(this);
-
         methods.destroy.call(this.self);
-
         this.opt = $.extend(true, {}, $.fn.raty.defaults, options, this.self.data());
 
         methods._adjustCallback.call(this);
+
         methods._adjustNumber.call(this);
+
         methods._adjustHints.call(this);
 
         this.opt.score = methods._adjustedScore.call(this, this.opt.score);
@@ -122,6 +128,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         methods._adjustPath.call(this);
+
         methods._createStars.call(this);
 
         if (this.opt.cancel) {
@@ -133,8 +140,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         methods._createScore.call(this);
+
         methods._apply.call(this, this.opt.score);
+
         methods._setTitle.call(this, this.opt.score);
+
         methods._target.call(this, this.opt.score);
 
         if (this.opt.readOnly) {
@@ -146,7 +156,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     _adjustCallback: function _adjustCallback() {
       var options = ['number', 'readOnly', 'score', 'scoreName', 'target', 'path'];
 
@@ -156,7 +165,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       }
     },
-
     _adjustedScore: function _adjustedScore(score) {
       if (!score) {
         return score;
@@ -164,7 +172,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return methods._between(score, 0, this.opt.number);
     },
-
     _adjustHints: function _adjustHints() {
       if (!this.opt.hints) {
         this.opt.hints = [];
@@ -197,11 +204,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       }
     },
-
     _adjustNumber: function _adjustNumber() {
       this.opt.number = methods._between(this.opt.number, 1, this.opt.numberMax);
     },
-
     _adjustPath: function _adjustPath() {
       this.opt.path = this.opt.path || '';
 
@@ -209,21 +214,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.opt.path += '/';
       }
     },
-
     _adjustPrecision: function _adjustPrecision() {
       this.opt.half = true;
     },
-
     _adjustStarType: function _adjustStarType() {
       var replaces = ['cancelOff', 'cancelOn', 'starHalf', 'starOff', 'starOn'];
-
       this.opt.path = '';
 
       for (var i = 0; i < replaces.length; i++) {
         this.opt[replaces[i]] = this.opt[replaces[i]].replace('.', '-');
       }
     },
-
     _apply: function _apply(score) {
       methods._fill.call(this, score);
 
@@ -235,26 +236,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         methods._roundStars.call(this, score);
       }
     },
-
     _between: function _between(value, min, max) {
       return Math.min(Math.max(parseFloat(value), min), max);
     },
-
     _binds: function _binds() {
       if (this.cancel) {
         methods._bindOverCancel.call(this);
+
         methods._bindClickCancel.call(this);
+
         methods._bindOutCancel.call(this);
       }
 
       methods._bindOver.call(this);
+
       methods._bindClick.call(this);
+
       methods._bindOut.call(this);
     },
-
     _bindClick: function _bindClick() {
       var that = this;
-
       that.stars.on('click.raty', function (evt) {
         var execute = true,
             score = that.opt.half || that.opt.precision ? that.self.data('score') : this.alt || $(this).data('alt');
@@ -272,10 +273,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     _bindClickCancel: function _bindClickCancel() {
       var that = this;
-
       that.cancel.on('click.raty', function (evt) {
         that.score.removeAttr('value');
 
@@ -284,15 +283,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     _bindOut: function _bindOut() {
       var that = this;
-
       that.self.on('mouseleave.raty', function (evt) {
         var score = +that.score.val() || undefined;
 
         methods._apply.call(that, score);
+
         methods._target.call(that, score, evt);
+
         methods._resetTitle.call(that);
 
         if (that.opt.mouseout) {
@@ -300,10 +299,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     _bindOutCancel: function _bindOutCancel() {
       var that = this;
-
       that.cancel.on('mouseleave.raty', function (evt) {
         var icon = that.opt.cancelOff;
 
@@ -315,16 +312,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         if (that.opt.mouseout) {
           var score = +that.score.val() || undefined;
-
           that.opt.mouseout.call(that, score, evt);
         }
       });
     },
-
     _bindOver: function _bindOver() {
       var that = this,
           action = that.opt.half ? 'mousemove.raty' : 'mouseover.raty';
-
       that.stars.on(action, function (evt) {
         var score = methods._getScoreByPosition.call(that, evt, this);
 
@@ -332,6 +326,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         if (that.opt.half) {
           methods._roundStars.call(that, score, evt);
+
           methods._setTitle.call(that, score, evt);
 
           that.self.data('score', score);
@@ -344,10 +339,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     _bindOverCancel: function _bindOverCancel() {
       var that = this;
-
       that.cancel.on('mouseover.raty', function (evt) {
         var starOff = that.opt.path + that.opt.starOff,
             icon = that.opt.cancelOn;
@@ -356,11 +349,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           that.stars.attr('src', starOff);
         } else {
           icon = that.opt.cancelClass + ' ' + icon;
-
           that.stars.attr('class', starOff);
         }
 
         methods._setIcon.call(that, this, icon);
+
         methods._target.call(that, null, evt);
 
         if (that.opt.mouseover) {
@@ -368,17 +361,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     _buildScoreField: function _buildScoreField() {
-      return $('<input />', { name: this.opt.scoreName, type: 'hidden' }).appendTo(this);
+      return $('<input />', {
+        name: this.opt.scoreName,
+        type: 'hidden'
+      }).appendTo(this);
     },
-
     _createCancel: function _createCancel() {
       var icon = this.opt.path + this.opt.cancelOff,
-          cancel = $('<' + this.opt.starType + ' />', { title: this.opt.cancelHint, 'class': this.opt.cancelClass });
+          cancel = $('<' + this.opt.starType + ' />', {
+        title: this.opt.cancelHint,
+        'class': this.opt.cancelClass
+      });
 
       if (this.opt.starType === 'img') {
-        cancel.attr({ src: icon, alt: 'x' });
+        cancel.attr({
+          src: icon,
+          alt: 'x'
+        });
       } else {
         // TODO: use $.data
         cancel.attr('data-alt', 'x').addClass(icon);
@@ -392,24 +392,26 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       this.cancel = cancel;
     },
-
     _createScore: function _createScore() {
       var score = $(this.opt.targetScore);
-
       this.score = score.length ? score : methods._buildScoreField.call(this);
     },
-
     _createStars: function _createStars() {
       for (var i = 1; i <= this.opt.number; i++) {
         var name = methods._nameForIndex.call(this, i),
-            attrs = { alt: i, src: this.opt.path + this.opt[name] };
+            attrs = {
+          alt: i,
+          src: this.opt.path + this.opt[name]
+        };
 
         if (this.opt.starType !== 'img') {
-          attrs = { 'data-alt': i, 'class': attrs.src }; // TODO: use $.data.
+          attrs = {
+            'data-alt': i,
+            'class': attrs.src
+          }; // TODO: use $.data.
         }
 
         attrs.title = methods._getHint.call(this, i);
-
         $('<' + this.opt.starType + ' />', attrs).appendTo(this);
 
         if (this.opt.space) {
@@ -419,13 +421,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       this.stars = this.self.children(this.opt.starType);
     },
-
     _error: function _error(message) {
       $(this).text(message);
-
       $.error(message);
     },
-
     _fill: function _fill(score) {
       var hash = 0;
 
@@ -436,7 +435,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         if (this.opt.iconRange && this.opt.iconRange.length > hash) {
           var irange = this.opt.iconRange[hash];
-
           icon = methods._getRangeIcon.call(this, irange, turnOn);
 
           if (i <= irange.range) {
@@ -453,7 +451,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       }
     },
-
     _getFirstDecimal: function _getFirstDecimal(number) {
       var decimal = number.toString().split('.')[1],
           result = 0;
@@ -468,11 +465,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return result;
     },
-
     _getRangeIcon: function _getRangeIcon(irange, turnOn) {
       return turnOn ? irange.on || this.opt.starOn : irange.off || this.opt.starOff;
     },
-
     _getScoreByPosition: function _getScoreByPosition(evt, icon) {
       var score = parseInt(icon.alt || icon.getAttribute('data-alt'), 10);
 
@@ -485,7 +480,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return score;
     },
-
     _getHint: function _getHint(score, evt) {
       if (score !== 0 && !score) {
         return this.opt.noRatedMsg;
@@ -505,13 +499,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         hint = group[decimal];
       } else if (this.opt.halfShow || this.opt.half) {
         decimal = set && decimal === 0 ? 1 : decimal > 5 ? 1 : 0;
-
         hint = group[decimal];
       }
 
       return hint === '' ? '' : hint || score;
     },
-
     _getWidth: function _getWidth() {
       var width = this.stars[0].width || parseFloat(this.stars.eq(0).css('font-size'));
 
@@ -521,13 +513,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return width;
     },
-
     _lock: function _lock() {
       var hint = methods._getHint.call(this, this.score.val());
 
       this.style.cursor = '';
       this.title = hint;
-
       this.score.prop('readonly', true);
       this.stars.prop('title', hint);
 
@@ -537,17 +527,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       this.self.data('readonly', true);
     },
-
     _nameForIndex: function _nameForIndex(i) {
       return this.opt.score && this.opt.score >= i ? 'starOn' : 'starOff';
     },
-
     _resetTitle: function _resetTitle() {
       for (var i = 0; i < this.opt.number; i++) {
         this.stars[i].title = methods._getHint.call(this, i + 1);
       }
     },
-
     _roundHalfScore: function _roundHalfScore(score) {
       var integer = parseInt(score, 10),
           decimal = methods._getFirstDecimal.call(this, score);
@@ -558,7 +545,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       return integer + decimal;
     },
-
     _roundStars: function _roundStars(score, evt) {
       var decimal = (score % 1).toFixed(2),
           name;
@@ -584,12 +570,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         methods._setIcon.call(this, star, icon);
       } // Full down: [x.00 .. x.25]
-    },
 
+    },
     _setIcon: function _setIcon(star, icon) {
       star[this.opt.starType === 'img' ? 'src' : 'className'] = this.opt.path + icon;
     },
-
     _setTarget: function _setTarget(target, score) {
       if (score) {
         score = this.opt.targetFormat.toString().replace('{score}', score);
@@ -601,16 +586,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         target.html(score);
       }
     },
-
     _setTitle: function _setTitle(score, evt) {
       if (score) {
         var integer = parseInt(Math.ceil(score), 10),
             star = this.stars[integer - 1];
-
         star.title = methods._getHint.call(this, score, evt);
       }
     },
-
     _target: function _target(score, evt) {
       if (this.opt.target) {
         var target = $(this.opt.target);
@@ -642,17 +624,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         methods._setTarget.call(this, target, score);
       }
     },
-
     _turnOn: function _turnOn(i, score) {
       return this.opt.single ? i === score : i <= score;
     },
-
     _unlock: function _unlock() {
       this.style.cursor = 'pointer';
       this.removeAttribute('title');
-
       this.score.removeAttr('readonly');
-
       this.self.data('readonly', false);
 
       for (var i = 0; i < this.opt.number; i++) {
@@ -663,19 +641,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.cancel.css('display', '');
       }
     },
-
     cancel: function cancel(click) {
       return this.each(function () {
         var self = $(this);
 
         if (self.data('readonly') !== true) {
           methods[click ? 'click' : 'score'].call(self, null);
-
           this.score.removeAttr('value');
         }
       });
     },
-
     click: function click(score) {
       return this.each(function () {
         if ($(this).data('readonly') !== true) {
@@ -691,33 +666,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     destroy: function destroy() {
       return this.each(function () {
         var self = $(this),
             raw = self.data('raw');
 
         if (raw) {
-          self.off('.raty').empty().css({ cursor: raw.style.cursor }).removeData('readonly');
+          self.off('.raty').empty().css({
+            cursor: raw.style.cursor
+          }).removeData('readonly');
         } else {
           self.data('raw', self.clone()[0]);
         }
       });
     },
-
     getScore: function getScore() {
       var score = [],
           value;
-
       this.each(function () {
         value = this.score.val();
-
         score.push(value ? +value : undefined);
       });
-
       return score.length > 1 ? score : score[0];
     },
-
     move: function move(score) {
       return this.each(function () {
         var integer = parseInt(score, 10),
@@ -732,16 +703,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             steps = width / 10,
             star = $(this.stars[integer]),
             percent = star.offset().left + steps * decimal,
-            evt = $.Event('mousemove', { pageX: percent });
+            evt = $.Event('mousemove', {
+          pageX: percent
+        });
 
         this.move = true;
-
         star.trigger(evt);
-
         this.move = false;
       });
     },
-
     readOnly: function readOnly(readonly) {
       return this.each(function () {
         var self = $(this);
@@ -753,6 +723,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             methods._lock.call(this);
           } else {
             methods._binds.call(this);
+
             methods._unlock.call(this);
           }
 
@@ -760,29 +731,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       });
     },
-
     reload: function reload() {
       return methods.set.call(this, {});
     },
-
     score: function score() {
       var self = $(this);
-
       return arguments.length ? methods.setScore.apply(self, arguments) : methods.getScore.call(self);
     },
-
     set: function set(options) {
       return this.each(function () {
         $(this).raty($.extend({}, this.opt, options));
       });
     },
-
     setScore: function setScore(score) {
       return this.each(function () {
         if ($(this).data('readonly') !== true) {
           score = methods._adjustedScore.call(this, score);
 
           methods._apply.call(this, score);
+
           methods._target.call(this, score);
         }
       });
@@ -792,7 +759,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   $.fn.raty = function (method) {
     if (methods[method]) {
       return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-    } else if ((typeof method === 'undefined' ? 'undefined' : _typeof(method)) === 'object' || !method) {
+    } else if (_typeof(method) === 'object' || !method) {
       return methods.init.apply(this, arguments);
     } else {
       $.error('Method ' + method + ' does not exist!');
@@ -819,7 +786,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     path: undefined,
     precision: false,
     readOnly: false,
-    round: { down: 0.25, full: 0.6, up: 0.76 },
+    round: {
+      down: 0.25,
+      full: 0.6,
+      up: 0.76
+    },
     score: undefined,
     scoreName: 'score',
     single: false,
@@ -838,16 +809,41 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })(jQuery);
 
 /***/ }),
-/* 12 */
+
+/***/ "./resources/assets/sass/master.scss":
+/*!*******************************************!*\
+  !*** ./resources/assets/sass/master.scss ***!
+  \*******************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 13 */
+
+/***/ "./resources/assets/sass/vendor/jquery.raty.scss":
+/*!*******************************************************!*\
+  !*** ./resources/assets/sass/vendor/jquery.raty.scss ***!
+  \*******************************************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
+/***/ }),
+
+/***/ 0:
+/*!**************************************************************************************************************************************!*\
+  !*** multi ./resources/assets/js/jquery.raty.js ./resources/assets/sass/master.scss ./resources/assets/sass/vendor/jquery.raty.scss ***!
+  \**************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! C:\Users\keith\desktop\mytest\foodback\resources\assets\js\jquery.raty.js */"./resources/assets/js/jquery.raty.js");
+__webpack_require__(/*! C:\Users\keith\desktop\mytest\foodback\resources\assets\sass\master.scss */"./resources/assets/sass/master.scss");
+module.exports = __webpack_require__(/*! C:\Users\keith\desktop\mytest\foodback\resources\assets\sass\vendor\jquery.raty.scss */"./resources/assets/sass/vendor/jquery.raty.scss");
+
+
 /***/ })
-/******/ ]);
+
+/******/ });
