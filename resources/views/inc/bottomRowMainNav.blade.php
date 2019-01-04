@@ -78,10 +78,7 @@
                                         <input type="hidden" name="previous" value="{{ URL::full() }}">
                                     {{--  --}}
                             </form>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();"
-                                                >
+                            <a class="dropdown-item" href="{{ route('logout') }}" id="nav-logout">
                                 <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
                             </a>
     
@@ -93,3 +90,15 @@
         </div>
     </div>
 </nav>
+<?php 
+
+    $modal =[
+        'id'=>'confirmLogout',
+        'HeaderText'=>'Logout Confirmation',
+        'BodyText'=>'Are you sure you want to logout?',
+        'cancelBtn'=>'Cancel',
+        'confirmationBtn'=>'Yes'
+    ];
+
+?>
+@include('inc.logoutModal',['modal'=>$modal])
