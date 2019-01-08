@@ -42,6 +42,20 @@
                             </div>
                         </form>
                     </div>
+                    <div class="card-footer">
+                        <p class="text-center">
+                            <a class="text-center font-weight-bold" href="{{ route('login') }}">
+                            Just remembered? Log in here    
+                            {{-- {{ __('Forgot Your Password?') }} --}}
+                            </a>
+                        </p>
+                        <p class="text-center mb-0">
+                            <a class="text-center font-weight-bold" href="{{ route('register') }}">
+                                Do not have an account? Register here 
+                                {{-- {{ __('Forgot Your Password?') }} --}}
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
