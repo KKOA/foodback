@@ -13,6 +13,16 @@ use App\Rules\NullOrGreaterThanMinLength as NullOrGreaterThanMinLength;
 
 class RestaurantController extends Controller
 {
+    
+    /** 
+     * Restaurant Constructor
+     * @return void
+    */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index','show']]);
+    }
+    
     /**
      * Display a listing of the resource.
      *
