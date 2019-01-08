@@ -48,14 +48,27 @@
                 </li>
                 @guest
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{route('login')}}" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php 
+
+                        $registerUrl = route('register') . '?previous=' . Request::fullUrl();
+                        $loginUrl = route('login') . '?previous=' . Request::fullUrl();
+
+                        if(preg_match('(\/login|\/register|\/password/reset)',URL::current()))
+                        {
+                            $registerUrl = route('register');
+                            $loginUrl = route('login');
+                        }
+    
+                        ?>
+                        <a class="nav-link dropdown-toggle" href="{{$loginUrl}}" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i> Account
                         </a>
                         <div class="dropdown-menu" aria-labelledby="accountDropdown">
-                            <a class="dropdown-item" href="{{ route('login') }}" id="nav-login">
+                            <a class="dropdown-item" href="{{ $loginUrl }}" id="nav-login">        
                                 <i class="fas fa-sign-in-alt"></i> Login
                             </a>
-                            <a class="dropdown-item" href="{{ route('register') }}" id="nav-register">
+                            
+                            <a class="dropdown-item" href="{{ $registerUrl }}" id="nav-register">
                                 <i class="fas fa-user-plus"></i> Sign Up
                             </a>
                         </div>
