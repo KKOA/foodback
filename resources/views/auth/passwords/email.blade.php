@@ -43,14 +43,29 @@
                         </form>
                     </div>
                     <div class="card-footer">
+                            <?php 
+                            $loginUrl = route('login');
+                            $registerUrl = route('register');
+                            $previousUrl="";
+                            if (Request::has('previous'))
+                                $previousUrl = old('previous') ?? Request::get('previous');
+                            else 
+                                $previousUrl = old('previous') ?? URL::previous();
+
+                            if((stripos($previousUrl,'/login'))||(stripos($previousUrl,'/register')))
+                                $previousUrl ="";
+                        ?>
+                        
+                        
                         <p class="text-center">
-                            <a class="text-center font-weight-bold" href="{{ route('login') }}">
+                            {{-- <a class="text-center font-weight-bold" href="{{ route('login') }}"> --}}
+                            <a href="{{$loginUrl . ($previousUrl ? '?previous='.$previousUrl : '')}} " class="login-link text-center font-weight-bold">
                             Just remembered? Log in here    
                             {{-- {{ __('Forgot Your Password?') }} --}}
                             </a>
                         </p>
                         <p class="text-center mb-0">
-                            <a class="text-center font-weight-bold" href="{{ route('register') }}">
+                            <a class="text-center font-weight-bold" href="{{$registerUrl . ($previousUrl ? '?previous='.$previousUrl : '')}}">
                                 Do not have an account? Register here 
                                 {{-- {{ __('Forgot Your Password?') }} --}}
                             </a>
