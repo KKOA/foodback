@@ -36,9 +36,9 @@
                                 </a>
                             </div>
                             <div class="col-12 col-sm-6 col-lg-4 my-2">
-                                    <a class="btn btn-twitter btn-block" >
-                                        <i class="fab fa-twitter"></i> Twitter
-                                    </a>
+                                <a class="btn btn-twitter btn-block" >
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </a>
                             </div>
                         </div>
 
@@ -70,7 +70,6 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                                 <div class="col-md-6">
-                                    
                                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                     @if ($errors->has('email'))
@@ -88,7 +87,6 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                                 <div class="col-md-6">
-                                    
                                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                                     <small> <span style="color:#25406F;"><i class='fas fa-info-circle fa-lg'></i></span> Min 6 characters, case sensitive </small>
                                     @if ($errors->has('password'))
@@ -110,24 +108,20 @@
                                 </div>
                             </div>
 
-                            {{--  --}}
-                            {{-- Url Previous : {{URL::previous()}}<br>
-                            Url Currentd : {{URL::full()}}<br>
-                            {{URL::previous() ===  URL::full() }}<br>
-                            Root Url {{URL::route('root')}}<br>
-                            Root Url {{URL::to('/')}}<br> --}}
-                            <div class="form-group">
-                                @if (Request::has('previous'))
-                                    <input type="hidden" name="previous" value="{{ Request::get('previous') }}">
-                                    wtf
-                                @elseif(URL::previous() === URL::full())
-                                    <input type="hidden" name="previous" value="{{ URL::route('root') }}">
-                                @else
-                                    <input type="hidden" name="previous" value="{{ URL::previous() }}">
-                                @endif
+                            <?php 
+                                $loginUrl = route('login');
+                                $previousUrl="";
+                                if (Request::has('previous'))
+                                    $previousUrl = old('previous') ?? Request::get('previous');
+                                else 
+                                    $previousUrl = old('previous') ?? URL::previous();
 
-                                {{-- <input type="hidden" name="previous" value="{{ URL::full() }}"> --}}
-                                {{-- url()->full(); --}}
+                                if((stripos($previousUrl,'/login'))||(stripos($previousUrl,'/register')))
+                                    $previousUrl ="";
+                            ?>
+
+                            <div class="form-group">
+                                <input type="hidden" name="previous" value="{{ $previousUrl }}" class="form-control">
                             </div>
                             {{--  --}}
                             
@@ -140,12 +134,12 @@
                                 </div>
                             </div>
                         </form>
-
-
                     </div>
                     <div class="card-footer">
                         <p class="text-center">Already have an account already?
-                            <a href="{{route('login')}}" class="login-link">Log in here</a>
+                            <a href="{{$loginUrl . ($previousUrl ? '?previous='.$previousUrl : '')}} " class="login-link">
+                                Log in here
+                            </a>
                         </p>
                     </div>
                 </div>

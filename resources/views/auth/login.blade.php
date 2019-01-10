@@ -10,9 +10,23 @@
                 <div class="card-content">
                         <div class="card-header text-center"><h2>{{ __('Login') }}</h2></div>
                         <div class="card-body">
-
                             <p class="text-center">New to FoodBack ?
-                            <a href="{{route('register')}}" class="register-link"> Register here</a>
+                            <?php 
+                            $registerUrl = route('register');
+
+                            $previousUrl="";
+                            if (Request::has('previous'))
+                                $previousUrl = old('previous') ?? Request::get('previous');
+                            else 
+                                $previousUrl = old('previous') ?? URL::previous();
+
+                            if((stripos($previousUrl,'/login'))||(stripos($previousUrl,'/register')))
+                                $previousUrl ="";
+                            ?>
+
+                            <a href="{{$registerUrl . ($previousUrl ? '?previous='.$previousUrl : '')}}" class="register-link">
+                                Register here
+                            </a>
                             </p>
                             <p class="text-center">
                                 By logging in, you agree to Foodback’s
@@ -45,6 +59,12 @@
 
                             <form method="POST" action="{{ route('login') }}" id="loginForm">
                                 @csrf
+
+                                {{--  --}}
+                                <div class="form-group">
+                                    <input type="hidden" name="previous" value="{{ $previousUrl }}" class="form-control">
+                                </div>
+                                {{--  --}}
 
                                 <div class="form-group row">
                                     <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -126,7 +146,11 @@
                         </div>
                         <div class="card-footer">
                             <p class="text-center mb-0">
-                                <a class="text-center font-weight-bold" href="{{ route('password.request') }}">
+                                <?php 
+                                    $forgottonPassUrl = route('password.request');
+                                ?>
+                                {{-- <a class="text-center font-weight-bold" href="{{ route('password.request') }}"> --}}
+                                <a href="{{$forgottonPassUrl . ($previousUrl ? '?previous='.$previousUrl : '')}}" class="text-center font-weight-bold ">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             </p>
