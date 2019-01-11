@@ -17,6 +17,11 @@ class CreateRestaurantsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
+            $table->string('address1');
+            $table->string('address2')->nullable();
+            $table->string('city');
+            $table->string('county')->nullable();
+            $table->string('postcode');
             $table->timestamps();
         });
     }
