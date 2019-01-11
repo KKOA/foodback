@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -35,9 +36,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('guest');
+        $this->request = $request;
     }
 
     /**
@@ -68,5 +70,22 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * Redirect users to the appropriate page after successful registering an account.
+     * 
+     * @return string
+     */
+
+    public function redirectTo()
+    {
+        
+        if ($this->request->has('previous')) {
+            // $this->redirectTo = $this->request->get('previous');
+            $newUrl = $this->request->get('previous');
+        }
+
+        return $newUrl ?? $redirectTo;
     }
 }

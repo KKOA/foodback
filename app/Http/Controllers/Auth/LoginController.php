@@ -42,13 +42,28 @@ class LoginController extends Controller
     }
 
     /**
+     * Redirect users to the appropriate page after successful login.
+     * 
+     * @return string
+     */
+
+    public function redirectTo()
+    {
+        
+        if ($this->request->has('previous')) {
+            // $this->redirectTo = $this->request->get('previous');
+            $newUrl = $this->request->get('previous');
+        }
+
+        return $newUrl ?? $redirectTo;
+    }
+
+        /**
      * Log the user out of the application. User is redirect back to previous page, 
      * if the page is not accessibile by guest then user is sent to login page.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
-
     public function logout(Request $request)
     {
         $this->guard()->logout();
