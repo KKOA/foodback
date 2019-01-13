@@ -2,18 +2,18 @@
 
 namespace Tests\Browser\auth;
 
+//Models
+use App\User as User;
+
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-
-use App\User as User;
 
 class RegisterTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-
-        /**
+    /**
      * A user can create an account.
      * @test
      * @return void
@@ -27,7 +27,6 @@ class RegisterTest extends DuskTestCase
             $user1->email = 'keith@test.com';
             $user1->password = 'secret';
 
-            // $browser->visit('/')
             $browser->visit('/')
                 // ->click('#accountDropdown')
                 ->clickLink('Account')
@@ -82,11 +81,11 @@ class RegisterTest extends DuskTestCase
     }
 
     /**
-     * Check user cannot create an account with exist account credintials
+     * Check user cannot create an account with exist account credentials
      * @test
      * @return void
      */
-    public function user_cannot_register_an_account_with_exist_account_credintials()
+    public function user_cannot_register_an_account_with_exist_account_credentials()
     {
         $this->browse(function (Browser $browser) {
             $user1 = User::create(

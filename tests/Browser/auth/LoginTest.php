@@ -2,11 +2,12 @@
 
 namespace Tests\Browser\auth;
 
+//Models
+use App\User as User;
+
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-
-use App\User as User;
 
 class LoginTest extends DuskTestCase
 {
@@ -46,7 +47,7 @@ class LoginTest extends DuskTestCase
     }
 
     /**
-     * Test as a user cannot log in into their account with incorrect credintials.
+     * Test as a user cannot log in into their account with incorrect credentials.
      * @test
      * @return void
      */
