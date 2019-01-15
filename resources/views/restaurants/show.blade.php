@@ -91,6 +91,7 @@
                 </div>
             </div>
 
+            @if(Auth::check())
             <div class="row mt-2 mb-2">
                 <div class='col-12 col-md-6 col-xl-5'>
                     <a href='{{route('restaurants.edit',[$restaurant->id])}}' id='edit-restaurant' class='btn btn-primary' title='Modify current restaurant'>
@@ -105,6 +106,7 @@
                     {!!Form::close()!!}
                 </div>
             </div>
+            @endif
             <hr>
             {{--  Reviews --}}
             @include('inc.reviews')
