@@ -4,28 +4,40 @@ namespace Tests\Browser;
 
 // use Faker\Generator as Faker;
 
+//Models
 use App\Restaurant as Restaurant;
+use App\User as User;
+
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-
 class CreateRestaurantTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+    
     /**
-     * A Dusk test example.
+     * Test user cannot create a restaurant with invalid details 
      *
      * @return void
      */
-
-    use DatabaseMigrations;
-
     public function test_user_cannot_create_restaurant_with_invalid_details()
     {
         
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
             
+            //users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+
+            //restaurants
             $restaurant1 = Restaurant::create(
                 [
                     'name'          => 'Benny',
@@ -49,7 +61,8 @@ class CreateRestaurantTest extends DuskTestCase
             );
 
             //visit create page
-            $browser->visit('/restaurants/create')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/create')
                     ->type('description',$restaurant2->description)
                     ->type('address2',$restaurant2->address2)
                     ->type('city',$restaurant2->city)
@@ -73,14 +86,49 @@ class CreateRestaurantTest extends DuskTestCase
                     ->assertMissing('#restaurant2')
                     ->assertDontSee($restaurant2->name)
                     ->assertDontSee($restaurant2->full_address())
+                    ->logout()
             ;
         });
     }
 
+    /**
+     * Test guest cannot create a restaurant
+     *
+     * @return void
+     */
+    public function test_guest_cannot_create_restaurant()
+    {
+        
+        $this->browse(function (Browser $browser) {
+            $faker = \Faker\Factory::create();
+            
+            //visit create page
+            $browser->visit('/restaurants/create')
+                    ->assertSeeIn('#loginCard','Login with')
+                    ->assertDontSeeIn('main','Create restaurant ')
+                    ;
+        });
+    }
+
+    /**
+     * Test user can create a restaurant with valid details.
+     *
+     * @return void
+     */
     public function test_user_can_create_restaurant_with_valid_details()
     {
         $this->browse(function (Browser $browser) {
 
+            //users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+            //restaurants
             $restaurant1 = Restaurant::create(
                 [
                     'name'          => 'Benny',
@@ -103,7 +151,8 @@ class CreateRestaurantTest extends DuskTestCase
             );
 
             //visit create page
-            $browser->visit('/restaurants/create')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/create')
                     ->type('name', $restaurant2->name)
                     ->type('description',$restaurant2->description)
                     ->type('address1',$restaurant2->address1)
@@ -115,7 +164,8 @@ class CreateRestaurantTest extends DuskTestCase
                     ->assertDontSee('The description must be at least 3 characters.')
                     ->assertSee($restaurant2->name ." restaurant created")
                     ->assertSee($restaurant2->description)
-                    ->assertSee($restaurant2->full_address());
+                    ->assertSee($restaurant2->full_address())
+                    ;
             //Visit homepage
             $browser->visit('/restaurants')
                     ->assertSeeIn('.total-restaurants',2)
@@ -125,13 +175,30 @@ class CreateRestaurantTest extends DuskTestCase
                     ->assertPresent('#restaurant2')
                     ->assertSeeIn('#restaurant2',$restaurant2->name)
                     ->assertSeeIn('#restaurant2',$restaurant2->full_address())
+                    ->logout()
                     ;
         });
     }
+
+    /**
+     * Test user cannot create a restaurant with a name that has already been taken.
+     *
+     * @return void
+     */
     public function test_user_cannot_create_restaurant_with_non_unquie_name()
     {
         $this->browse(function (Browser $browser) {
-            //Create Restaurant
+            //users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+
+            //restaurants
             $restaurant1 = Restaurant::create(
                 [
                     'name'          =>  'Bear & Billet',
@@ -154,7 +221,8 @@ class CreateRestaurantTest extends DuskTestCase
             );
 
             //visit create page
-            $browser->visit('/restaurants/create')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/create')
                     ->type('name', $restaurant2->name)
                     ->type('description',$restaurant2->desc)
                     ->type('address1',$restaurant2->address1)
@@ -167,12 +235,38 @@ class CreateRestaurantTest extends DuskTestCase
                     ;
             //Visit homepage
             $browser->visit('/restaurants')
-            ->assertPresent('#restaurant1')
-            ->assertSeeIn('#restaurant1',$restaurant1->name)
-            ->assertSeeIn('.total-restaurants',1)
-            ->assertMissing('#restaurant2')
-            ->assertDontSee($restaurant2->full_address())
+                    ->assertPresent('#restaurant1')
+                    ->assertSeeIn('#restaurant1',$restaurant1->name)
+                    ->assertSeeIn('.total-restaurants',1)
+                    ->assertMissing('#restaurant2')
+                    ->assertDontSee($restaurant2->full_address())
+                    ->logout()
             ;
         });
     }
+
+    public function fillForm(Browser $browser, $restaurantDetails)
+    {
+        $browser->type('name', $restaurantDetails->name)
+            ->type('description',$restaurantDetails->description)
+            ->type('address1',$restaurantDetails->address1)
+            ->type('city',$restaurantDetails->city)
+            ->type('county',$restaurantDetails->county)
+            ->type('postcode',$restaurantDetails->postcode)
+            ;
+    }
+
+    public function submitForm(Browser $browser,$restaurantDetails)
+    {
+        $this->fillForm($browser,$restaurantDetails);
+        $browser->click('button[type="submit"]');
+    }
+
+    public function generateUser()
+    {
+        
+        return User::all();
+    }
+
+
 }

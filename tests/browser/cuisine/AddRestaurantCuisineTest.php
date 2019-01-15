@@ -4,6 +4,7 @@ namespace Tests\Browser\cuisine;
 
 use App\Restaurant as Restaurant;
 use App\Cuisine as Cuisine;
+use App\User as User;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
@@ -42,19 +43,21 @@ class AddRestaurantCuisineTest extends DuskTestCase
             ]
         );
     }
+
     
-    public function test_user_can_see_restaurant_default_cuisine_type()
-    {
-        $this->browse(function (Browser $browser) {
+    
+    // public function test_user_can_see_restaurant_default_cuisine_type()
+    // {
+    //     $this->browse(function (Browser $browser) {
             
-            $this->SetUpRestaurants();
-            $browser->visit('/restaurants')
-            //Index
-            ->assertSeeIn('#restaurant1 .cuisine-value','Not specified');
-        });
+    //         $this->SetUpRestaurants();
+    //         $browser->visit('/restaurants')
+    //         //Index
+    //         ->assertSeeIn('#restaurant1 .cuisine-value','Not specified');
+    //     });
 
         
-    }
+    // }
 
     public function test_user_can_create_restaurant_with_a_cuisine_type()
     {
@@ -68,6 +71,17 @@ class AddRestaurantCuisineTest extends DuskTestCase
             // Restaurants
             $this->SetUpRestaurants();
 
+            //Users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+
+
             $restaurant2 = new Restaurant(
                 [
                     'name'          =>  'bebo',
@@ -79,7 +93,8 @@ class AddRestaurantCuisineTest extends DuskTestCase
                 ]
             );
 
-            $browser->visit('/restaurants/create')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/create')
                     ->type('name', $restaurant2->name)
                     ->type('description',$restaurant2->description)
                     ->type('address1',$restaurant2->address1)
@@ -98,6 +113,7 @@ class AddRestaurantCuisineTest extends DuskTestCase
                     ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
+                    ->logout()
                     ;
         });
 
@@ -113,6 +129,16 @@ class AddRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
+            //Users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+
             // Restaurants
             $this->SetUpRestaurants();
             
@@ -127,7 +153,8 @@ class AddRestaurantCuisineTest extends DuskTestCase
                 ]
             );
 
-            $browser->visit('/restaurants/create')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/create')
                     ->type('name', $restaurant2->name)
                     ->type('description',$restaurant2->description)
                     ->type('address1',$restaurant2->address1)
@@ -146,7 +173,9 @@ class AddRestaurantCuisineTest extends DuskTestCase
             ->assertSeeIn('#restaurant1 .cuisine-value','Not specified')
             ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
             ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
-            ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name);
+            ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
+            ->logout()
+            ;
         });
     }
 }

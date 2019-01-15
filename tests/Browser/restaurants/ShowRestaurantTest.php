@@ -2,26 +2,25 @@
 
 namespace Tests\Browser;
 
+//Models
 use App\Restaurant as Restaurant;
+
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ShowRestaurantTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+
     /**
-     * A Dusk test example.
+     * Test guest can view restaurant
      *
      * @return void
-     */
-
-    use DatabaseMigrations;
-    
+     */  
     public function test_guest_can_view_restaurant()
     {
         $this->browse(function (Browser $browser) {
-            //$restaurant1 = Restaurant::create(['name' => 'Benny','description' => 'Benny Text']);
-            //$restaurant2 = Restaurant::create(['name' => 'Jimmy','description' => 'Jimmy Text']);
 
             $restaurant1 = Restaurant::create(
                 [
@@ -47,11 +46,11 @@ class ShowRestaurantTest extends DuskTestCase
                 ]
             );
 
-
             $browser->visit('/restaurants/'.$restaurant1->id)
                     ->assertSee($restaurant1->name)
                     ->assertSee($restaurant1->description)
                     ->assertSee($restaurant1->full_address())
+                    ->assertSeeIn('.cuisine-value','Not specified')
                     ->assertDontSee($restaurant2->name)
                     ->assertSeeLink('View Restaurant');
         });

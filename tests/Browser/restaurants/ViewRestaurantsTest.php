@@ -2,21 +2,24 @@
 
 namespace Tests\Browser;
 
+//Models
 use App\Restaurant as Restaurant;
+use App\User as User;
+
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ViewRestaurantsTest extends DuskTestCase
 {
+    
+    use DatabaseMigrations;
+
     /**
-     * A Dusk test example.
+     * Test the guest can see the appropriate  message when no restaurants exist
      *
      * @return void
      */
-
-    use DatabaseMigrations;
-
     public function test_guest_can_see_no_avaliable_restaurants()
     {
         $this->browse(function (Browser $browser) {
@@ -39,6 +42,12 @@ class ViewRestaurantsTest extends DuskTestCase
         });
     }
 
+
+    /**
+     * Test the guest can see the appropriate message when restaurants exist
+     *
+     * @return void
+     */
     public function test_guest_can_see_avaliable_restaurants()
     {
         $this->browse(function (Browser $browser) {
@@ -68,8 +77,10 @@ class ViewRestaurantsTest extends DuskTestCase
                     ->assertPathIs('/restaurants')
                     ->assertSeeIn('#restaurant'.$restaurant1->id,e($restaurant1->name))
                     ->assertSeeIn('#restaurant'.$restaurant1->id,e($restaurant1->full_address()))
+                    ->assertSeeIn('#restaurant1 .cuisine-value','Not specified')
                     ->assertSeeIn('#restaurant'.$restaurant2->id,e($restaurant2->name))
                     ->assertSeeIn('#restaurant'.$restaurant2->id,e($restaurant2->full_address()))
+                    ->assertSeeIn('#restaurant2 .cuisine-value','Not specified')
                     ->assertSeeIn('.total-restaurants',2)
                     ->assertDontSee('No restaurants avaliable.')
                     ;

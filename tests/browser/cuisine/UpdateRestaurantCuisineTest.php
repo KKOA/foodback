@@ -4,6 +4,7 @@ namespace Tests\Browser\cuisine;
 
 use App\Restaurant as Restaurant;
 use App\Cuisine as Cuisine;
+use App\User as User;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
@@ -59,10 +60,22 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
-
+            
+            //users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
             $this->SetUpRestaurants();
 
-            $browser->visit('/restaurants/2/edit')
+
+
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/2/edit')
                     ->click('#'.$cuisine1->name)
                     ->click('button[type="submit"]')
                     // show
@@ -76,7 +89,9 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant1 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
-                    ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name);
+                    ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
+                    ->logout()
+                    ;
         });
     }
 
@@ -89,9 +104,20 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
+            //users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+
             $this->SetUpRestaurants();
 
-            $browser->visit('/restaurants/2/edit')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/2/edit')
                     ->click('#'.$cuisine1->name)
                     ->click('#'.$cuisine2->name)
                     ->click('button[type="submit"]')
@@ -106,7 +132,9 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant1 .cuisine-value',$cuisine1->name)
                     ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
-                    ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name);
+                    ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
+                    ->logout()
+                    ;
         });
     }
 
@@ -120,6 +148,16 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
+            //users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+
             //Restaurants
             $this->SetUpRestaurants();
             $restaurant2 = Restaurant::find(2);
@@ -127,7 +165,8 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             //Link Restaurant & cuisine
             $restaurant2->cuisines()->attach([$cuisine1->id,$cuisine2->id]);
 
-            $browser->visit('/restaurants/2/edit')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/2/edit')
                     ->click('#'.$cuisine2->name)
                     ->click('button[type="submit"]')
                     // Show
@@ -141,7 +180,9 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant1 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
-                    ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name);
+                    ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
+                    ->logout()
+                    ;
         });
 
     }
@@ -156,6 +197,16 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
+            //users
+            $user1 = User::firstOrCreate(
+                ['name'          =>  'Keith'],
+                [
+                    'name'          =>  'Keith',
+                    'email'         => 'keith@test.com',
+                    'password'  =>  bcrypt('nisbets')
+                ]
+            );
+
             //Restaurants
             $this->SetUpRestaurants();
             $restaurant2 = Restaurant::find(2);
@@ -163,7 +214,8 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             //Link Restaurant & cuisine
             $restaurant2->cuisines()->attach([$cuisine1->id,$cuisine2->id]);
 
-            $browser->visit('/restaurants/2/edit')
+            $browser->loginAs($user1)
+                    ->visit('/restaurants/2/edit')
                     ->click('#'.$cuisine1->name)
                     ->click('#'.$cuisine2->name)
                     ->click('button[type="submit"]')
@@ -179,6 +231,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
+                    ->logout()
                     ;
 
         });
