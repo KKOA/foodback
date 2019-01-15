@@ -10,7 +10,7 @@
     <div class='row mb-3'>
         <h1 class="text-center col-12">Restaurants</h1>
         <div class="text-center col-12">
-			<a href="{{route('restaurants.create')}}" class="btn btn-primary btn-lg">
+			<a href="{{route('restaurants.create')}}" class="btn btn-primary btn-lg add-restaurant">
 				New Restaurant <i class="fa fa-plus"></i>
 			</a>
         </div>
