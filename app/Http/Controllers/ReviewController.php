@@ -13,8 +13,8 @@ class ReviewController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @params int                          $id                             
+     * @return \Illuminate\Http\Response    
      */
     public function create($id)
     {
@@ -27,9 +27,10 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Review  $review
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request     $request
+     * @param  \App\Review                  $review
+     * @param   int                         $id
+     * @return \Illuminate\Http\Response    
      */
     //public function store(/*Request $request, Review $review*/)
     public function store(Request $request,$id)
@@ -51,12 +52,12 @@ class ReviewController extends Controller
         /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int                          $restaurant_id
+     * @param  int                          $review_id
+     * @return \Illuminate\Http\Response    
      */
     public function edit($restaurant_id,$review_id)
     {
-
         $review = Review::find($review_id);
         return view('reviews.edit', compact('review'));
     }
@@ -65,9 +66,9 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Review  $review
-     * @param  \DummyFullModelClass  $DummyModelVariable
+     * @param  \Illuminate\Http\Request     $request
+     * @param  \App\Restaurant              $restaurant
+     * @param  int                          $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,Restaurant $restaurant, $id)
@@ -88,9 +89,9 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Review  $review
-     * @param  \DummyFullModelClass  $DummyModelVariable
-     * @return \Illuminate\Http\Response
+     * @param  \App\Restaurant              $restaurant
+     * @param  \App\Review                  $review
+     * @return \Illuminate\Http\Response    
      */
     public function destroy(Restaurant $restaurant,Review $review)
     {

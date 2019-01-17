@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Restaurant as Restaurant;
-use App\Cuisine as Cuisine;
+
 use Image;
 use File;
 use Storage;
+
+//Models
+use App\Restaurant as Restaurant;
+use App\Cuisine as Cuisine;
 
 use App\Rules\NullOrGreaterThanMinLength as NullOrGreaterThanMinLength;
 
@@ -49,8 +52,8 @@ class RestaurantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request     $request
+     * @return \Illuminate\Http\Response    
      */
     public function store(Request $request)
     {
@@ -103,21 +106,20 @@ class RestaurantController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int                          $id
+     * @return \Illuminate\Http\Response    
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
-        $restaurant = Restaurant::with('reviews')->find($id);
+        $restaurant = Restaurant::with('reviews')->findOrFail($id);
         return view('restaurants.show',compact('restaurant'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  int                          $id
+     * @return \Illuminate\Http\Response    
      */
     public function edit($id)
     {
@@ -130,9 +132,9 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request     $request
+     * @param  \App\Restaurant              $restaurant
+     * @return \Illuminate\Http\Response    
      */
     //public function update(Request $request, $id)
     public function update(Request $request,Restaurant $restaurant)
@@ -168,7 +170,7 @@ class RestaurantController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Restaurant              $restaurant
      * @return \Illuminate\Http\Response
      */
     //public function destroy($id)

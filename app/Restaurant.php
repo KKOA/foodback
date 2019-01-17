@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     // MASS ASSIGNMENT -------------------------------------------------------
-    // define which attributes are mass assignable (for security)
+    
+    /**
+     * @var array define which attributes are mass assignable (for security)
+     * */
     protected $fillable =[
         'name',
         'description',
@@ -17,14 +20,26 @@ class Restaurant extends Model
         'county',
         'postcode',
         'cover_image'
-    
     ];
+    
+    /**
+     * Check the element in question is not empty
+     * @param unknown $element
+     * @return boolean
+     * */
 
     public function not_blank($element)
     {
         $element = trim($element);
         return (strlen($element) > 0);
     }
+    
+    /*
+     * Combines all the address fields into string
+     * 
+     * @return string
+     * */
+    
     public function full_address()
     {
         $parts = [

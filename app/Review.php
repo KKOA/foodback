@@ -9,10 +9,16 @@ class Review extends Model
 {
     
     // MASS ASSIGNMENT -------------------------------------------------------
-    // define which attributes are mass assignable (for security)
+    
+    /**
+     * @var array define which attributes are mass assignable (for security)
+     * */
     protected $fillable = 
     [
-        'comment', 'rating', 'restaurant_id','updated_at'
+        'comment',
+        'rating',
+        'restaurant_id',
+        'updated_at'
     ];
 
     // DEFINE Mutators --------------------------------------------------
