@@ -144,5 +144,10 @@ class Restaurant extends Model
     public function cuisines() {
         return $this->belongsToMany('App\Cuisine')->withTimestamps();
     }
+
+    public function user()
+    {
+      return $this->belongsTo('App\User');
+    }
 }
 
