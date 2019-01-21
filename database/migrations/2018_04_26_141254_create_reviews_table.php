@@ -15,10 +15,19 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('restaurant_id');
+            $table->integer('restaurant_id')->unsigned();
             $table->text('comment');
             $table->integer('rating');
             $table->timestamps();
+        });
+
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->foreign('restaurant_id')
+                ->references('id')
+                ->on('restaurants')
+                ->onDelete('cascade')
+                ->onUpdate('cascade')
+                ;
         });
     }
 
