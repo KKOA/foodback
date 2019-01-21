@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Restaurant as Restaurant;
+use App\User as User;
 
 
 class RestaurantSeeder extends Seeder
@@ -16,9 +17,13 @@ class RestaurantSeeder extends Seeder
         $restaurantImg = '/imgs/restaurants/';
         $faker = Faker\Factory::create();
 
+        $lastUserId = User::all()->last()->id;
+
         $restaurant1 = Restaurant::firstOrCreate(
             ['name'=>'El Greco'], //Greek
             [
+                // 'user_id'       =>  User::all()->random()->id,
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'El Greco',
                 'description'   => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '27 Rother Street',
@@ -28,9 +33,11 @@ class RestaurantSeeder extends Seeder
                 'postcode'      =>  'CV37 6QB'
             ]
         );
+
         $restaurant2 = Restaurant::firstOrCreate(
             ['name'=>'Reubens'], //Russina
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Reubens',
                 'description'   => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '79 Baker Street',
@@ -40,9 +47,11 @@ class RestaurantSeeder extends Seeder
                 'postcode'      =>  'W1U 6AG'
             ]
         );
+
         $restaurant3 = Restaurant::firstOrCreate(
             ['name'=>'Laduree UK'], //Swedish
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Laduree UK',
                 'description'   => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '71 Burlington Arcade',
@@ -52,9 +61,11 @@ class RestaurantSeeder extends Seeder
                 'postcode'      =>  'W1J 0QX'
             ]
         );
+
         $restaurant4 = Restaurant::firstOrCreate(
             ['name'=>'Sorrentino Restaurant'], //Italien
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Sorrentino Restaurant',
                 'description'   => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '64 Gold Street',
@@ -64,9 +75,11 @@ class RestaurantSeeder extends Seeder
                 'postcode'      =>  'NN1 1RS'
             ]
         );
+
         $restaurant5 = Restaurant::firstOrCreate(
             ['name'=>'Makara'], //Turkish
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Makara',
                 'description'   => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '28 Church Road',
@@ -76,9 +89,11 @@ class RestaurantSeeder extends Seeder
                 'postcode'      =>  'BN3 2FN'
             ]
         );
+
         $restaurant6 = Restaurant::firstOrCreate(
             ['name'=>'Tenkaichi'], //Japanense
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Tenkaichi',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '236 City Road',
@@ -92,6 +107,7 @@ class RestaurantSeeder extends Seeder
         $restaurant7 = Restaurant::firstOrCreate(
             ['name'=>'Bear & Billet'],//German
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Bear & Billet',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '94 Lower Bridge Street',
@@ -105,6 +121,7 @@ class RestaurantSeeder extends Seeder
         $restaurant8 = Restaurant::firstOrCreate(
             ['name'=>'Akamba'], //African
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Akamba',
                 'description'   => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  'Tythe Barn Lane',
@@ -114,9 +131,11 @@ class RestaurantSeeder extends Seeder
                 'postcode'      =>  'B90 1PH'
             ]
         );
+        
         $restaurant9 = Restaurant::firstOrCreate(
             ['name'=>'Bistro Jacques'],//French
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Bistro Jacques',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '29 Claremount Street',
@@ -126,9 +145,11 @@ class RestaurantSeeder extends Seeder
                 'postcode'      =>  'SY1 1RD'
             ]
         );
+
         $restaurant10 = Restaurant::firstOrCreate( //American
             ['name'=>'Infamous Diner'],
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Infamous Diner',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '3-5 Basil Chambers Nicholas Croft',
@@ -142,6 +163,7 @@ class RestaurantSeeder extends Seeder
         $restaurant11 = Restaurant::firstOrCreate(
             ['name'=>'Los Gatos'], //Spanish
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Los Gatos',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '1-3 Devizes Road',
@@ -155,6 +177,7 @@ class RestaurantSeeder extends Seeder
         $restaurant12 = Restaurant::firstOrCreate(
             ['name'=>'Nur'], //Egyptian
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Nur',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '22 Bridge Street',
@@ -168,6 +191,7 @@ class RestaurantSeeder extends Seeder
         $restaurant13 = Restaurant::firstOrCreate(
             ['name'=>'Thai Garden'], //Thai
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Thai Garden',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '100 West Street',
@@ -181,6 +205,7 @@ class RestaurantSeeder extends Seeder
         $restaurant14 = Restaurant::firstOrCreate(
             ['name'=>'Amigos Mexican Restaurant'], //Mexican
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Amigos Mexican Restaurant',
                 'description'   => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '41 Friar Street',
@@ -194,6 +219,7 @@ class RestaurantSeeder extends Seeder
         $restaurant15 = Restaurant::firstOrCreate(
             ['name'=>'Lebaneat'], //Lebanese
             [
+                'user_id'       =>  User::all()->where("id","!=",$lastUserId)->random()->id,
                 'name'          =>  'Lebaneat',
                 'description'   =>  $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
                 'address1'      =>  '47 North Baliey',
