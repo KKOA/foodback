@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Image;
 use File;
 use Storage;
+use Auth;
 
 //Models
 use App\Restaurant as Restaurant;
@@ -67,11 +68,9 @@ class RestaurantController extends Controller
             'postcode' => 'required|min:3|max:10'
         ]);
 
-        //dd($request);
-
-        //dd($request->cuisines);
 
         $restaurant = new Restaurant();
+        $restaurant->user_id = Auth::user()->id;
         $restaurant->name = $request->name;
         $restaurant->description = $request->description;
         $restaurant->address1 = $request->address1;
@@ -123,8 +122,12 @@ class RestaurantController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
         $restaurant = Restaurant::find($id);
+        if($user->id !== $restaurant->user_id)
+        {
+            return redirect('/');
+        }
         $cuisines = Cuisine::all();
         return view('restaurants.edit', compact('restaurant','cuisines'));
     }
