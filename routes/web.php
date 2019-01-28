@@ -17,9 +17,9 @@ Route::get('/welcome', function () {
 })->name('root');
 
 Route::get('/', function () {
-    // return redirect('/restaurants');
-    $myTitle = 'Homepage';
-    return view('temp', compact('myTitle'));
+    return redirect('/restaurants');
+    // $myTitle = 'Homepage';
+    // return view('temp', compact('myTitle'));
 })->name('root');
 
 // Restaurant CRUD routes
