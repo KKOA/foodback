@@ -23,76 +23,79 @@
                 {{Form::hidden('_method',$form['method'])}}
             @endif
 
+                        
             {{--  Name --}}
-            <div class='form-group row '>
-                <div class='col-md-3 text-md-right'>
-                    {!! Form::label('name', 'Name : ',['class'=>'col-form-label']) !!} 
-                    <span class="required">*</span>
-                </div>
-                <div class='col-md-8'>
-                    {!! Form::text('name', $restaurant->name, ['class' => 'form-control','placeholder'=>'E.g. Lee Chinese', 'autofocus'=>true]) !!}
-                </div>
-            </div>
+            {!! Form::textGroup(
+                [
+                'name' => 'name',
+                'value' => old('name')?? $restaurant->name,
+                'placeholder'=>'E.g. Wild Thyme Cafe',
+                'required'=>true,
+                'info'=>'Min 3 Characters'
+            ], $errors) !!}
 
             {{-- Description --}}
-            <div class='form-group row'>
-                <div class='control-label col-md-3 text-md-right'>
-                    {!! Form::label('description', "Description : ",['class'=>'col-form-label']) !!} <span class="required">*</span>
-                </div>
-                <div class='col-md-8'>
-                {!! Form::textarea('description', $restaurant->description, ['rows' => 10,'class' => 'form-control','placeholder'=>'Restaurant description','id'=>'description']) !!}
-                </div>
-            </div>
+            {!! Form::textAreaGroup(
+                [
+                'name' => 'description',
+                'value' => old('description')?? $restaurant->description,
+                'placeholder'=>'Restaurant Description',
+                'required'=>true,
+                'row'=>5,
+                'info'=>'Min 3 Characters'
+            ], $errors) !!}
+
 
             {{-- Address1 --}}
-            <div class='form-group row'>
-                <div class='control-label col-md-3 text-md-right'>
-                    {!! Form::label('address1', "Address1 : ",['class'=>'col-form-label']) !!} <span class="required">*</span>
-                </div>
-                <div class='col-md-8'>
-                {!! Form::text('address1', $restaurant->address1, ['class' => 'form-control','placeholder'=>'200 Cheam Road']) !!}
-                </div>
-            </div>
+            {!! Form::textGroup([
+                'name' => 'address1',
+                'value' => old('address1')?? $restaurant->address1,
+                'placeholder'=>'200 Cheam Road',
+                'required'=>true
+                // 'info'=>'Min 3 Characters'
+            ],
+             $errors) !!}
 
             {{-- Address2 --}}
-            <div class='form-group row'>
-                <div class='control-label col-md-3 text-md-right'>
-                    {!! Form::label('address2', "Address2 : ",['class'=>'col-form-label']) !!}
-                </div>
-                <div class='col-md-8'>
-                {!! Form::text('address2', $restaurant->address2, ['class' => 'form-control','placeholder'=>'Sparcells']) !!}
-                </div>
-            </div>
+            {!! Form::textGroup([
+                'name' => 'address2',
+                'value' => old('address2')?? $restaurant->address2,
+                'placeholder'=>'Sparcells'
+                // 'required'=>true,
+                // 'info'=>'Min 3 Characters'
+            ],
+             $errors) !!}
 
             {{-- City --}}
-            <div class='form-group row'>
-                <div class='control-label col-md-3 text-md-right'>
-                    {!! Form::label('city', "City : ",['class'=>'col-form-label']) !!} <span class="required">*</span>
-                </div>
-                <div class='col-md-8'>
-                {!! Form::text('city', $restaurant->city, ['class' => 'form-control','placeholder'=>'Bristol']) !!}
-                </div>
-            </div>
+            {!! Form::textGroup([
+                'name' => 'city',
+                'value' => old('city')?? $restaurant->city,
+                'placeholder'=>'Bristol',
+                'required'=>true
+                // 'info'=>'Min 3 Characters'
+            ],
+             $errors) !!}
 
             {{-- County --}}
-            <div class='form-group row'>
-                <div class='control-label col-md-3 text-md-right'>
-                    {!! Form::label('county', "County : ",['class'=>'col-form-label']) !!}
-                </div>
-                <div class='col-md-8'>
-                {!! Form::text('county', $restaurant->county, ['class' => 'form-control','placeholder'=>'Wiltshire']) !!}
-                </div>
-            </div>
+            {!! Form::textGroup([
+                'name' => 'county',
+                'value' => old('county')?? $restaurant->county,
+                'placeholder'=>'Wiltshire'
+                // 'required'=>true
+                // 'info'=>'Min 3 Characters'
+            ],
+             $errors) !!}
 
             {{-- Postcode --}}
-            <div class='form-group row'>
-                <div class='control-label col-md-3 text-md-right'>
-                    {!! Form::label('postcode', "Postcode : ",['class'=>'col-form-label']) !!} <span class="required">*</span>
-                </div>
-                <div class='col-md-8'>
-                {!! Form::text('postcode', $restaurant->postcode, ['class' => 'form-control','placeholder'=>'EN1 DG2']) !!}
-                </div>
-            </div>
+            {!! Form::textGroup([
+                'name' => 'postcode',
+                'value' => old('postcode')?? $restaurant->postcode,
+                'placeholder'=>'EN1 DG2',
+                'required'=>true
+                // 'info'=>'Min 3 Characters'
+            ],
+             $errors) !!}
+
             
             {{-- Cuisine Type --}}
             <h3 class='text-center'>Cuisine Type</h3>
