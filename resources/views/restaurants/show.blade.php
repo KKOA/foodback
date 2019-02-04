@@ -7,7 +7,7 @@
 
 @section('content')
     <div class='row mt-3'>
-        <a href='{{route('restaurants.index')}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See all restaurants' id='view-restaurants'>
+        <a href='{{route('restaurants.index')}}' link_to restaurants_path, class='btn btn-primary' title='See all restaurants' id='view-restaurants'>
             <i class="fas fa-hand-point-left"></i> View Restaurants
         </a>
     </div>

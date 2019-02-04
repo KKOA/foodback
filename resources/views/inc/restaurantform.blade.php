@@ -1,10 +1,10 @@
 <div class='row mt-4'>
     @if(isset($form["cancel"]['parameter']))
-        <a href='{{route($form["cancel"]["url"], $form["cancel"]["parameter"])}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See {{$restaurant->name}} restaurants'>
+        <a href='{{route($form["cancel"]["url"], $form["cancel"]["parameter"])}}' link_to restaurants_path, class='btn btn-primary' title='See {{$restaurant->name}} restaurants'>
         <i class="fas fa-hand-point-left"></i> View {{$restaurant->name}} restaurant
         </a>
     @else
-        <a href='{{route($form["cancel"]["url"])}}' link_to restaurants_path, class='btn btn-primary btn-lg' title='See all restaurants'>
+        <a href='{{route($form["cancel"]["url"])}}' link_to restaurants_path, class='btn btn-primary' title='See all restaurants'>
                 <i class="fas fa-hand-point-left"></i> View restaurants
         </a>
     @endif
