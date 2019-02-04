@@ -1,7 +1,7 @@
 
 @if ($errors->any())
   <div class='row mt-3 mb-3'>
-      <div class='offset-md-1 col-md-10'>
+      <div class='col-12 offset-lg-1 col-lg-10 offset-xl-2 col-xl-8'>
         <div class="card bg-danger">
           <div class="card-header">
               <h2 class="card-title text-center text-white">
@@ -11,11 +11,9 @@
             </h2>
           </div>
           <div class="card-body bg-white rounded-bottom">
-              <ul>
-                  @foreach ($errors->all() as $error)
-                    <li>{!! $error !!}</li>
-                  @endforeach
-              </ul>        
+              <p class="text-center">{{$error_count}} incorrect {{str_plural('value',$error_count)}} submitted.<br>
+                Please correct the {{str_plural('field',$error_count)}} highlighted in red below and resubmit the form.
+              </p>
           </div>
         </div>
     </div>
@@ -24,7 +22,7 @@
 
 @if(session('success'))
   <div class='row mt-3 mb-3'>
-    <div class="offset-md-1 col-md-10">
+    <div class="col-12 offset-lg-1 col-lg-10 offset-xl-2 col-xl-8">
       <div class="card bg-success">
         <div class="card-header">
           <h2 class="card-title text-center text-white">
@@ -40,7 +38,7 @@
 @endif
 
 @if(session('error'))
-  <div class='row mt-3 mb-3'>
+  <div class='col-12 offset-lg-1 col-lg-10 offset-xl-2 col-xl-8'>
       <div class="offset-md-1 col-md-10">
       <div class="card bg-danger">
         <div class="card-header">
