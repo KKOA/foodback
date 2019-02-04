@@ -1,0 +1,1 @@
+<span class='d-inline-block text-center'>{{$restaurants->links()}}</span>
