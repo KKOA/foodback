@@ -13,6 +13,7 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/jquery.raty.js', 'public/js')
     .js('resources/assets/js/master.js', 'public/js')
+    .js('resources/assets/js/form.js', 'public/js')
     .sass('resources/assets/sass/master.scss', 'public/css')
     .sass('resources/assets/sass/filter.scss', 'public/css')
     .sass('resources/assets/sass/vendor/jquery.raty.scss', 'public/css/vendor')
