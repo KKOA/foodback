@@ -22,19 +22,15 @@
 	margin-right:-1.25rem;
 }
 
-.formHeader
+.form-Header
 {
-	
-	background:#3c8dbc;
 	border-top-right-radius:10px;
 	border-top-left-radius:10px;
 	border-bottom:1px solid #aaa;
 	margin-bottom:40px;
 
-
 	& > h2
 	{
-		// color: $white;
 		font-family: Arvo;
 		font-weight: 700;
 		line-height: 1.2em;
@@ -42,12 +38,6 @@
 		margin-top: 0;
 		padding-top: 20px;
 		padding-bottom: 20px;
-		text-shadow: -2px -2px 0 #2E6B8F,
-		 2px -2px 0 #2E6B8F,
-		  -2px 2px 0 #2E6B8F,
-		   2px 2px 0 #2E6B8F,
-			2px 3px 0 #ddd,
-			 3px 4px 0 #ddd;
 		text-align: center;
 	}
 }
@@ -89,7 +79,7 @@ textarea
 
 /* Checkbox */
 // source https://bootsnipp.com/snippets/featured/simple-css-custom-checkboxes-and-radios
-.cuisine 
+.my-checkbox-label 
 {
 	position: relative;
 	cursor: pointer;

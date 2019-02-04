@@ -8,16 +8,7 @@ a[aria-expanded='true']::after {
 
 
 .main-nav {
-    // background-image:url('/imgs/background/black-Linen_@2X.png') !important;
-    // background-image:url('/imgs/background/black_linen_v2_@2X.png') !important;
-    // background-image:url('/imgs/background/black_scales_@2X.png') !important;
-    background-image:url('/imgs/background/dark_Tire.png') !important;
-    // background-image:url('/imgs/background/escheresque_ste_@2X.png') !important;
-    // background-image:url('/imgs/background/pw_maze_black_@2X.png') !important;
-    // background-image:url('/imgs/food2.png') !important;
-    // background-image:url('/public/imgs/background/') !important;
-    // box-shadow:none !important;
-    // background-repeat: repeat-x !important;
+    background: rgb(30,30,30) url('/imgs/background/dark_Tire.png') !important;
     box-shadow: 0px 2px 10px grey;
 }
 
@@ -143,7 +134,8 @@ a[aria-expanded='true']::after {
 //Menu closed 
 #help{
     margin-bottom:10px;
-    padding:10px 10px 5px 10px;
+    // padding:10px 10px 5px 10px;
+    padding:5px 5px 0px 5px;
     border:2px solid #4D4D4D;
     background-color:#525A60;
     outline:none;
