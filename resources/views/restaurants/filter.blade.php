@@ -1,5 +1,5 @@
 <?php 
-$cuisines = \App\Cuisine::all();
+// $cuisines = \App\Cuisine::all();
 
 $features = [
     1=>'Reservations',

@@ -35,7 +35,8 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurants = Restaurant::with('reviews')->paginate(6);
-        return view('restaurants.index',compact('restaurants'));
+        $cuisines = Cuisine::all();
+        return view('restaurants.index',compact('restaurants','cuisines'));
     }
 
     /**
