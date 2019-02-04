@@ -7,128 +7,138 @@
 @section('title', 'Find the restaurant for you')
 
 @section('content')
-    <div class='row mb-3'>
-        <h1 class="text-center col-12">Restaurants</h1>
+
+	<div class='row mb-3'>
+        <h2 class="text-center col-12">Restaurants</h2>
         <div class="text-center col-12">
-			<a href="{{route('restaurants.create')}}" class="btn btn-primary btn-lg add-restaurant">
+			<a href="{{route('restaurants.create')}}" class="btn btn-primary add-restaurant">
 				New Restaurant <i class="fa fa-plus"></i>
 			</a>
         </div>
-    </div>
-    @if(count($restaurants))
-    <div class='row mb-3'>
-        <div class='col-12 text-center'>
-            <strong>
-                Showing 
-                <span class='first-item'>{{$restaurants->firstItem()}}</span>
-                - 
-                <span class='last-item'>{{$restaurants->lastItem()}}</span>
-                of 
-                <span class='total-restaurants'>{{$restaurants->total()}}</span>
-			</strong>
-        </div>
 	</div>
-	<ul class='row restaurants'>
-		@foreach($restaurants as $restaurant)
-		{{-- <li id="restaurant{{$restaurant->id}}" class="col-xs-offset-1 col-xs-10 col-sm-5 col-sm-center-offset-1 col-lg-3 restaurant"> --}}
-		<li id="restaurant{{$restaurant->id}}" class="offset-1 col-10 col-md-5 center-offset-md-1 col-xl-3 restaurant">
-			<div class="holder">
-				<div class="prop-info">
-					<h3 class="prop-title text-center">
-						<a href="{{route('restaurants.show',[$restaurant->id])}}">
-							{{$restaurant->name}}
-						</a>
-					</h3>
-				</div>
-				<a class="overlay" title="View {{$restaurant->name}}" href="{{route('restaurants.show',[$restaurant->id])}}">
-					<span class="more"></span>
-					@if($restaurant->cover_image)
-						<img src="{{asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image)}}" alt="{{$restaurant->name.' cover image'}}">
-					@else
-						<img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image avaliable" alt="No image avaliable">
-					@endif
-				</a>
-				<div class="prop-info">
-					<ul class='more-info align-items-center'>
-						<li class="clearfix location">
-							<div class='address text-center'>
-									{{$restaurant->full_address()}}
+		@include('restaurants.filter')
+	<div class=" row">	
+		<div class="col-12 offset-md-1 col-md-10 result my-card">
+			<header class='card-header bg-blue-header'>
+				<h3 class="text-center">Results</h3>
+			</header>
+			<div class="remove-bs-padding">
+				@if(count($restaurants))
+					
+					<div class='row mt-3 mb-3'>
+
+						<?php 
+							$sortOrderOption = [
+								'Best_Match' => 'Best Match',
+								'Name_Ascending' => 'Name(A - Z)',
+								'Name_Descending' => 'Name(Z - A)',
+								'Highest_rated'=>'Highest rated first',
+								'Highest_price'=>'Highest price first',
+								// 'Lowest_price'=>'Lowest price first',
+								'Most_Reviewed'=>'Most Reviewed'
+							];
+
+							$displayQty = [];
+							$totalRestaurant = $restaurants->total();
+							for($i = 6; $i < $totalRestaurant; $i*=2)
+							{
+								$displayQty["$i"] = $i;
+							}
+							$displayQty["$totalRestaurant"] = $totalRestaurant;
+						?>
+
+						<div class='col-4 col-lg-3 text-right'>
+							<label class="col-form-label" for='SortOrder'> Sort By </label>
+						</div>
+						<div class='col-7 col-sm-6 col-lg-3'>
+							{{Form::select('sortOrder', $sortOrderOption, null, ['class'=>'form-control','id'=>'SortOrder'])}}
+
+						</div>
+
+						@if($restaurants->total() > 6)
+							<div class='col-4 col-lg-3 text-right'>
+								<label class="col-form-label" for='displayQty'> Display </label>
 							</div>
-						</li>
-						<li class="clearfix">
-							<div class="field-name">Cuisine Type :</div>
-							<div class='cuisine-value'>
-
-								@if($restaurant->cuisines()->count() > 0)
-									{{$restaurant->cuisines()->get()->implode('name',', ')}}
-								@else
-									Not specified
-								@endif
+							<div class='col-7 col-sm-6 col-lg-3'>
+								{{Form::select('displayQty', $displayQty, null , ['class'=>'form-control','id'=>'displayQty'])}}
 							</div>
-						</li>
+						@endif
+					</div>
 
-						<li class="clearfix">
-							<span class="float-left field-name">Avg Rating :</span>
-							{{-- <span class="qty float-right avg-rating"> --}}
-							<span class="qty float-right">
-								@if($restaurant->reviews->count())
-									<span class='avg-rating'>
-										<span class='star-rating' data-score={{$restaurant->reviews->avg('rating')}}>
-										</span>
-										<span class='text-rating sr-only'>
-											{{number_format((float)$restaurant->reviews->avg('rating'),2)}} 
-										</span>
-									</span>
+					@include('inc.result_info')
 
-									<span class='d-inline-block ml-1 no-of-reviews' title=' {{$restaurant->reviews->count()}} review{{$restaurant->reviews->count() > 1 ? "s" :""}}'>	 
-										{{number_format((float)$restaurant->reviews->count(),0)}}
-										<span class='sr-only'> review{{$restaurant->reviews->count() > 1 ? "s" :""}} </span>
-										<i class="far fa-comment-alt"></i> 
-									</span>
-									
-								@else
-									No reviews yet.
-								@endif
-							</span>
-						</li>
-						{{-- <li class="clearfix id='average-rating-output'">
-							<span class="pull-left field-name">Reviews:</span>
-							<span class="qty pull-right no-of-reviews">
-								@if($restaurant->reviews->count())
-									{{$restaurant->reviews->count()}} 
-									<i class="far fa-comment-alt"></i>
-								@else
-									No reviews yet.
-								@endif
-							</span>
-						</li> --}}
+					<div class='col-12 text-center font-weight-bold mt-2 mb-2'>
+						@include('inc.pagination')
+					</div>
+
+					<ul class='row restaurants'>
+						@foreach($restaurants as $restaurant)
+							@include('inc.restaurant', ['restaurant' => $restaurant])
+						@endforeach
 					</ul>
-				</div>
-			</div>
-		</li>
-		@endforeach
-	</ul>
-	<div class='row'>
-		<div class='col-12 text-center'>
-				<span class='d-inline-block text-center'>{{$restaurants->links()}}</span>
-		</div>
-	</div>
-	@else
-	<div class='row result justify-content-center'>  
-		<div class="col-md-10 col-xl-8">
-			<div class="jumbotron" style='background:#fff;'>
-				<h2 class='text-center'> No restaurants avaliable. </h2>
+					<div class='row'>
+						<div class='col-12 text-center mt-3 mb-4'>
+							@include('inc.pagination')
+						</div>
+					</div>
+
+				@else
+					<div class="jumbotron" style='background:#fff;'>
+						<h3 class='text-center'> No restaurants avaliable. </h3>
+					</div>
+				@endif
 			</div>
 		</div>
 	</div>
-    @endif
+
+	
+	
+
+
+@endsection
+
+@section('style')
+<link rel="stylesheet" href="{{mix('css/vendor/jquery.simpler-sidebar.css')}}">
+<link rel="stylesheet" href="{{mix('css/filter.css')}}">
 @endsection
 
 @section('script')
+{{-- <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script> --}}
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
 <script src="{{mix('js/jquery.raty.js')}}"></script>
+<script src="{{asset('js/jquery.simpler-sidebar.min.js')}}"></script>
+
+{{-- <script src="mix(/node_modules/'simpler-sidebar/dist/jquery.simpler-sidebar.min.js"></script> --}}
 <script>
     $(document).ready(function(){
-        $('.star-rating').raty({
+        
+		//Swap one css class with another on the given element
+		function swapClass(element,addClass,removeClass)
+		{
+
+			element.removeClass(removeClass);
+			element.addClass(addClass);
+		}
+
+		//Check query contain string to determine filter should be turn by default or not
+		function isfilterOpen()
+		{
+			let field = 'filterOpen';
+			let url = window.location.href;
+			if(url.indexOf('?' + field + '=') != -1)
+				return true;
+			else if(url.indexOf('&' + field + '=') != -1)
+				return true;
+			return false;
+		}
+		
+		$('.star-rating').raty({
              path:     "{{asset('/imgs/rating')}}",
             readOnly: true,
             numberMax: 5,
@@ -136,6 +146,60 @@
             return $(this).attr('data-score');
             }
         });
-    });
+	
+		// Sliding men filter menu
+        let $mainSidebar = $( "#sidebar-main" );
+        $mainSidebar.simplerSidebar( {
+            align: "left",
+            attr: "sidebar-main",
+            selectors: {
+                trigger: "#sidebar-main-trigger",
+                quitter: ".quitter"
+            },
+            animation: {
+                easing: "easeOutQuint"
+            },
+            init:(isfilterOpen() ? 'opened' : 'closed' )
+        } );
+	
+		$(document).on('click','.filter-title',function(event){
+			
+			event.preventDefault();
+			let nextFilterOPtion = $(this).next("ul");
+			$('.filter-options').not(nextFilterOPtion).each(function(){
+				$(this).removeClass("d-block");
+				$(this).addClass("d-none");
+			});
+
+			if($(this).not(nextFilterOPtion))
+			{
+				if(nextFilterOPtion.hasClass("d-none"))
+					swapClass(nextFilterOPtion, 'd-block', 'd-none');
+				else
+					swapClass(nextFilterOPtion, 'd-none', 'd-block');
+			}
+		});
+
+		$(document).on('click','.current-filter-btn',function(event){
+
+			$this = $(this);
+			if($this.hasClass('show-current-filter'))
+			{
+				$('.active-filters-wrapper').slideDown();
+				$this.html('Hide Active Filters');
+				swapClass($this,'hide-current-filter','show-current-filter');
+				$this.attr('title','Hide selected Filters');
+			}
+			else
+			{
+				$('.active-filters-wrapper').slideUp();
+				$this.html('Active Filters');
+				swapClass($this,'show-current-filter','hide-current-filter');
+				$this.attr('title','Show selected filters');
+			}
+			// $('.filters-result').removeClass('d-none');
+		});
+	});
+	
 </script>
 @endsection
