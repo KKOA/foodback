@@ -29,7 +29,7 @@
         <div id="app">
             {{--phpinfo()--}}
             @include('inc.mainNav')
-            <main class="py-4">
+            <main class="py-2 py-md-4">
                 <div class='container-fluid'>
                     @include('inc.messages')
                     @yield('content')
