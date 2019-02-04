@@ -1,0 +1,26 @@
+.active-filters-wrapper{
+    display:none;
+}
+
+.active-filters-card header{
+    padding:0.5rem;
+}
+
+.active-filter{
+    display:inline-block;
+
+    a{
+        padding:0.25rem;
+        margin:0.25rem;
+        border-radius:5px;
+        display:inline-block;
+        color:white;
+        background:#006FFB;
+        white-space: nowrap;
+        text-decoration:none;
+
+        &:hover{
+            background:#286090;
+        }
+    }
+}
