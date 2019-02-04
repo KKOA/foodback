@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div id="resetPasswordCard" class="card">
                 <div class="card-content">
-                    <div class="card-header text-center"><h2>{{ __('Reset Password') }}</h2></div>
+                    <div class="card-header text-center bg-blue-header"><h2>{{ __('Reset Password') }}</h2></div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -42,7 +42,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer bg-blue-footer">
                             <?php 
                             $loginUrl = route('login');
                             $registerUrl = route('register');

@@ -8,7 +8,7 @@
             {{-- <div class="card-content"> --}}
             <div id="resetPasswordCard" class="card">
                 <div class="card-content">
-                    <div class="card-header text-center"><h2>{{ __('Reset Password') }}</h2></div>
+                    <div class="card-header text-center bg-blue-header"><h2>{{ __('Reset Password') }}</h2></div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('password.request') }}" aria-label="{{ __('Reset Password') }}">

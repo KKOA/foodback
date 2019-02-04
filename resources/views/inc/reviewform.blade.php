@@ -2,8 +2,8 @@
         <div class='col-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6'>
             {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal review-form','novalidate'=>'' ]) !!}
     
-                <header class='formHeader pl-1 pr-1'>
-                    <h2 class='text-center text-white'>
+                <header class='form-Header bg-blue-header pl-1 pr-1'>
+                    <h2 class='text-center'>
                         {{$form['formHeader']}} review for <br>{{$restaurant->name}}
                     </h2>
                 </header>

@@ -13,8 +13,8 @@
 <div class='row mt-4 mb-4'>
     <div class='col-12 offset-lg-1 col-lg-10 offset-xl-2 col-xl-8'>
         {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal restaurant-form','files'=>'true']) !!}
-            <header class='formHeader'>
-                <h2 class='text-center text-white pl-1 pr-1'>
+            <header class='form-Header bg-blue-header'>
+                <h2 class='text-center pl-1 pr-1'>
                     {{$form['formHeader']}} restaurant
                 </h2>
             </header>
@@ -102,7 +102,7 @@
             <div class='form-group row justify-content-center'>
                 <div class='offset-md-1 col-md-10'>
                     @foreach($cuisines as $cuisine)
-                        <label class='cuisine' id='{{$cuisine->name}}' class='text-center'>
+                        <label class='my-checkbox-label' id='{{$cuisine->name}}' class='text-center'>
                             {{Form::checkbox('cuisines[]', $cuisine->id , $restaurant->cuisines->contains($cuisine->id))}}   
                             <span class="label-text">{{ $cuisine->name}}</span>
                         </label>

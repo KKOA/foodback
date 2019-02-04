@@ -8,7 +8,7 @@
             <div id="loginCard" class="card">
                 {{--  --}}
                 <div class="card-content">
-                        <div class="card-header text-center"><h2>{{ __('Login') }}</h2></div>
+                        <div class="card-header text-center bg-blue-header"><h2>{{ __('Login') }}</h2></div>
                         <div class="card-body">
                             <p class="text-center">New to FoodBack ?
                             <?php 
@@ -97,37 +97,15 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="form-group row">
-                                    <div class="col-md-6 offset-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="remember">
-                                                {{ __('Remember Me') }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="form-group row">
-                                    <div class="col-md-6 offset-md-4">
-                                        <label class="cuisine" for="remember">
-                                            <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                            <span class="label-text">{{ __('Remember Me') }}</span>
-                                        </label>
-                                    </div>
-                                </div> --}}
                                 <div class="form-group row">
                                     <div class="col-md-6 offset-md-4">
-                                        <label class="cuisine" for="remember">
+                                        <label class="my-checkbox-label" for="remember">
                                             <input {{ old('remember') ? 'checked' : '' }} name="remember" type="checkbox"  id="remember" >
                                             <span class="label-text">{{ __('Remember Me') }}</span> 
                                         </label>
                                     </div>
                                 </div>
 
-                                {{-- <label class="cuisine" id="Mexican"> 
-                                    <input checked="checked" name="cuisines[]" type="checkbox" value="11"> 
-                                    <span class="label-text">Mexican</span> 
-                                </label> --}}
 
                                 <div class="form-group row mb-0 justify-content-center">
                                     {{-- <div class="col-md-8 offset-md-4"> --}}
@@ -144,7 +122,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer bg-blue-footer">
                             <p class="text-center mb-0">
                                 <?php 
                                     $forgottonPassUrl = route('password.request');

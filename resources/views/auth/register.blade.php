@@ -7,7 +7,7 @@
         <div class="col-md-10 col-xl-8">
             <div id="registerCard" class="card">
                 <div class="card-content">
-                    <div class="card-header text-center">
+                    <div class="card-header text-center bg-blue-header">
                         <h2>{{ __('Register') }}</h2>
                     </div>
 
@@ -135,7 +135,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer bg-blue-footer">
                         <p class="text-center">Already have an account already?
                             <a href="{{$loginUrl . ($previousUrl ? '?previous='.$previousUrl : '')}} " class="login-link">
                                 Log in here
