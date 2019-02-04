@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/restaurants';
 
     /**
      * @param Request $request
@@ -49,13 +49,14 @@ class LoginController extends Controller
 
     public function redirectTo()
     {
-        
+        $newUrl = null;
         if ($this->request->has('previous')) {
             // $this->redirectTo = $this->request->get('previous');
             $newUrl = $this->request->get('previous');
         }
+        //dd($newUrl, $this->redirectTo);
+        return $newUrl ?? $this->redirectTo;
 
-        return $newUrl ?? $redirectTo;
     }
 
         /**
