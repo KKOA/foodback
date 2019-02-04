@@ -1,5 +1,5 @@
 <div class='row mt-4 mb-4'>
-        <div class='col-12 offset-md-1 col-md-10 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6'>
+        <div class='col-12 offset-lg-1 col-lg-10 offset-xl-2 col-xl-8'>
             {!! Form::model($restaurant, ['route' => $form['url'],'class'=>'form-horizontal review-form','novalidate'=>'' ]) !!}
     
                 <header class='form-Header bg-blue-header pl-1 pr-1'>
@@ -13,16 +13,16 @@
                 @endif
     
                 {{-- Comment --}}
-                <div class='form-group row'>
-                    <div class='control-label col-md-3 text-md-right'>
-                        {!! Form::label('comment', "Comment : ",['class'=>'col-form-label']) !!} <span class="required">*</span>
-                    </div>
-                    <div class='col-md-8'>
-                        {!! Form::textarea('comment', $review->comment, ['rows' => 5,'class' => 'form-control','placeholder'=>'Restaurant comment','id'=>'comment','required'=>'required','minlength'=>3]) !!}
-                    <small class='form-text'>Min characters : 3</small>
-                    </div>
-                </div>
-    
+                {!! Form::textAreaGroup(
+                    [
+                    'name' => 'comment',
+                    'value' => old('comment')?? $review->comment,
+                    'placeholder'=>'Restaurant comment',
+                    'required'=>true,
+                    'row'=>5,
+                    'info'=>'Min 3 Characters'
+                ], $errors) !!}
+
                 {{-- Rating --}}
                 <div class='form-group row'>
                     <div class='control-label col-md-3 text-md-right'>
@@ -32,13 +32,7 @@
                     <div class='col-md-8'>
                         
                         <input id='rating' class='form-control input-rating-text' name='rating' type="number" step="1" min='0.0' max='5.0' required 
-                        <?php 
-                        if($review->rating){
-                        ?>
-                            value='{{$review->rating}}'
-                        <?php
-                        }
-                        ?>
+                        value={{old('rating') ? old('rating') : $review->rating ? $review->rating :   0.0 }}
                         />
     
     
