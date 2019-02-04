@@ -110,6 +110,12 @@ $form = [
             $('.input-rating-star').raty('click', {{ json_encode($review->rating)}}); 
         });
 
+
+        
+
     });
 </script>
+<script src="{{mix('js/form.js')}}"></script>
+
+
 @endsection

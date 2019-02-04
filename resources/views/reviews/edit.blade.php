@@ -116,5 +116,6 @@ $form = [
 
     });
 </script>
+<script src="{{mix('js/form.js')}}"></script>
 @endsection
 
