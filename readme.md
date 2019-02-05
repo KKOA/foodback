@@ -2,11 +2,11 @@
 Constructed a clone of Yelp using following technology
 - Laravel
 - Bootstrap 4 & Fontawesome 5
-- JavaScript, Jquery & Jquery Raty
+- JavaScript, jquery & jquery Raty
 - MySQL
 - CSS & SCSS
-- Sqlite (Testing only)
-- phpunit (Testing Only)
+- SQLite (Testing only)
+- PHPUnit (Testing Only)
 - Laravel dusk (Testing Only)
 
 
