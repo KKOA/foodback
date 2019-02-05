@@ -17,6 +17,13 @@ Constructed a clone of Yelp using following technology
 <a href="http://foodback-laravel.herokuapp.com/">Foodback</a><br>
 ( Image upload not function for live version)
 
+Dummy user Login details for live version:
+
+|Email          | Password          |
+|---------------|-------------------|
+| mary@test.com | secret            |
+
+
 ## Set up Application
 This installation assumes have 
 - MySQL
