@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class RestaurantPhoto
- * @package App
+ * @package App\Models
  */
 class RestaurantPhoto extends Model
 {

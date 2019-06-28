@@ -10,7 +10,7 @@ use Carbon\Carbon as Carbon;
 
 /**
  * Class Review
- * @package App
+ * @package App\Models
  * @property int $id
  * @property int $restaurant_id
  * @property string $comment
@@ -46,18 +46,19 @@ class Review extends Model
     }
 
 	/**
-	 * @param string
+	 * @param string $value
+	 * @return void
 	 */
-	public function setCommentAttribute(string $value)
+	public function setCommentAttribute(string $value) :void
     {
 		$this->attributes['comment'] = ucfirst($value);
     }
 
 	/**
-	 * @param $date
+	 * @param string $date
 	 * @return string
 	 */
-	public function getUpdatedAtAttribute($date)
+	public function getUpdatedAtAttribute(string $date) :string
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('h:i A l jS F Y');
     }

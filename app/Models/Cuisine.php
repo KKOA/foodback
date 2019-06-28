@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Cuisine
- * @package App
+ * @package App\Models
  * @property string name
  */
 class Cuisine extends Model
@@ -38,8 +38,9 @@ class Cuisine extends Model
 
 	/**
 	 * @param $value
+	 * @return void
 	 */
-	public function setNameAttribute(string $value = null)
+	public function setNameAttribute(string $value = null) :void
     {
         $this->attributes['name'] = !is_null($value) ? ucwords($value) : $value;
     }
@@ -49,7 +50,8 @@ class Cuisine extends Model
 	/**
 	 * @return BelongsToMany
 	 */
-	public function restaurants() {
+	public function restaurants() :BelongsToMany
+	{
         return $this->belongsToMany('App\Models\Restaurant')->withTimestamps();
     }
 }

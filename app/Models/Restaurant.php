@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class Restaurant
- * @package App
+ * @package App\Models
  * @property int id
  * @property  int $user_id
  * @property string $name
@@ -156,56 +156,63 @@ class Restaurant extends Model
 	/**
 	 * Set
 	 * @param string $value
+	 * @return void
 	 */
-	public function setNameAttribute(string $value)
+	public function setNameAttribute(string $value) :void
     {
         $this->attributes['name'] = ucwords($value);
     }
 
 	/**
 	 * @param string $value
+	 * @return void
 	 */
-	public function setDescriptionAttribute(string $value)
+	public function setDescriptionAttribute(string $value) :void
     {
         $this->attributes['description'] = ucfirst($value);
     }
 
 	/**
 	 * @param string $value
+	 * @return void
 	 */
-	public function setAddress1Attribute(string $value)
+	public function setAddress1Attribute(string $value) :void
     {
         $this->attributes['address1'] = ucwords($value);
     }
 
 	/**
 	 * @param string $value
+	 * @return void
 	 */
-	public function setAddress2Attribute(string $value = null)
+	public function setAddress2Attribute(string $value = null) :void
     {
         $this->attributes['address2'] = !is_null($value) ? ucwords($value) :$value;
     }
 
 	/**
 	 * @param string $value
+	 * @return void
 	 */
-	public function setCityAttribute(string $value)
+	public function setCityAttribute(string $value) : void
     {
         $this->attributes['city'] = ucwords($value);
     }
 
 	/**
 	 * @param string $value
+	 * @return void
 	 */
-	public function setCountyAttribute(string $value = null)
+	public function setCountyAttribute(string $value = null) :void
     {
         $this->attributes['county'] = !is_null($value) ? ucwords($value) :$value;
     }
 
 	/**
 	 * @param string $value
+	 * @return void
 	 */
-	public function setPostcodeAttribute(string $value)
+	public function setPostcodeAttribute(string $value) :void
     {
         $this->attributes['postcode'] = strtoupper($value);
     }
