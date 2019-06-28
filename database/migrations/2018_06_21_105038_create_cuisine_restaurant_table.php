@@ -1,9 +1,14 @@
 <?php
+declare(strict_types=1);
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
+/**
+ * Class CreateCuisineRestaurantTable
+ */
 class CreateCuisineRestaurantTable extends Migration
 {
     /**
@@ -11,7 +16,7 @@ class CreateCuisineRestaurantTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() :void
     {
         Schema::create('cuisine_restaurant', function (Blueprint $table) {
             $table->increments('id');
@@ -37,8 +42,6 @@ class CreateCuisineRestaurantTable extends Migration
             ->onUpdate('cascade')
             ;
         });
-
-
     }
 
     /**
@@ -46,7 +49,7 @@ class CreateCuisineRestaurantTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down() :void
     {
         Schema::table('cuisine_restaurant', function (Blueprint $table) {
             $table->dropForeign('cuisine_restaurant_cuisine_id_foreign');
