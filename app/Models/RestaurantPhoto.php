@@ -1,19 +1,34 @@
 <?php
+declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+
+/**
+ * Class RestaurantPhoto
+ * @package App
+ */
 class RestaurantPhoto extends Model
 {
     // MASS ASSIGNMENT -------------------------------------------------------
     // define which attributes are mass assignable (for security)
-    protected $fillable =['filename'];
+
+	/**
+	 * @var array $fillable
+	 */
+	protected $fillable =['filename'];
     
     // DEFINE Mutators --------------------------------------------------
         
     // DEFINE RELATIONSHIPS --------------------------------------------------
-    public function restaurant() {
-        return $this->belongsTo('App\Restaurant');
+
+	/**
+	 * @return BelongsTo
+	 */
+	public function restaurant() :BelongsTo {
+        return $this->belongsTo('App\Models\Restaurant');
     }
 }

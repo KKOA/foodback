@@ -1,10 +1,20 @@
 <?php
+declare(strict_types=1);
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Class User
+ * @package App
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -12,7 +22,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array $fillable
      */
     protected $fillable = [
         'name', 'email', 'password',
@@ -21,15 +31,19 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array $hidden
      */
     protected $hidden = [
         'password', 'remember_token',
     ];
 
     // DEFINE RELATIONSHIPS --------------------------------------------------
-    public function restaurants()
+
+	/**
+	 * @return HasMany
+	 */
+	public function restaurants() : HasMany
     {
-        return $this->hasMany('App\Restaurant');
+        return $this->hasMany('App\Models\Restaurant');
     }
 }
