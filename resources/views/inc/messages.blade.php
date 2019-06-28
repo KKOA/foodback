@@ -1,4 +1,6 @@
-
+<?php
+  use \Illuminate\Support\Str;
+?>
 @if ($errors->any())
   <div class='row mt-3 mb-3'>
       <div class='col-12 offset-lg-1 col-lg-10 offset-xl-2 col-xl-8'>
@@ -6,13 +8,13 @@
           <div class="card-header">
               <h2 class="card-title text-center text-white">
                   <?php $error_count = count($errors->all());
-                  echo str_plural('Error',$error_count);
+                echo Str::plural('Error',$error_count);
                   ?>
             </h2>
           </div>
           <div class="card-body bg-white rounded-bottom">
-              <p class="text-center">{{$error_count}} incorrect {{str_plural('value',$error_count)}} submitted.<br>
-                Please correct the {{str_plural('field',$error_count)}} highlighted in red below and resubmit the form.
+              <p class="text-center">{{$error_count}} incorrect {{\Illuminate\Support\Str::plural('value',$error_count)}} submitted.<br>
+                Please correct the {{\Illuminate\Support\Str::plural('field',$error_count)}} highlighted in red below and resubmit the form.
               </p>
           </div>
         </div>
