@@ -1,62 +1,69 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-//use App\Review;
-use Illuminate\Http\Request;
-use App\Restaurant as Restaurant;
-use App\Review as Review;
+//Models
+use App\Models\Restaurant;
+use App\Models\Review;
 
+use Illuminate\Http\Request;
+use \Illuminate\Http\Response;
+use \Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+
+use \Exception;
+use \Illuminate\Contracts\View\Factory;
+
+/**
+ * Class ReviewController
+ * @package App\Http\Controllers
+ */
 class ReviewController extends Controller
 {
 
-
-    /**
-     * Show the form for creating a new resource.
-     * @params int                          $id                             
-     * @return \Illuminate\Http\Response    
-     */
-    public function create($id)
+	/**
+	 * Show the form for creating a new resource.
+	 * @param int $id
+	 * @return View
+	 */
+	public function create(int $id) :View
     {
         $restaurant = Restaurant::find($id);
         $review = new Review();
         return view('reviews.create', compact('review','restaurant'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request     $request
-     * @param  \App\Review                  $review
-     * @param   int                         $id
-     * @return \Illuminate\Http\Response    
+     * @param  Request     $request
+     * @param   int        $id
+     * @return RedirectResponse
      */
-    //public function store(/*Request $request, Review $review*/)
-    public function store(Request $request,$id)
+    public function store(Request $request, int $id) :RedirectResponse
     {
-        //dd($request,$id);
         $validatedData = $request->validate([
             'comment' => 'required|min:3',
             'rating' => 'required|between:0,5',
         ]);
 
         $review = new Review();
-        $review->restaurant_id=$id;
+        $review->restaurant_id = $id;
         $review->comment = $request->comment;
         $review->rating = floatval($request->rating);
         $review->save();
         return redirect('/restaurants/'.$id)->with('success',"Review created.");
     }
 
-        /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int                          $restaurant_id
-     * @param  int                          $review_id
-     * @return \Illuminate\Http\Response    
-     */
-    public function edit($restaurant_id,$review_id)
+    /**
+	* Show the form for editing the specified resource.
+	*
+	* @param  int                          $restaurant_id
+	* @param  int                          $review_id
+	* @return View
+	*/
+    public function edit(int $restaurant_id, int $review_id) :View
     {
         $review = Review::find($review_id);
         return view('reviews.edit', compact('review'));
@@ -66,12 +73,12 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request     $request
-     * @param  \App\Restaurant              $restaurant
-     * @param  int                          $id
-     * @return \Illuminate\Http\Response
+     * @param   Request      $request
+     * @param   Restaurant    $restaurant
+     * @param   int          $id
+     * @return  RedirectResponse
      */
-    public function update(Request $request,Restaurant $restaurant, $id)
+    public function update(Request $request,Restaurant $restaurant, int $id) :RedirectResponse
     {
         $validatedData = $request->validate([
             'comment' => 'required|min:3',
@@ -86,14 +93,15 @@ class ReviewController extends Controller
         return redirect('/restaurants/'.$restaurant->id)->with('success',"Review updated.");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Restaurant              $restaurant
-     * @param  \App\Review                  $review
-     * @return \Illuminate\Http\Response    
-     */
-    public function destroy(Restaurant $restaurant,Review $review)
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param Restaurant $restaurant
+	 * @param Review $review
+	 * @return RedirectResponse
+	 * @throws Exception
+	 */
+    public function destroy(Restaurant $restaurant,Review $review) :RedirectResponse
     {
         $review->delete();
         return redirect()->route('restaurants.show',$restaurant->id)->with('success',"Review deleted.");

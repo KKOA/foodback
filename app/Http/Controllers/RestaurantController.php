@@ -1,20 +1,29 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+//Models
+use App\Models\Restaurant;
+use App\Models\Cuisine;
+
 use Illuminate\Http\Request;
+use \Illuminate\Http\Response;
+use \Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 use Image;
 use File;
 use Storage;
 use Auth;
-
-//Models
-use App\Restaurant as Restaurant;
-use App\Cuisine as Cuisine;
-
+use \Exception;
 use App\Rules\NullOrGreaterThanMinLength as NullOrGreaterThanMinLength;
 
+
+/**
+ * Class RestaurantController
+ * @package App\Http\Controllers
+ */
 class RestaurantController extends Controller
 {
     
@@ -30,9 +39,9 @@ class RestaurantController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index() :View
     {
         $restaurants = Restaurant::with('reviews')->paginate(6);
         $cuisines = Cuisine::all();
@@ -42,9 +51,9 @@ class RestaurantController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create() :View
     {
         $restaurant = new Restaurant();
         $cuisines = Cuisine::all();
@@ -54,10 +63,10 @@ class RestaurantController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request     $request
-     * @return \Illuminate\Http\Response    
+     * @param  Request     $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request) :RedirectResponse
     {
         $validatedData = $request->validate([
             'name' => 'required|unique:restaurants|min:3|max:255',
@@ -89,16 +98,13 @@ class RestaurantController extends Controller
         {
             //Check directory exists
                 //Create directory
-                
-            
 
             // Add filename to 
-            $restaurant->cover_photo = $filename;
+//            $restaurant->cover_photo = $filename;
 
         }
 
         $restaurant->save();
-
 
         return redirect('/restaurants/'.$restaurant->id)->with('success',$restaurant->name ." restaurant created.");
     }
@@ -106,10 +112,11 @@ class RestaurantController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int                          $id
-     * @return \Illuminate\Http\Response    
+     * @param  int      $id
+     * @param Request   $request
+     * @return View
      */
-    public function show($id, Request $request)
+    public function show($id, Request $request) :View
     {
         $restaurant = Restaurant::with('reviews')->findOrFail($id);
         return view('restaurants.show',compact('restaurant'));
@@ -119,9 +126,9 @@ class RestaurantController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int                          $id
-     * @return \Illuminate\Http\Response    
+     * @return View
      */
-    public function edit($id)
+    public function edit($id) :View
     {
         $user = Auth::user();
         $restaurant = Restaurant::find($id);
@@ -136,12 +143,11 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request     $request
-     * @param  \App\Restaurant              $restaurant
-     * @return \Illuminate\Http\Response    
+     * @param  Request     $request
+     * @param  Restaurant  $restaurant
+     * @return RedirectResponse
      */
-    //public function update(Request $request, $id)
-    public function update(Request $request,Restaurant $restaurant)
+    public function update(Request $request,Restaurant $restaurant) :RedirectResponse
     {
                 
         // return $restaurant->id;
@@ -154,8 +160,6 @@ class RestaurantController extends Controller
             'county' => [new NullOrGreaterThanMinLength(3),'max:255'],
             'postcode' => 'required|min:3|max:10'
             ]);
-
-            // dd($request);
 
             $restaurant->name= $request->name;
             $restaurant->description = $request->description;
@@ -171,14 +175,14 @@ class RestaurantController extends Controller
             return redirect()->route('restaurants.show',['restaurant' => $restaurant])->with('success',$restaurant->name." restaurant updated.");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Restaurant              $restaurant
-     * @return \Illuminate\Http\Response
-     */
-    //public function destroy($id)
-    public function destroy(Restaurant $restaurant)
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param Restaurant $restaurant
+	 * @return RedirectResponse
+	 * @throws Exception
+	 */
+    public function destroy(Restaurant $restaurant) :RedirectResponse
     {
         $name = $restaurant->name;
         $restaurant->cuisines()->detach();

@@ -1,14 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 
+
+/**
+ * Class RegisterController
+ * @package App\Http\Controllers\Auth
+ */
 class RegisterController extends Controller
 {
     /*
@@ -27,7 +33,7 @@ class RegisterController extends Controller
     /**
      * Where to redirect users after registration.
      *
-     * @var string
+     * @var string $redirectTo
      */
     protected $redirectTo = '/';
 
@@ -48,7 +54,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(array $data) :\Illuminate\Contracts\Validation\Validator
     {
         return Validator::make($data, [
             'name' => 'required|string|min:3,max:255',
@@ -61,9 +67,9 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return User
      */
-    protected function create(array $data)
+    protected function create(array $data) :User
     {
         return User::create([
             'name' => $data['name'],
@@ -78,7 +84,7 @@ class RegisterController extends Controller
      * @return string
      */
 
-    public function redirectTo()
+    public function redirectTo() :string
     {
         
         if ($this->request->has('previous')) {
@@ -86,6 +92,6 @@ class RegisterController extends Controller
             $newUrl = $this->request->get('previous');
         }
 
-        return $newUrl ?? $redirectTo;
+        return $newUrl ?? $this->redirectTo;
     }
 }

@@ -1,11 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
+
+/**
+ * Class LoginController
+ * @package App\Http\Controllers\Auth
+ */
 class LoginController extends Controller
 {
     /*
@@ -24,7 +32,7 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      *
-     * @var string
+     * @var string $redirectTo
      */
     protected $redirectTo = '/restaurants';
 
@@ -47,28 +55,28 @@ class LoginController extends Controller
      * @return string
      */
 
-    public function redirectTo()
+    public function redirectTo() :string
     {
-        $newUrl = null;
         if ($this->request->has('previous')) {
             // $this->redirectTo = $this->request->get('previous');
             $newUrl = $this->request->get('previous');
         }
         //dd($newUrl, $this->redirectTo);
-        return $newUrl ?? $this->redirectTo;
+        return ($newUrl ?? $this->redirectTo);
 
     }
 
         /**
      * Log the user out of the application. User is redirect back to previous page, 
-     * if the page is not accessibile by guest then user is sent to login page.
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * if the page is not accessible by guest then user is sent to login page.
+     * @param  Request  $request
+     * @return RedirectResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request) :RedirectResponse
     {
         $this->guard()->logout();
         $request->session()->invalidate();
+//		dd(redirect($request->get('previous')));
         return redirect($request->get('previous'));
     }
 
