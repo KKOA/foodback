@@ -1,34 +1,54 @@
 <?php
+declare(strict_types=1);
 
-namespace Tests\Browser;
+namespace Tests\Browser\Reviews;
 
 //Models
-use App\Restaurant as Restaurant;
-use App\Review as Review;
+use App\Models\Restaurant;
+use App\Models\Review;
 
 //Datetime manipulation
+use App\Models\User;
 Use Carbon\Carbon as Carbon;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use \Faker\Factory;
+use \Throwable;
 
+/**
+ * Class ViewRestaurantReviewsTest
+ * @package Tests\Browser\Reviews
+ */
 class ViewRestaurantReviewsTest extends DuskTestCase
 {
-    /**
-     * A Dusk test example.
-     *
-     * @return void
-     */
+
     use DatabaseMigrations;
 
-    public function test_guest_cannot_see_restaurant_reviews()
+	/**
+	 * @test
+	 * @throws Throwable;
+	 * @return void
+	 */
+	public function guest_cannot_see_restaurant_reviews() :void
     {
-        $this->browse(function (Browser $browser) {    
-            $faker = \Faker\Factory::create();
+        $this->browse(function (Browser $browser) {
+
+	        $user1 = User::firstOrCreate(
+		        ['name'          =>  'Keith'],
+		        [
+			        'name'          =>  'Keith',
+			        'email'         => 'keith@test.com',
+			        'password'  =>  bcrypt('nisbets')
+		        ]
+	        );
+
+            $faker = Factory::create();
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Nur',
+                    'user_id'       => $user1->id,
+                	'name'          =>  'Nur',
                     'description'   =>  'Nur text',
                     'address1'      =>  '22 Bridge Street',
                     'address2'      =>  '',
@@ -40,7 +60,8 @@ class ViewRestaurantReviewsTest extends DuskTestCase
 
             $restaurant2 = Restaurant::create(
                 [
-                    'name'          =>  'Thai Garden',
+	                'user_id'       => $user1->id,
+                	'name'          =>  'Thai Garden',
                     'description'   =>  'Thai Garden text',
                     'address1'      =>  '100 West Street',
                     'address2'      =>  '',
@@ -58,7 +79,7 @@ class ViewRestaurantReviewsTest extends DuskTestCase
                 ]
             );
             $browser->visit('/restaurants/'.$restaurant1->id)
-                ->assertSee('No reviews avaliable for this restaurant')
+                ->assertSee('No reviews available for this restaurant')
                 ->assertDontSee($review1->rating)
                 ->assertDontSee($review1->comment)
                 ->assertDontSee($review1->updated_at)
@@ -67,14 +88,30 @@ class ViewRestaurantReviewsTest extends DuskTestCase
         });
     }
 
-    public function test_guest_can_see_restaurant_reviews()
+	/**
+	 * @test
+	 * @throws Throwable
+	 * @return void
+	 */
+	public function guest_can_see_restaurant_reviews() :void
     {
         $this->browse(function (Browser $browser) {
             //Create Restaurants
             $faker = \Faker\Factory::create();
+
+	        $user1 = User::firstOrCreate(
+		        ['name'          =>  'Keith'],
+		        [
+			        'name'          =>  'Keith',
+			        'email'         => 'keith@test.com',
+			        'password'  =>  bcrypt('nisbets')
+		        ]
+	        );
+
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Nur',
+	                'user_id'       => $user1->id,
+                	'name'          =>  'Nur',
                     'description'   =>  'Nur text',
                     'address1'      =>  '22 Bridge Street',
                     'address2'      =>  '',
@@ -86,7 +123,8 @@ class ViewRestaurantReviewsTest extends DuskTestCase
 
             $restaurant2 = Restaurant::create(
                 [
-                    'name'          =>  'Thai Garden',
+	                'user_id'       => $user1->id,
+                	'name'          =>  'Thai Garden',
                     'description'   =>  'Thai Garden text',
                     'address1'      =>  '100 West Street',
                     'address2'      =>  '',
@@ -108,7 +146,7 @@ class ViewRestaurantReviewsTest extends DuskTestCase
                     'restaurant_id' => $restaurant2->id,
                     'comment'       =>  'Some more text',
                     'rating'        =>  4,
-                    'updated_at'    =>  Carbon::now()->subMinute(90) //Set date to now - 90 minutes
+                    'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
                 ]
             );
             // View page
@@ -119,18 +157,34 @@ class ViewRestaurantReviewsTest extends DuskTestCase
             ->assertSeeIn('.no-of-reviews','1')
             ->assertDontSee($review2->comment)
             ->assertDontSee($review2->updated_at)
-            ->assertDontSee('No reviews avaliable for this restaurant')
+            ->assertDontSee('No reviews available for this restaurant')
             ;
             //->assertDontSee($review2->comment);
         });
     }
 
-    public function test_new_restaurant_has_start_off_with_no_reviews_and_no_avg_rating()
+	/**
+	 * @test
+	 * @throws Throwable
+	 * @return void
+	 */
+	public function new_restaurant_has_start_off_with_no_reviews_and_no_avg_rating() :void
     {
         $this->browse(function (Browser $browser) {
-            $restaurant1 = Restaurant::create(
+
+	        $user1 = User::firstOrCreate(
+		        ['name'          =>  'Keith'],
+		        [
+			        'name'          =>  'Keith',
+			        'email'         => 'keith@test.com',
+			        'password'  =>  bcrypt('nisbets')
+		        ]
+	        );
+
+        	$restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Nur',
+	                'user_id'       => $user1->id,
+                	'name'          =>  'Nur',
                     'description'   =>  'Nur text',
                     'address1'      =>  '22 Bridge Street',
                     'address2'      =>  '',
@@ -145,14 +199,30 @@ class ViewRestaurantReviewsTest extends DuskTestCase
         });
     }
 
-    public function test_guest_can_view_each_restaurants_total_review_and_avg_rating()
+	/**
+	 * @test
+	 * @throws Throwable
+	 * @return void
+	 */
+	public function guest_can_view_each_restaurants_total_review_and_avg_rating() :void
     {
         $this->browse(function (Browser $browser) {
             //Create Restaurants
             $faker = \Faker\Factory::create();
+
+	        $user1 = User::firstOrCreate(
+		        ['name'          =>  'Keith'],
+		        [
+			        'name'          =>  'Keith',
+			        'email'         => 'keith@test.com',
+			        'password'  =>  bcrypt('nisbets')
+		        ]
+	        );
+
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Nur',
+	                'user_id'       => $user1->id,
+                	'name'          =>  'Nur',
                     'description'   =>  'Nur text',
                     'address1'      =>  '22 Bridge Street',
                     'address2'      =>  '',
@@ -164,7 +234,8 @@ class ViewRestaurantReviewsTest extends DuskTestCase
 
             $restaurant2 = Restaurant::create(
                 [
-                    'name'          =>  'Thai Garden',
+	                'user_id'       => $user1->id,
+                	'name'          =>  'Thai Garden',
                     'description'   =>  'Thai Garden text',
                     'address1'      =>  '100 West Street',
                     'address2'      =>  '',
@@ -187,7 +258,7 @@ class ViewRestaurantReviewsTest extends DuskTestCase
                     'restaurant_id' => $restaurant1->id,
                     'comment'       => $faker->paragraph,
                     'rating'        =>  5,
-                    'updated_at'    =>  Carbon::now()->subMinute(90) //Set date to now - 90 minutes
+                    'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
                 ]
             );
             $review3 = Review::create(
@@ -195,7 +266,7 @@ class ViewRestaurantReviewsTest extends DuskTestCase
                     'restaurant_id' => $restaurant2->id,
                     'comment'       => $faker->paragraph,
                     'rating'        =>  2,
-                    'updated_at'    =>  Carbon::now()->addMinute(30) //Set date to now + 30 minutes
+                    'updated_at'    =>  Carbon::now()->addMinutes(30) //Set date to now + 30 minutes
                 ]
             );
 

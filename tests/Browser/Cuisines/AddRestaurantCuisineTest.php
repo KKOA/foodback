@@ -1,17 +1,21 @@
 <?php
+declare(strict_types=1);
 
-namespace Tests\Browser\cuisine;
+namespace Tests\Browser\Cuisines;
 
-use App\Restaurant as Restaurant;
-use App\Cuisine as Cuisine;
-use App\User as User;
+use App\Models\Restaurant as Restaurant;
+use App\Models\Cuisine as Cuisine;
+use App\Models\User as User;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 
-
+/**
+ * Class AddRestaurantCuisineTest
+ * @package Tests\Browser\cuisine
+ */
 class AddRestaurantCuisineTest extends DuskTestCase
 {
 
@@ -30,12 +34,16 @@ class AddRestaurantCuisineTest extends DuskTestCase
         Cuisine::create(['name'=>'Japanese']);
     }
 
-    public function SetUpRestaurants()
+	/**
+	 * @param User $user
+	 */
+	public function SetUpRestaurants(User $user)
     {
         //Create Cuisines
         Restaurant::create(
             [
-                'name'          => 'Benny',
+                'user_id'       => $user->id,
+            	'name'          => 'Benny',
                 'description'   => 'Benny Text',
                 'address1'      =>  '47 North Baliey',
                 'city'          =>  'Durham',
@@ -59,7 +67,10 @@ class AddRestaurantCuisineTest extends DuskTestCase
         
     // }
 
-    public function test_user_can_create_restaurant_with_a_cuisine_type()
+	/**
+	 * @throws \Throwable
+	 */
+	public function test_user_can_create_restaurant_with_a_cuisine_type()
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
@@ -68,23 +79,24 @@ class AddRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
-            // Restaurants
-            $this->SetUpRestaurants();
+	        //Users
+	        $user1 = User::firstOrCreate(
+		        ['name'          =>  'Keith'],
+		        [
+			        'name'          =>  'Keith',
+			        'email'         => 'keith@test.com',
+			        'password'  =>  bcrypt('nisbets')
+		        ]
+	        );
 
-            //Users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+            // Restaurants
+            $this->SetUpRestaurants($user1);
 
 
             $restaurant2 = new Restaurant(
                 [
-                    'name'          =>  'bebo',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'bebo',
                     'description'   =>  'some random text',
                     'address1'      =>  '28 Church Road',
                     'city'          =>  'Hove',
@@ -120,7 +132,10 @@ class AddRestaurantCuisineTest extends DuskTestCase
         
     }
 
-    public function test_user_can_create_restaurant_with_mutlipe_cuisine_type()
+	/**
+	 * @throws \Throwable
+	 */
+	public function test_user_can_create_restaurant_with_multiple_cuisine_type()
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
@@ -140,11 +155,12 @@ class AddRestaurantCuisineTest extends DuskTestCase
             );
 
             // Restaurants
-            $this->SetUpRestaurants();
+            $this->SetUpRestaurants($user1);
             
             $restaurant2 = new Restaurant(
                 [
-                    'name'          =>  'bebo',
+                    'user_id'       =>  $user1->id,
+                	'name'          =>  'bebo',
                     'description'   =>  'some random text',
                     'address1'      =>  '28 Church Road',
                     'city'          =>  'Hove',

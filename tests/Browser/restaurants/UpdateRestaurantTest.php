@@ -1,28 +1,48 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Restaurants;
 
 //Models
-use App\Restaurant as Restaurant;
-use App\User as User;
+use App\Models\Restaurant as Restaurant;
+use App\Models\User as User;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use \Throwable;
+use \Faker\Factory;
+use Tests\Browser\MyHelper\DuskFormHelper;
 
+
+/**
+ * Class UpdateRestaurantTest
+ * @package Tests\Browser\Restaurants
+ */
 class UpdateRestaurantTest extends DuskTestCase
 {
     use DatabaseMigrations;
+    use DuskFormHelper;
 
-    /**
-     * Test owner cannot update their own restaurant with invalid details.
-     *
-     * @return void
-     */
-    public function test_owner_cannot_update_their_own_restaurant_with_invalid_details()
+	/**
+	 * @param Browser $browser
+	 * @param array $fields
+	 */
+	public function submitForm(Browser $browser, array $fields)
+	{
+		$this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
+		$browser->click('button[type="submit"]');
+	}
+
+	/**
+	 * Test owner cannot update their own restaurant with invalid details.
+	 *
+	 * @throws Throwable
+	 * @return void
+	 */
+    public function test_owner_cannot_update_their_own_restaurant_with_invalid_details() :void
     {
         $this->browse(function (Browser $browser) {
-            $faker = \Faker\Factory::create();
+            $faker = Factory::create();
 
             //users
             $user1 = User::firstOrCreate(
@@ -37,7 +57,8 @@ class UpdateRestaurantTest extends DuskTestCase
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Bistro Jacques',
+                    'user_id'       =>  $user1->id,
+                	'name'          =>  'Bistro Jacques',
                     'description'   =>  'Bistro Jacques text',
                     'address1'      =>  '29 Claremount Street',
                     'city'          =>  'Shrewsbury',
@@ -57,16 +78,20 @@ class UpdateRestaurantTest extends DuskTestCase
 
             //visit create page
             $browser->loginAs($user1)
-                    ->visit('/restaurants/'.$restaurant1->id.'/edit')
-                    ->type('name',$restaurant2->name)
-                    ->type('description',$restaurant2->description)
-                    ->type('address1',$restaurant2->address1)
-                    ->type('address2',$restaurant2->address2)
-                    ->type('city',$restaurant2->city)
-                    ->type('county',$restaurant2->county)
-                    ->type('postcode',$restaurant2->postcode)
-                    ->click('button[type="submit"]')
-                    ->assertSee('The name field is required.')
+	                ->visit('/restaurants/'.$restaurant1->id.'/edit');
+            ;
+
+            $this->submitForm($browser,[
+//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
+                ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+                ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
+                ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
+                ['field_name' =>'address2',     'field_value'=>$restaurant2->address2,      'field_type'=>'text'],
+                ['field_name' =>'city',         'field_value'=>$restaurant2->city,          'field_type'=>'text'],
+                ['field_name' =>'county',       'field_value'=>$restaurant2->county,        'field_type'=>'text'],
+                ['field_name' =>'postcode',     'field_value'=>$restaurant2->postcode,      'field_type'=>'text']
+            ]);
+            $browser->assertSee('The name field is required.')
                     ->assertSee('The description must be at least 3 characters.')
                     ->assertSee('The address1 field is required.')
                     ->assertSee('The address2 may not be greater than 255 characters.')
@@ -81,16 +106,29 @@ class UpdateRestaurantTest extends DuskTestCase
 
     /**
      * Test restaurant cannot be either by guest or user who is not the restaurant owner.
-     *
+     * @throws Throwable
      * @return void
      */ 
-    public function test_guest_cannot_update_a_restaurant()
+    public function test_guest_cannot_update_a_restaurant() :void
     {
         $this->browse(function (Browser $browser) {
             $faker = \Faker\Factory::create();
+
+	        $user1 = User::firstOrCreate(
+		        ['name'          =>  'Keith'],
+		        [
+			        'name'          =>  'Keith',
+			        'email'         => 'keith@test.com',
+			        'password'  =>  bcrypt('nisbets')
+		        ]
+	        );
+
+
+
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Bistro Jacques',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'Bistro Jacques',
                     'description'   =>  'Bistro Jacques text',
                     'address1'      =>  '29 Claremount Street',
                     'city'          =>  'Shrewsbury',
@@ -108,7 +146,7 @@ class UpdateRestaurantTest extends DuskTestCase
 
     /**
      * Test owner can update their own restaurant with valid details.
-     *
+     * @throws Throwable
      * @return void
      */ 
     public function test_owner_can_update_their_own_restaurant_with_valid_details()
@@ -128,7 +166,8 @@ class UpdateRestaurantTest extends DuskTestCase
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Bistro Jacques',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'Bistro Jacques',
                     'description'   =>  'Bistro Jacques text',
                     'address1'      =>  '29 Claremount Street',
                     'city'          =>  'Shrewsbury',
@@ -147,15 +186,18 @@ class UpdateRestaurantTest extends DuskTestCase
 
             //visit create page
             $browser->loginAs($user1)
-                    ->visit('/restaurants/'.$restaurant1->id.'/edit')
-                    ->type('name', $restaurant2->name)
-                    ->type('description',$restaurant2->description)
-                    ->type('address1',$restaurant2->address1)
-                    ->type('city',$restaurant2->city)
-                    ->type('county',$restaurant2->county)
-                    ->type('postcode',$restaurant2->postcode)
-                    ->click('button[type="submit"]')
-                    ->assertDontSee('The address1 field is required.')
+                    ->visit('/restaurants/'.$restaurant1->id.'/edit');
+            $this->submitForm($browser,[
+//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
+	            ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+	            ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
+	            ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
+	            ['field_name' =>'address2',     'field_value'=>$restaurant2->address2,      'field_type'=>'text'],
+	            ['field_name' =>'city',         'field_value'=>$restaurant2->city,          'field_type'=>'text'],
+	            ['field_name' =>'county',       'field_value'=>$restaurant2->county,        'field_type'=>'text'],
+	            ['field_name' =>'postcode',     'field_value'=>$restaurant2->postcode,      'field_type'=>'text']
+            ]);
+            $browser->assertDontSee('The address1 field is required.')
                     ->assertDontSee('The potcode must be at least 3 characters.')
                     ->assertSee($restaurant2->name ." restaurant updated")
                     ->logout()
@@ -165,10 +207,10 @@ class UpdateRestaurantTest extends DuskTestCase
 
     /**
      * Test owner cannot update their own restaurant with a name that has already been taken.
-     *
+     * @throws Throwable
      * @return void
      */
-    public function test_owner_cannot_update_their_own_restaurant_with_non_unquie_name()
+    public function test_owner_cannot_update_their_own_restaurant_with_non_unique_name()
     {
         $this->browse(function (Browser $browser) {
             
@@ -185,7 +227,8 @@ class UpdateRestaurantTest extends DuskTestCase
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Bistro Jacques',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'Bistro Jacques',
                     'description'   =>  'Bistro Jacques text',
                     'address1'      =>  '29 Claremount Street',
                     'city'          =>  'Shrewsbury',
@@ -194,7 +237,8 @@ class UpdateRestaurantTest extends DuskTestCase
             );
             $restaurant2 = Restaurant::create(
                 [
-                    'name'          =>  'Bear & Billet',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'Bear & Billet',
                     'description'   =>  'some description',
                     'address1'      =>  '94 Lower Bridge Street',
                     'city'          =>  'Chester',
@@ -204,10 +248,16 @@ class UpdateRestaurantTest extends DuskTestCase
 
             //visit create page
             $browser->loginAs($user1)
-                    ->visit('/restaurants/'.$restaurant1->id.'/edit')
-                    ->type('name', $restaurant2->name)
-                    ->click('button[type="submit"]')
-                    ->assertSee('The name has already been taken.')
+                    ->visit('/restaurants/'.$restaurant1->id.'/edit');
+//                  ->type('name', $restaurant2->name)
+//	                ->click('button[type="submit"]')
+
+            $this   ->submitForm($browser,[
+//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
+                ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+            ]);
+
+            $browser->assertSee('The name has already been taken.')
                     ->assertDontSee($restaurant2->name ." restaurant updated")
                     ->logout()
                     ;

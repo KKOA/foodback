@@ -1,14 +1,15 @@
 <?php
 
-namespace Tests\Browser;
+namespace Tests\Browser\Restaurants;
 
 //Models
-use App\Restaurant as Restaurant;
-use App\User as user;
+use App\Models\Restaurant as Restaurant;
+use App\Models\User as user;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Throwable;
 
 class DeleteRestaurantTest extends DuskTestCase
 {
@@ -16,10 +17,10 @@ class DeleteRestaurantTest extends DuskTestCase
 
     /**
      * Test owner can delete their own restaurant
-     *
+     * @throws Throwable
      * @return void
      */
-    public function test_owner_can_delete_their_own_restaurant()
+    public function test_owner_can_delete_their_own_restaurant() :void
     {
         $this->browse(function (Browser $browser) {
 
@@ -36,7 +37,8 @@ class DeleteRestaurantTest extends DuskTestCase
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Infamous Diner',
+                    'user_id'       => $user1->id,
+                	'name'          =>  'Infamous Diner',
                     'description'   =>  'Infamous Diner text',
                     'address1'      =>  '3-5 Basil Chambers Nicholas Croft',
                     'address2'      =>  '',
@@ -48,7 +50,8 @@ class DeleteRestaurantTest extends DuskTestCase
     
             $restaurant2 = Restaurant::create(
                 [
-                    'name'          =>  'Los Gatos',
+	                'user_id'       => $user1->id,
+                	'name'          =>  'Los Gatos',
                     'description'   =>  'Los Gatos text',
                     'address1'      =>  '1-3 Devizes Road',
                     'address2'      =>  'Old Town',
@@ -74,10 +77,10 @@ class DeleteRestaurantTest extends DuskTestCase
 
     /**
      * test restaurant cannot be deleted by someone who is not owner of the restaurant
-     *
+     * @throws Throwable
      * @return void
      */
-    public function test_non_owner_cannot_delete_anothers_restaurant()
+    public function test_non_owner_cannot_delete_anothers_restaurant() :void
     {
         $this->browse(function (Browser $browser) {
 
@@ -90,11 +93,21 @@ class DeleteRestaurantTest extends DuskTestCase
                     'password'  =>  bcrypt('nisbets')
                 ]
             );
+
+	        $user2 = User::firstOrCreate(
+		        ['name'          =>  'Jon'],
+		        [
+			        'name'          =>  'Jon',
+			        'email'         => 'jon@test.com',
+			        'password'  =>  bcrypt('nisbets')
+		        ]
+	        );
             
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Infamous Diner',
+                    'user_id'       =>  $user1->id,
+                	'name'          =>  'Infamous Diner',
                     'description'   =>  'Infamous Diner text',
                     'address1'      =>  '3-5 Basil Chambers Nicholas Croft',
                     'address2'      =>  '',
@@ -106,7 +119,8 @@ class DeleteRestaurantTest extends DuskTestCase
     
             $restaurant2 = Restaurant::create(
                 [
-                    'name'          =>  'Los Gatos',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'Los Gatos',
                     'description'   =>  'Los Gatos text',
                     'address1'      =>  '1-3 Devizes Road',
                     'address2'      =>  'Old Town',

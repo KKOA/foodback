@@ -1,31 +1,52 @@
 <?php
+declare(strict_types=1);
 
-namespace Tests\Browser;
+namespace Tests\Browser\Restaurants;
 
 // use Faker\Generator as Faker;
 
 //Models
-use App\Restaurant as Restaurant;
-use App\User as User;
+use App\Models\Restaurant;
+use App\Models\User;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Throwable;
+use Tests\Browser\MyHelper\DuskFormHelper;
+use Faker\Factory as FakerFactory;
 
+
+/**
+ * Class CreateRestaurantTest
+ * @package Tests\Browser\Restaurants
+ */
 class CreateRestaurantTest extends DuskTestCase
 {
     use DatabaseMigrations;
-    
+    use DuskFormHelper;
+
+
+	/**
+	 * @param Browser $browser
+	 * @param array $fields
+	 */
+	public function submitForm(Browser $browser, array $fields)
+    {
+	    $this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
+    	$browser->click('button[type="submit"]');
+    }
+
     /**
      * Test user cannot create a restaurant with invalid details 
-     *
+     * @throws Throwable
      * @return void
      */
-    public function test_user_cannot_create_restaurant_with_invalid_details()
+    public function test_user_cannot_create_restaurant_with_invalid_details() :void
     {
         
         $this->browse(function (Browser $browser) {
-            $faker = \Faker\Factory::create();
+            $faker = FakerFactory::create();
             
             //users
             $user1 = User::firstOrCreate(
@@ -40,7 +61,8 @@ class CreateRestaurantTest extends DuskTestCase
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          => 'Benny',
+	                'user_id'       =>  $user1->id,
+                	'name'          => 'Benny',
                     'description'   => 'Benny Text',
                     'address1'      =>  '47 North Baliey',
                     'city'          =>  'Durham',
@@ -62,14 +84,18 @@ class CreateRestaurantTest extends DuskTestCase
 
             //visit create page
             $browser->loginAs($user1)
-                    ->visit('/restaurants/create')
-                    ->type('description',$restaurant2->description)
-                    ->type('address2',$restaurant2->address2)
-                    ->type('city',$restaurant2->city)
-                    ->type('county',$restaurant2->county)
-                    ->type('postcode',$restaurant2->postcode)
-                    ->click('button[type="submit"]')
-                    ->assertSee('The name field is required.')
+                    ->visit('/restaurants/create');
+            $this->submitForm($browser,[
+//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
+                ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+                ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
+                ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
+                ['field_name' =>'address2',     'field_value'=>$restaurant2->address2,      'field_type'=>'text'],
+                ['field_name' =>'city',         'field_value'=>$restaurant2->city,          'field_type'=>'text'],
+                ['field_name' =>'county',       'field_value'=>$restaurant2->county,        'field_type'=>'text'],
+                ['field_name' =>'postcode',     'field_value'=>$restaurant2->postcode,      'field_type'=>'text']
+            ]);
+            $browser->assertSee('The name field is required.')
                     ->assertSee('The description must be at least 3 characters.')
                     ->assertSee('The address1 field is required.')
                     ->assertSee('The address2 must be empty or atleast 3 characters long.')
@@ -82,21 +108,20 @@ class CreateRestaurantTest extends DuskTestCase
                     ->assertSeeIn('.total-restaurants',1)
                     ->assertPresent('#restaurant1')
                     ->assertSeeIn('#restaurant1',$restaurant1->name)
-                    ->assertSeeIn('#restaurant1',$restaurant1->full_address())
+                    ->assertSeeIn('#restaurant1',$restaurant1->fullAddress())
                     ->assertMissing('#restaurant2')
                     ->assertDontSee($restaurant2->name)
-                    ->assertDontSee($restaurant2->full_address())
-                    ->logout()
-            ;
+                    ->assertDontSee($restaurant2->fullAddress())
+                    ->logout();
         });
     }
 
     /**
      * Test guest cannot create a restaurant
-     *
+     * @throws Throwable
      * @return void
      */
-    public function test_guest_cannot_create_restaurant()
+    public function test_guest_cannot_create_restaurant() :void
     {
         
         $this->browse(function (Browser $browser) {
@@ -105,17 +130,16 @@ class CreateRestaurantTest extends DuskTestCase
             //visit create page
             $browser->visit('/restaurants/create')
                     ->assertSeeIn('#loginCard','Login with')
-                    ->assertDontSeeIn('main','Create restaurant ')
-                    ;
+                    ->assertDontSeeIn('main','Create restaurant ');
         });
     }
 
     /**
      * Test user can create a restaurant with valid details.
-     *
+     * @throws Throwable
      * @return void
      */
-    public function test_user_can_create_restaurant_with_valid_details()
+    public function test_user_can_create_restaurant_with_valid_details() :void
     {
         $this->browse(function (Browser $browser) {
 
@@ -131,7 +155,8 @@ class CreateRestaurantTest extends DuskTestCase
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          => 'Benny',
+                    'user_id'       => $user1->id,
+                	'name'          => 'Benny',
                     'description'   => 'Benny Text',
                     'address1'      =>  '47 North Baliey',
                     'city'          =>  'Durham',
@@ -141,7 +166,8 @@ class CreateRestaurantTest extends DuskTestCase
 
             $restaurant2 = new Restaurant(
                 [
-                    'name'          =>  'bebo',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'bebo',
                     'description'   =>  'some random text',
                     'address1'      =>  '28 Church Road',
                     'city'          =>  'Hove',
@@ -152,40 +178,43 @@ class CreateRestaurantTest extends DuskTestCase
 
             //visit create page
             $browser->loginAs($user1)
-                    ->visit('/restaurants/create')
-                    ->type('name', $restaurant2->name)
-                    ->type('description',$restaurant2->description)
-                    ->type('address1',$restaurant2->address1)
-                    ->type('city',$restaurant2->city)
-                    ->type('county',$restaurant2->county)
-                    ->type('postcode',$restaurant2->postcode)
-                    ->click('button[type="submit"]')
-                    ->assertDontSee('The name field is required.')
+                    ->visit('/restaurants/create');
+
+            $this->submitForm($browser,[
+//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
+                ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+                ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
+                ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
+                ['field_name' =>'address2',     'field_value'=>$restaurant2->address2,      'field_type'=>'text'],
+                ['field_name' =>'city',         'field_value'=>$restaurant2->city,          'field_type'=>'text'],
+                ['field_name' =>'county',       'field_value'=>$restaurant2->county,        'field_type'=>'text'],
+                ['field_name' =>'postcode',     'field_value'=>$restaurant2->postcode,      'field_type'=>'text']
+            ]);
+
+            $browser->assertDontSee('The name field is required.')
                     ->assertDontSee('The description must be at least 3 characters.')
                     ->assertSee($restaurant2->name ." restaurant created")
                     ->assertSee($restaurant2->description)
-                    ->assertSee($restaurant2->full_address())
-                    ;
+                    ->assertSee($restaurant2->fullAddress());
             //Visit homepage
             $browser->visit('/restaurants')
                     ->assertSeeIn('.total-restaurants',2)
                     ->assertPresent('#restaurant1')
                     ->assertSeeIn('#restaurant1',$restaurant1->name)
-                    ->assertSeeIn('#restaurant1',$restaurant1->full_address())
+                    ->assertSeeIn('#restaurant1',$restaurant1->fullAddress())
                     ->assertPresent('#restaurant2')
                     ->assertSeeIn('#restaurant2',$restaurant2->name)
-                    ->assertSeeIn('#restaurant2',$restaurant2->full_address())
-                    ->logout()
-                    ;
+                    ->assertSeeIn('#restaurant2',$restaurant2->fullAddress())
+                    ->logout();
         });
     }
 
     /**
      * Test user cannot create a restaurant with a name that has already been taken.
-     *
+     * @throws Throwable
      * @return void
      */
-    public function test_user_cannot_create_restaurant_with_non_unquie_name()
+    public function test_user_cannot_create_restaurant_with_non_unique_name() :void
     {
         $this->browse(function (Browser $browser) {
             //users
@@ -201,7 +230,8 @@ class CreateRestaurantTest extends DuskTestCase
             //restaurants
             $restaurant1 = Restaurant::create(
                 [
-                    'name'          =>  'Bear & Billet',
+	                'user_id'       =>  $user1->id,
+                	'name'          =>  'Bear & Billet',
                     'description'   =>  'some description',
                     'address1'      =>  '94 Lower Bridge Street',
                     'city'          =>  'Chester',
@@ -222,15 +252,18 @@ class CreateRestaurantTest extends DuskTestCase
 
             //visit create page
             $browser->loginAs($user1)
-                    ->visit('/restaurants/create')
-                    ->type('name', $restaurant2->name)
-                    ->type('description',$restaurant2->desc)
-                    ->type('address1',$restaurant2->address1)
-                    ->type('address2',$restaurant2->address2)
-                    ->type('city',$restaurant2->city)
-                    ->type('postcode',$restaurant2->postcode)
-                    ->click('button[type="submit"]')
-                    ->assertSee('The name has already been taken.')
+                    ->visit('/restaurants/create');
+	        $this->submitForm($browser,[
+//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
+		        ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+		        ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
+		        ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
+		        ['field_name' =>'address2',     'field_value'=>$restaurant2->address2,      'field_type'=>'text'],
+		        ['field_name' =>'city',         'field_value'=>$restaurant2->city,          'field_type'=>'text'],
+		        ['field_name' =>'county',       'field_value'=>$restaurant2->county,        'field_type'=>'text'],
+		        ['field_name' =>'postcode',     'field_value'=>$restaurant2->postcode,      'field_type'=>'text']
+	        ]);
+            $browser->assertSee('The name has already been taken.')
                     ->assertDontSee($restaurant2->name ." restaurant created")
                     ;
             //Visit homepage
@@ -239,34 +272,23 @@ class CreateRestaurantTest extends DuskTestCase
                     ->assertSeeIn('#restaurant1',$restaurant1->name)
                     ->assertSeeIn('.total-restaurants',1)
                     ->assertMissing('#restaurant2')
-                    ->assertDontSee($restaurant2->full_address())
-                    ->logout()
-            ;
+                    ->assertDontSee($restaurant2->fullAddress())
+                    ->logout();
         });
     }
 
-    public function fillForm(Browser $browser, $restaurantDetails)
+	/**
+	 * @param Browser $browser
+	 * @param $restaurantDetails
+	 */
+	public function fillForm(Browser $browser, $restaurantDetails) :void
     {
         $browser->type('name', $restaurantDetails->name)
-            ->type('description',$restaurantDetails->description)
-            ->type('address1',$restaurantDetails->address1)
-            ->type('city',$restaurantDetails->city)
-            ->type('county',$restaurantDetails->county)
-            ->type('postcode',$restaurantDetails->postcode)
-            ;
+	            ->type('description',$restaurantDetails->description)
+	            ->type('address1',$restaurantDetails->address1)
+	            ->type('city',$restaurantDetails->city)
+	            ->type('county',$restaurantDetails->county)
+	            ->type('postcode',$restaurantDetails->postcode);
     }
-
-    public function submitForm(Browser $browser,$restaurantDetails)
-    {
-        $this->fillForm($browser,$restaurantDetails);
-        $browser->click('button[type="submit"]');
-    }
-
-    public function generateUser()
-    {
-        
-        return User::all();
-    }
-
 
 }

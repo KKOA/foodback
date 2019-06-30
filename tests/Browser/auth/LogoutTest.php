@@ -1,14 +1,21 @@
 <?php
+declare(strict_types=1);
 
-namespace Tests\Browser\auth;
+namespace Tests\Browser\Auth;
 
 //Models
-use App\User as User;
+use App\Models\User as User;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Throwable;
 
+
+/**
+ * Class LogoutTest
+ * @package Tests\Browser\Auth
+ */
 class LogoutTest extends DuskTestCase
 {
     use DatabaseMigrations;
@@ -16,6 +23,7 @@ class LogoutTest extends DuskTestCase
     /**
      * Test a login user can logout of their account
      *  @test
+     * @throws Throwable
      * @return void
      */
     public function user_can_logout_of_their_account()

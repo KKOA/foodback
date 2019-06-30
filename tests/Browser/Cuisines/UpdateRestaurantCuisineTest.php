@@ -1,20 +1,29 @@
 <?php
+declare(strict_types=1);
+namespace Tests\Browser\Cuisines;
 
-namespace Tests\Browser\cuisine;
-
-use App\Restaurant as Restaurant;
-use App\Cuisine as Cuisine;
-use App\User as User;
+use App\Models\Restaurant;
+use App\Models\Cuisine;
+use App\Models\User;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Throwable;
 
+
+/**
+ * Class UpdateRestaurantCuisineTest
+ * @package Tests\Browser\Cuisines
+ */
 class UpdateRestaurantCuisineTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    public function SetUpCusines()
+	/**
+	 * @return void
+	 */
+	public function setUpCusines() :void
     {
         //Create Cuisines
         Cuisine::create(['name'=>'French']);
@@ -22,11 +31,16 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
         Cuisine::create(['name'=>'Japanese']);
     }
 
-    public function SetUpRestaurants()
+	/**
+	 * @param User $user
+	 * @return void
+	 */
+	public function SetUpRestaurants(User $user) :void
     {
         //Create Cuisines
         Restaurant::create(
             [
+            	'user_id'       =>$user->id,
                 'name'          => 'Benny',
                 'description'   => 'Benny Text',
                 'address1'      =>  '47 North Baliey',
@@ -36,7 +50,8 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
         );
         Restaurant::create(
             [
-                'name'          =>  'bebo',
+	            'user_id'       =>$user->id,
+            	'name'          =>  'bebo',
                 'description'   =>  'some random text',
                 'address1'      =>  '28 Church Road',
                 'city'          =>  'Hove',
@@ -47,15 +62,15 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
     }
 
     /**
-     * A Dusk test example.
      *
+     * @throws Throwable
      * @return void
      */
-    public function test_restaurant_owner_can_update_their_own_restaurant_with_a_cuisine_type()
+    public function test_restaurant_owner_can_update_their_own_restaurant_with_a_cuisine_type() :void
     {
         $this->browse(function (Browser $browser) {
             
-            $this->SetUpCusines();
+            $this->setUpCusines();
             
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
@@ -70,9 +85,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     'password'  =>  bcrypt('nisbets')
                 ]
             );
-            $this->SetUpRestaurants();
-
-
+            $this->SetUpRestaurants($user1);
 
             $browser->loginAs($user1)
                     ->visit('/restaurants/2/edit')
@@ -95,10 +108,14 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
         });
     }
 
-    public function test_restaurant_owner_can_update_their_own_restaurant_with_multiple_cuisine_type()
+	/**
+	 * @throws Throwable
+	 * @returns void
+	 */
+	public function test_restaurant_owner_can_update_their_own_restaurant_with_multiple_cuisine_type() :void
     {
         $this->browse(function (Browser $browser) {
-            $this->SetUpCusines();
+            $this->setUpCusines();
                 
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
@@ -114,7 +131,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                 ]
             );
 
-            $this->SetUpRestaurants();
+            $this->SetUpRestaurants($user1);
 
             $browser->loginAs($user1)
                     ->visit('/restaurants/2/edit')
@@ -138,11 +155,15 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
         });
     }
 
-    public function test_restaurant_owner_can_remove_a_cuisine_type_from_their_own_restaurant()
+	/**
+	 * @throws Throwable
+	 * @return void
+	 */
+	public function test_restaurant_owner_can_remove_a_cuisine_type_from_their_own_restaurant() :void
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
-            $this->SetUpCusines();
+            $this->setUpCusines();
                 
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
@@ -159,7 +180,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             );
 
             //Restaurants
-            $this->SetUpRestaurants();
+            $this->SetUpRestaurants($user1);
             $restaurant2 = Restaurant::find(2);
 
             //Link Restaurant & cuisine
@@ -184,14 +205,17 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     ->logout()
                     ;
         });
-
     }
 
-    public function test_restaurant_owner_can_remove_cuisine_types_from_their_own_restaurant()
+	/**
+	 * @throws Throwable
+	 * @return void
+	 */
+	public function test_restaurant_owner_can_remove_cuisine_types_from_their_own_restaurant() :void
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
-            $this->SetUpCusines();
+            $this->setUpCusines();
                 
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
@@ -208,7 +232,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             );
 
             //Restaurants
-            $this->SetUpRestaurants();
+            $this->SetUpRestaurants($user1);
             $restaurant2 = Restaurant::find(2);
 
             //Link Restaurant & cuisine
@@ -233,7 +257,6 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
                     ->logout()
                     ;
-
         });
 
     }
