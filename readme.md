@@ -5,7 +5,7 @@ Constructed a clone of Yelp using following technology
 - JavaScript, jquery & jquery Raty
 - MySQL
 - CSS & SCSS
-- SQLite (Testing only)
+- ~~SQLite (Testing only)~~
 - PHPUnit (Testing Only)
 - Laravel dusk (Testing Only)
 
@@ -49,8 +49,14 @@ DB_DATABASE=homestead
 DB_USERNAME=homestead
 DB_PASSWORD=secret
 ```
+Next step  create database. In mysql run the following commands
+```
+CREATE DATABASE foodback
+CREATE DATABASE foodback_dusk
+```
+**Make sure the database name matches the value of DB_DATABASE in your .env file (case sensitive).**
 
-Open a MySQL connection and create a database with the same name as the value of DB_DATABASE in your .env file.
+A copy of these commands can be found inside the Database directory as a .sql file. 
 
 In the terminal/command prompt, enter the following:
 
@@ -86,6 +92,12 @@ Click the link in command prompt/terminal to open application in the browser.
 
 ### Laravel Dusk
 
+If you have followed the **Setup Application** process, the mysql database has already setup. 
+
+If you have chosen another database other than mysql or chosen different name for the database, 
+you will need to update the respective values in the .env.dusk.local.
+
+<!--
 The following instructions assume that sqlite is installed. 
 ```
 cd foodback
@@ -93,7 +105,8 @@ cd database
 touch foodback_dusk.sqlite
 ```
 
-If you intend to use another database, you will need to update database configuration in .env.dusk.local and ignore the previous step.
+If you intend to use another database, you will need to update the database configuration in .env.dusk.local and ignore the previous step.
+-->
 
 Generate key for .env.dusk.local
 ```
