@@ -1,9 +1,17 @@
 <?php
+declare(strict_types=1);
+
+//Models
+use App\Models\Cuisine;
+use App\Models\Restaurant;
 
 use Illuminate\Database\Seeder;
-use App\Cuisine as Cuisine;
-use App\Restaurant as Restaurant;
+use Faker\Factory;
 
+
+/**
+ * Class DatabaseSeeder
+ */
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -11,7 +19,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run() :void
     {
         // $this->call(UsersTableSeeder::class);
         $this->call(UserSeeder::class);
@@ -19,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RestaurantSeeder::class);
         $this->call(ReviewSeeder::class);
 
-        $faker = Faker\Factory::create();
+        $faker = Factory::create();
 
         $restaurants = Restaurant::all();
         $cuisines = Cuisine::all()->pluck('id')->toArray();

@@ -1,8 +1,16 @@
 <?php
+declare(strict_types=1);
+
+//Models
+use App\Models\Cuisine;
 
 use Illuminate\Database\Seeder;
-use App\Cuisine;
 
+
+
+/**
+ * Class CuisineSeeder
+ */
 class CuisineSeeder extends Seeder
 {
     /**

@@ -1,8 +1,14 @@
 <?php
+declare(strict_types=1);
+
+//Models
+use App\Models\User;
 
 use Illuminate\Database\Seeder;
-use App\User as User;
 
+/**
+ * Class UserSeeder
+ */
 class UserSeeder extends Seeder
 {
     /**
@@ -10,52 +16,22 @@ class UserSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run() :void
     {
-        $user1 = User::firstOrCreate(
-            ['name'=>'Keith'], //Greek
-            [
-                'name'          =>  'Keith',
-                'email'         => 'keith@test.com',
-                'password'      =>  bcrypt('secret')
-            ]
-        );
-
-        $user2 = User::firstOrCreate(
-            ['name'=>'Tom'], //Greek
-            [
-                'name'          =>  'Tom',
-                'email'         => 'tom@test.com',
-                'password'      =>  bcrypt('secret')
-            ]
-        );
-
-        $user3 = User::firstOrCreate(
-            ['name'=>'Sarah'], //Greek
-            [
-                'name'          =>  'Sarah',
-                'email'         => 'sarah@test.com',
-                'password'      =>  bcrypt('secret')
-            ]
-        );
-
-        $user4 = User::firstOrCreate(
-            ['name'=>'Mary'], //Greek
-            [
-                'name'          =>  'Mary',
-                'email'         => 'mary@test.com',
-                'password'      =>  bcrypt('secret')
-            ]
-        );
-
-        $user5 = User::firstOrCreate(
-            ['name'=>'Aaron'], //Greek
-            [
-                'name'          =>  'Aaron',
-                'email'         => 'aaron@test.com',
-                'password'      =>  bcrypt('secret')
-            ]
-        );
+        $names = ['keith','tom','sarah','mary','aaron'];
+	    $password = bcrypt('secret');
+	    $domain =  'test.com';
+        foreach($names as $name)
+        {
+	        User::firstOrCreate(
+		        ['name'=>ucfirst($name)],
+		        [
+			        'name'          =>  ucfirst($name),
+			        'email'         => $name.'@'.$domain,
+			        'password'      =>  $password
+		        ]
+	        );
+        }
 
     }
 }

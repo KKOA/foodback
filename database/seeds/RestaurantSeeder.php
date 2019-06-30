@@ -1,10 +1,17 @@
 <?php
+declare(strict_types=1);
+
+//Models
+use App\Models\Restaurant;
+use App\Models\User;
 
 use Illuminate\Database\Seeder;
-use App\Restaurant as Restaurant;
-use App\User as User;
+use Faker\Factory;
 
 
+/**
+ * Class RestaurantSeeder
+ */
 class RestaurantSeeder extends Seeder
 {
     /**
@@ -15,7 +22,7 @@ class RestaurantSeeder extends Seeder
     public function run()
     {
         $restaurantImg = '/imgs/restaurants/';
-        $faker = Faker\Factory::create();
+        $faker = Factory::create();
 
         $lastUserId = User::all()->last()->id;
 
