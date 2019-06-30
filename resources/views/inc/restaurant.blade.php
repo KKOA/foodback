@@ -12,14 +12,14 @@
                 @if($restaurant->cover_image)
                     <img src="{{asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image)}}" alt="{{$restaurant->name.' cover image'}}">
                 @else
-                    <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image avaliable" alt="No image avaliable">
+                    <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image available" alt="No image available">
                 @endif
             </a>
             <div class="prop-info">
                 <ul class='more-info align-items-center'>
                     <li class="clearfix location">
                         <div class='address text-center'>
-                                {{$restaurant->full_address()}}
+                                {{$restaurant->fullAddress()}}
                         </div>
                     </li>
                     <li class="clearfix">

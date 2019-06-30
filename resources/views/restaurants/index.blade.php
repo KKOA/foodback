@@ -84,7 +84,7 @@
 
 				@else
 					<div class="jumbotron" style='background:#fff;'>
-						<h3 class='text-center'> No restaurants avaliable. </h3>
+						<h3 class='text-center'> No restaurants available. </h3>
 					</div>
 				@endif
 			</div>

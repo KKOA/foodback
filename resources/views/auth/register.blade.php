@@ -70,13 +70,12 @@
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                    <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                     @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
-                                            <div class="invalid-feedback-content">
-                                                <i class="fas fa-exclamation-circle fa-lg"></i>
-                                                <strong>{{ $errors->first('email') }}</strong>
+                                            <div class="invalid-feedback-content font-weight-bold">
+                                                <i class="fas fa-exclamation-circle fa-lg"></i>{{ $errors->first('email') }}
                                             </div>
                                         </span>
                                     @endif
@@ -91,7 +90,7 @@
                                     <small> <span style="color:#25406F;"><i class='fas fa-info-circle fa-lg'></i></span> Min 6 characters, case sensitive </small>
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
-                                            <div class="invalid-feedback-content">
+                                            <div class="invalid-feedback-content font">
                                                 <i class="fas fa-exclamation-circle fa-lg"></i>
                                                 <strong>{{ $errors->first('password') }}</strong>
                                             </div>

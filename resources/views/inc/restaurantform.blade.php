@@ -30,7 +30,6 @@
                 'name' => 'name',
                 'value' => old('name')?? $restaurant->name,
                 'placeholder'=>'E.g. Wild Thyme Cafe',
-                'required'=>true,
                 'info'=>'Min 3 Characters'
             ], $errors) !!}
 
@@ -40,7 +39,6 @@
                 'name' => 'description',
                 'value' => old('description')?? $restaurant->description,
                 'placeholder'=>'Restaurant Description',
-                'required'=>true,
                 'row'=>5,
                 'info'=>'Min 3 Characters'
             ], $errors) !!}
@@ -51,7 +49,7 @@
                 'name' => 'address1',
                 'value' => old('address1')?? $restaurant->address1,
                 'placeholder'=>'200 Cheam Road',
-                'required'=>true
+                
                 // 'info'=>'Min 3 Characters'
             ],
              $errors) !!}
@@ -61,7 +59,7 @@
                 'name' => 'address2',
                 'value' => old('address2')?? $restaurant->address2,
                 'placeholder'=>'Sparcells'
-                // 'required'=>true,
+                // ,
                 // 'info'=>'Min 3 Characters'
             ],
              $errors) !!}
@@ -71,7 +69,7 @@
                 'name' => 'city',
                 'value' => old('city')?? $restaurant->city,
                 'placeholder'=>'Bristol',
-                'required'=>true
+                
                 // 'info'=>'Min 3 Characters'
             ],
              $errors) !!}
@@ -81,7 +79,7 @@
                 'name' => 'county',
                 'value' => old('county')?? $restaurant->county,
                 'placeholder'=>'Wiltshire'
-                // 'required'=>true
+                // 
                 // 'info'=>'Min 3 Characters'
             ],
              $errors) !!}
@@ -91,7 +89,7 @@
                 'name' => 'postcode',
                 'value' => old('postcode')?? $restaurant->postcode,
                 'placeholder'=>'EN1 DG2',
-                'required'=>true
+                
                 // 'info'=>'Min 3 Characters'
             ],
              $errors) !!}
@@ -123,7 +121,7 @@
                         <img src="{{asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image)}}" alt="{{$restaurant->name.' cover image'}}"
                         id='imgPreview'>
                     @else
-                        <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image avaliable" alt="No image avaliable" id='imgPreview'>
+                        <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image available" alt="No image available" id='imgPreview'>
                     @endif
                 </div>
             </div>

@@ -31,27 +31,19 @@
                 @if($restaurant->cover_image)
                     <img src="{{asset('storage/upload/restaurants/'.$restaurant->id.'/'.$restaurant->cover_image)}}" alt="{{$restaurant->name.' cover image'}}">
                 @else
-                    <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image avaliable" alt="No image avaliable">
+                    <img src="{{asset('imgs/placeholder/restaurant.png')}}" title="No image available" alt="No image available">
                 @endif
             </a>
             {{-- Adress --}}
             <div class='address'>
-                <div class='text-center'>{{$restaurant->full_address()}}</div>
+                <div class='text-center'>{{$restaurant->fullAddress()}}</div>
             </div> 
             <ul class='more-info row'>
                 <li class="clearfix col-sm-11 center-offset-sm-1">
-                    {{-- <span class="pull-left field-name">Type:</span>
-                    <span class="qty pull-right cuisine-value"> --}}
-                        {{-- <%= render 'category', categories: @restaurant.categories %> --}}
-                    {{-- </span> --}}
                     <div class="field-name">Cuisine Type :</div>
                     <div class='cuisine-value'>
 
                         @if($restaurant->cuisines()->count() > 0)
-                            <?php //print_r($restaurant->cuisines()->get()->implode('name',', ')); ?>
-                            {{-- @foreach($restaurant->cuisines as $cuisine)
-                                {{$cuisine->name}}
-                            @endforeach --}}
                             {{$restaurant->cuisines()->get()->implode('name',', ')}}
                         @else
                             Not specified

@@ -59,7 +59,7 @@
         </div>
     @endforeach
 @else
-    <h3>No reviews avaliable for this restaurant</h3> 
+    <h3>No reviews available for this restaurant</h3>
     <a href='{{route('restaurants.reviews.create',[$restaurant->id])}}' id='write-restaurant' class='btn btn-primary' title='Write new review'>
         Write a Review <i class='glyphicon glyphicon-star'></i>
     </a>
