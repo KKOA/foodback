@@ -30,25 +30,12 @@ class ViewRestaurantsTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
 
-	        $user1 = User::firstOrCreate(
-		        ['name'          =>  'Keith'],
-		        [
-			        'name'          =>  'Keith',
-			        'email'         => 'keith@test.com',
-			        'password'  =>  bcrypt('nisbets')
-		        ]
-	        );
+	        //users
+	        $user1 = factory(User::class)->create();
 
-            $restaurant1 = new Restaurant(
-                [
-                    'user_id'       => $user1->id,
-                	'name'          => 'Benny',
-                    'description'   => 'Benny Text',
-                    'address1'      =>  '47 North Baliey',
-                    'city'          =>  'Durham',
-                    'postcode'      =>  'DH1 3ET'
-                ]
-            );
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->make(['user_id'=>$user1->id]);
+
             $browser->visit('/restaurants')
                     ->assertPathIs('/restaurants')
                     ->assertSee('No restaurants available.')
@@ -69,45 +56,24 @@ class ViewRestaurantsTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
 
-	        $user1 = User::firstOrCreate(
-		        ['name'          =>  'Keith'],
-		        [
-			        'name'          =>  'Keith',
-			        'email'         => 'keith@test.com',
-			        'password'  =>  bcrypt('nisbets')
-		        ]
-	        );
+			//users
+	        $user1 = factory(User::class)->create();
 
-            //Create Restaurants
-            $restaurant1 = Restaurant::create(
-                [
-	                'user_id'       => $user1->id,
-                	'name'          => 'Benny',
-                    'description'   => 'Benny Text',
-                    'address1'      =>  '47 North Baliey',
-                    'city'          =>  'Durham',
-                    'postcode'      =>  'DH1 3ET'
-                ]
-            );
-            $restaurant2 = Restaurant::create(
-                [
-	                'user_id'       => $user1->id,
-                	'name'          => 'Jimmy',
-                    'description'   => 'Jimmy Text',
-                    'address1'      =>  '28 Church Road',
-                    'address2'      =>  'Chalkton',
-                    'city'          =>  'Hove',
-                    'postcode'      =>  'BN3 2FN'
-                ]
-            );
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create([
+	        	'user_id'=>$user1->id,
+		        'name'=>"Effertz, O&#039;Keefe And Heaney"
+//		        'name'=>"Effertz, O'Keefe And Heaney"
+	        ]);
 
             $browser->visit('/restaurants')
                     ->assertPathIs('/restaurants')
-                    ->assertSeeIn('#restaurant'.$restaurant1->id,e($restaurant1->name))
-                    ->assertSeeIn('#restaurant'.$restaurant1->id,e($restaurant1->fullAddress()))
+                    ->assertSeeIn('#restaurant'.$restaurant1->id,$restaurant1->name)
+                    ->assertSeeIn('#restaurant'.$restaurant1->id,$restaurant1->fullAddress())
                     ->assertSeeIn('#restaurant1 .cuisine-value','Not specified')
-                    ->assertSeeIn('#restaurant'.$restaurant2->id,e($restaurant2->name))
-                    ->assertSeeIn('#restaurant'.$restaurant2->id,e($restaurant2->fullAddress()))
+                    ->assertSeeIn('#restaurant'.$restaurant2->id,$restaurant2->name)
+                    ->assertSeeIn('#restaurant'.$restaurant2->id,$restaurant2->fullAddress())
                     ->assertSeeIn('#restaurant2 .cuisine-value','Not specified')
                     ->assertSeeIn('.total-restaurants',2)
                     ->assertDontSee('No restaurants available.')

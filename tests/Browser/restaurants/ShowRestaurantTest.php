@@ -17,7 +17,6 @@ class ShowRestaurantTest extends DuskTestCase
 
 	/**
 	 * Test guest can view restaurant
-	 *
 	 * @return void
 	 * @throws Throwable
 	 */
@@ -25,41 +24,12 @@ class ShowRestaurantTest extends DuskTestCase
 	{
 		$this->browse(function (Browser $browser) {
 
-			$user1 = User::firstOrCreate(
-				['name'          =>  'Keith'],
-				[
-					'name'          =>  'Keith',
-					'email'         => 'keith@test.com',
-					'password'  =>  bcrypt('nisbets')
-				]
-			);
+			//users
+			$user1 = factory(User::class)->create();
 
-
-			$restaurant1 = Restaurant::create(
-				[
-					'user_id'       => $user1->id,
-					'name'          =>  'Nur',
-					'description'   =>  'Nur text',
-					'address1'      =>  '22 Bridge Street',
-					'address2'      =>  '',
-					'city'          =>  'Glasgow',
-					'county'        =>  '',
-					'postcode'      =>  'G5 9HR'
-				]
-			);
-
-			$restaurant2 = Restaurant::create(
-				[
-					'user_id'       => $user1->id,
-					'name'          =>  'Thai Garden',
-					'description'   =>  'Thai Garden text',
-					'address1'      =>  '100 West Street',
-					'address2'      =>  '',
-					'city'          =>  'Bristol',
-					'county'        =>  '',
-					'postcode'      =>  'BS3 3LR'
-				]
-			);
+			//restaurants
+			$restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+			$restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
 			$browser->visit('/restaurants/'.$restaurant1->id)
 				->assertSee($restaurant1->name)

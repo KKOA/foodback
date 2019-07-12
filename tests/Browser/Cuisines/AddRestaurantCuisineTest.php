@@ -10,6 +10,7 @@ use App\Models\User as User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Throwable;
 
 
 /**
@@ -26,7 +27,7 @@ class AddRestaurantCuisineTest extends DuskTestCase
      * @return void
      */
 
-    public function SetUpCusines()
+    public function SetUpCuisines() :void
     {
         //Create Cuisines
         Cuisine::create(['name'=>'French']);
@@ -68,42 +69,24 @@ class AddRestaurantCuisineTest extends DuskTestCase
     // }
 
 	/**
-	 * @throws \Throwable
+	 * @throws Throwable
+	 * @return void
 	 */
-	public function test_user_can_create_restaurant_with_a_cuisine_type()
+	public function test_user_can_create_restaurant_with_a_cuisine_type() :void
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
-            $this->SetUpCusines();
+            $this->SetUpCuisines();
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
 	        //Users
-	        $user1 = User::firstOrCreate(
-		        ['name'          =>  'Keith'],
-		        [
-			        'name'          =>  'Keith',
-			        'email'         => 'keith@test.com',
-			        'password'  =>  bcrypt('nisbets')
-		        ]
-	        );
+	        $user1 = factory(User::class)->create();
 
             // Restaurants
-            $this->SetUpRestaurants($user1);
-
-
-            $restaurant2 = new Restaurant(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'bebo',
-                    'description'   =>  'some random text',
-                    'address1'      =>  '28 Church Road',
-                    'city'          =>  'Hove',
-                    'county'        =>  'East Sussex',
-                    'postcode'      =>  'BN3 2FN'
-                ]
-            );
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->make();
 
             $browser->loginAs($user1)
                     ->visit('/restaurants/create')
@@ -121,53 +104,34 @@ class AddRestaurantCuisineTest extends DuskTestCase
                     ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
                     ->press('#view-restaurants')
                     // index
-                    ->assertSeeIn('#restaurant1 .cuisine-value','Not specified')
+                    ->assertSeeIn('#restaurant'.$restaurant1->id.' .cuisine-value','Not specified')
                     ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
                     ->logout()
                     ;
         });
-
-        
     }
 
 	/**
-	 * @throws \Throwable
+	 * @throws Throwable
+	 * @return void
 	 */
-	public function test_user_can_create_restaurant_with_multiple_cuisine_type()
+	public function test_user_can_create_restaurant_with_multiple_cuisine_type() :void
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
-            $this->SetUpCusines();
+            $this->SetUpCuisines();
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
             //Users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        $user1 = factory(User::class)->create();
 
             // Restaurants
-            $this->SetUpRestaurants($user1);
-            
-            $restaurant2 = new Restaurant(
-                [
-                    'user_id'       =>  $user1->id,
-                	'name'          =>  'bebo',
-                    'description'   =>  'some random text',
-                    'address1'      =>  '28 Church Road',
-                    'city'          =>  'Hove',
-                    'county'        =>  'East Sussex',
-                    'postcode'      =>  'BN3 2FN'
-                ]
-            );
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->make();
 
             $browser->loginAs($user1)
                     ->visit('/restaurants/create')

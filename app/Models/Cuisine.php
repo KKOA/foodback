@@ -19,9 +19,8 @@ class Cuisine extends Model
 	 * @var array $fillable
 	 */
 	protected $fillable =['name'];
-    
 
-    // DEFINE Mutators --------------------------------------------------
+	// DEFINE Mutators --------------------------------------------------
     
     // Getter
 	/**

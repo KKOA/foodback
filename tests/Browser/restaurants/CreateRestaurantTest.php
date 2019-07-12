@@ -26,7 +26,6 @@ class CreateRestaurantTest extends DuskTestCase
     use DatabaseMigrations;
     use DuskFormHelper;
 
-
 	/**
 	 * @param Browser $browser
 	 * @param array $fields
@@ -47,28 +46,12 @@ class CreateRestaurantTest extends DuskTestCase
         
         $this->browse(function (Browser $browser) {
             $faker = FakerFactory::create();
-            
-            //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
 
-            //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          => 'Benny',
-                    'description'   => 'Benny Text',
-                    'address1'      =>  '47 North Baliey',
-                    'city'          =>  'Durham',
-                    'postcode'      =>  'DH1 3ET'
-                ]
-            );
+	        //users
+			$user1 = factory(User::class)->create();
+
+	        //restaurants
+			$restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             $restaurant2 = new Restaurant(
                 [
@@ -86,7 +69,6 @@ class CreateRestaurantTest extends DuskTestCase
             $browser->loginAs($user1)
                     ->visit('/restaurants/create');
             $this->submitForm($browser,[
-//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
                 ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
                 ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
                 ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
@@ -103,6 +85,7 @@ class CreateRestaurantTest extends DuskTestCase
                     ->assertSee('The county may not be greater than 255 characters.')
                     ->assertSee('The postcode may not be greater than 10 characters.')
                     ->assertDontSee($restaurant2->name ." restaurant created");
+
             //Visit homepage
             $browser->visit('/restaurants')
                     ->assertSeeIn('.total-restaurants',1)
@@ -125,7 +108,6 @@ class CreateRestaurantTest extends DuskTestCase
     {
         
         $this->browse(function (Browser $browser) {
-            $faker = \Faker\Factory::create();
             
             //visit create page
             $browser->visit('/restaurants/create')
@@ -144,44 +126,17 @@ class CreateRestaurantTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
             //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
-            //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-                    'user_id'       => $user1->id,
-                	'name'          => 'Benny',
-                    'description'   => 'Benny Text',
-                    'address1'      =>  '47 North Baliey',
-                    'city'          =>  'Durham',
-                    'postcode'      =>  'DH1 3ET'
-                ]
-            );
+	        $user1 = factory(User::class)->create();
 
-            $restaurant2 = new Restaurant(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'bebo',
-                    'description'   =>  'some random text',
-                    'address1'      =>  '28 Church Road',
-                    'city'          =>  'Hove',
-                    'county'        =>  'East Sussex',
-                    'postcode'      =>  'BN3 2FN'
-                ]
-            );
+            //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->make();
 
             //visit create page
             $browser->loginAs($user1)
                     ->visit('/restaurants/create');
 
             $this->submitForm($browser,[
-//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
                 ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
                 ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
                 ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
@@ -218,43 +173,16 @@ class CreateRestaurantTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        $user1 = factory(User::class)->create();
 
             //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'Bear & Billet',
-                    'description'   =>  'some description',
-                    'address1'      =>  '94 Lower Bridge Street',
-                    'city'          =>  'Chester',
-                    'postcode'      =>  'CH1 1RU'
-                ]
-            );
-
-            $restaurant2 = new Restaurant(
-                [
-                    'name'          =>  $restaurant1->name,
-                    'description'   =>  'some random text',
-                    'address1'      =>  '28 Church Road',
-                    'address2'      =>  'Rackton',
-                    'city'          =>  'Hove',
-                    'postcode'      =>  'BN3 2FN'
-                ]
-            );
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id' => $user1->id ]);
+	        $restaurant2 = factory(Restaurant::class)->make(['name' =>  $restaurant1->name]);
 
             //visit create page
             $browser->loginAs($user1)
                     ->visit('/restaurants/create');
 	        $this->submitForm($browser,[
-//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
 		        ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
 		        ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
 		        ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
@@ -264,8 +192,7 @@ class CreateRestaurantTest extends DuskTestCase
 		        ['field_name' =>'postcode',     'field_value'=>$restaurant2->postcode,      'field_type'=>'text']
 	        ]);
             $browser->assertSee('The name has already been taken.')
-                    ->assertDontSee($restaurant2->name ." restaurant created")
-                    ;
+                    ->assertDontSee($restaurant2->name ." restaurant created");
             //Visit homepage
             $browser->visit('/restaurants')
                     ->assertPresent('#restaurant1')
@@ -276,19 +203,4 @@ class CreateRestaurantTest extends DuskTestCase
                     ->logout();
         });
     }
-
-	/**
-	 * @param Browser $browser
-	 * @param $restaurantDetails
-	 */
-	public function fillForm(Browser $browser, $restaurantDetails) :void
-    {
-        $browser->type('name', $restaurantDetails->name)
-	            ->type('description',$restaurantDetails->description)
-	            ->type('address1',$restaurantDetails->address1)
-	            ->type('city',$restaurantDetails->city)
-	            ->type('county',$restaurantDetails->county)
-	            ->type('postcode',$restaurantDetails->postcode);
-    }
-
 }

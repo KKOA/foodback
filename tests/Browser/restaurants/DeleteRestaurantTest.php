@@ -24,42 +24,12 @@ class DeleteRestaurantTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
 
-            //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        //users
+	        $user1 = factory(User::class)->create();
 
-            //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-                    'user_id'       => $user1->id,
-                	'name'          =>  'Infamous Diner',
-                    'description'   =>  'Infamous Diner text',
-                    'address1'      =>  '3-5 Basil Chambers Nicholas Croft',
-                    'address2'      =>  '',
-                    'city'          =>  'Manchester',
-                    'county'        =>  '',
-                    'postcode'      =>  'M4 1EY'
-                ]
-            );
-    
-            $restaurant2 = Restaurant::create(
-                [
-	                'user_id'       => $user1->id,
-                	'name'          =>  'Los Gatos',
-                    'description'   =>  'Los Gatos text',
-                    'address1'      =>  '1-3 Devizes Road',
-                    'address2'      =>  'Old Town',
-                    'city'          =>  'Swindon',
-                    'county'        =>  '',
-                    'postcode'      =>  'SN4 4BJ'
-                ]
-            );
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             $name = $restaurant1->name;
             
@@ -85,57 +55,22 @@ class DeleteRestaurantTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
             //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
-
-	        $user2 = User::firstOrCreate(
-		        ['name'          =>  'Jon'],
-		        [
-			        'name'          =>  'Jon',
-			        'email'         => 'jon@test.com',
-			        'password'  =>  bcrypt('nisbets')
-		        ]
-	        );
+	        $user1 = factory(User::class)->create();
+	        $user2 = factory(User::class)->create();
             
             //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-                    'user_id'       =>  $user1->id,
-                	'name'          =>  'Infamous Diner',
-                    'description'   =>  'Infamous Diner text',
-                    'address1'      =>  '3-5 Basil Chambers Nicholas Croft',
-                    'address2'      =>  '',
-                    'city'          =>  'Manchester',
-                    'county'        =>  '',
-                    'postcode'      =>  'M4 1EY'
-                ]
-            );
-    
-            $restaurant2 = Restaurant::create(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'Los Gatos',
-                    'description'   =>  'Los Gatos text',
-                    'address1'      =>  '1-3 Devizes Road',
-                    'address2'      =>  'Old Town',
-                    'city'          =>  'Swindon',
-                    'county'        =>  '',
-                    'postcode'      =>  'SN4 4BJ'
-                ]
-            );
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
-            $name = $restaurant1->name;
             // Test guest
             $browser->visit('/restaurants/'.$restaurant1->id)
-                    ->assertDontSeeIn('main','delete-restaurant')
-            // Test User
-                    ;
+		        ->assertDontSeeIn('main','delete-restaurant');
+            // Test user which does own a restaurant
+	        $browser->loginAs($user2)
+		            ->visit('/restaurants/'.$restaurant2->id)
+		            ->assertDontSeeIn('main','delete-restaurant')
+	                ->logout();
+
         });
     }
 }

@@ -26,8 +26,9 @@ class UpdateRestaurantTest extends DuskTestCase
 	/**
 	 * @param Browser $browser
 	 * @param array $fields
+	 * @return void
 	 */
-	public function submitForm(Browser $browser, array $fields)
+	public function submitForm(Browser $browser, array $fields) :void
 	{
 		$this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
 		$browser->click('button[type="submit"]');
@@ -45,26 +46,10 @@ class UpdateRestaurantTest extends DuskTestCase
             $faker = Factory::create();
 
             //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        $user1 = factory(User::class)->create();
 
             //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-                    'user_id'       =>  $user1->id,
-                	'name'          =>  'Bistro Jacques',
-                    'description'   =>  'Bistro Jacques text',
-                    'address1'      =>  '29 Claremount Street',
-                    'city'          =>  'Shrewsbury',
-                    'postcode'      =>  'SY1 1RD'
-                ]
-            );
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             $restaurant2 = new Restaurant([
                 'name'          => '',
@@ -82,7 +67,6 @@ class UpdateRestaurantTest extends DuskTestCase
             ;
 
             $this->submitForm($browser,[
-//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
                 ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
                 ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
                 ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
@@ -105,36 +89,19 @@ class UpdateRestaurantTest extends DuskTestCase
     }
 
     /**
-     * Test restaurant cannot be either by guest or user who is not the restaurant owner.
+     * Test restaurant cannot be updated either by guest or user who is not the restaurant owner.
      * @throws Throwable
      * @return void
      */ 
     public function test_guest_cannot_update_a_restaurant() :void
     {
         $this->browse(function (Browser $browser) {
-            $faker = \Faker\Factory::create();
 
-	        $user1 = User::firstOrCreate(
-		        ['name'          =>  'Keith'],
-		        [
-			        'name'          =>  'Keith',
-			        'email'         => 'keith@test.com',
-			        'password'  =>  bcrypt('nisbets')
-		        ]
-	        );
+	        //users
+	        $user1 = factory(User::class)->create();
 
-
-
-            $restaurant1 = Restaurant::create(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'Bistro Jacques',
-                    'description'   =>  'Bistro Jacques text',
-                    'address1'      =>  '29 Claremount Street',
-                    'city'          =>  'Shrewsbury',
-                    'postcode'      =>  'SY1 1RD'
-                ]
-            );
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             //visit create page
             $browser->visit('/restaurants/'.$restaurant1->id.'/edit')
@@ -154,41 +121,17 @@ class UpdateRestaurantTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
             //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        $user1 = factory(User::class)->create();
 
             //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'Bistro Jacques',
-                    'description'   =>  'Bistro Jacques text',
-                    'address1'      =>  '29 Claremount Street',
-                    'city'          =>  'Shrewsbury',
-                    'postcode'      =>  'SY1 1RD'
-                ]
-            );
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->make();
 
-            $restaurant2 = new Restaurant([
-                'name'          =>  'bebo',
-                'description'   =>  'some random text',
-                'address1'      =>  '28 Church Road',
-                'city'          =>  'Hove',
-                'county'        =>  'East Sussex',
-                'postcode'      =>  'BN3 2FN'
-            ]);
 
             //visit create page
             $browser->loginAs($user1)
                     ->visit('/restaurants/'.$restaurant1->id.'/edit');
             $this->submitForm($browser,[
-//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
 	            ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
 	            ['field_name' =>'description',  'field_value'=>$restaurant2->description,   'field_type'=>'text'],
 	            ['field_name' =>'address1',     'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
@@ -198,7 +141,7 @@ class UpdateRestaurantTest extends DuskTestCase
 	            ['field_name' =>'postcode',     'field_value'=>$restaurant2->postcode,      'field_type'=>'text']
             ]);
             $browser->assertDontSee('The address1 field is required.')
-                    ->assertDontSee('The potcode must be at least 3 characters.')
+                    ->assertDontSee('The postcode must be at least 3 characters.')
                     ->assertSee($restaurant2->name ." restaurant updated")
                     ->logout()
                     ;
@@ -215,45 +158,18 @@ class UpdateRestaurantTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             
             //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        $user1 = factory(User::class)->create();
+	        $user2 = factory(User::class)->create();
 
             //restaurants
-            $restaurant1 = Restaurant::create(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'Bistro Jacques',
-                    'description'   =>  'Bistro Jacques text',
-                    'address1'      =>  '29 Claremount Street',
-                    'city'          =>  'Shrewsbury',
-                    'postcode'      =>  'SY1 1RD'
-                ]
-            );
-            $restaurant2 = Restaurant::create(
-                [
-	                'user_id'       =>  $user1->id,
-                	'name'          =>  'Bear & Billet',
-                    'description'   =>  'some description',
-                    'address1'      =>  '94 Lower Bridge Street',
-                    'city'          =>  'Chester',
-                    'postcode'      =>  'CH1 1RU'
-                ]
-            );
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user2->id]);
 
             //visit create page
             $browser->loginAs($user1)
                     ->visit('/restaurants/'.$restaurant1->id.'/edit');
-//                  ->type('name', $restaurant2->name)
-//	                ->click('button[type="submit"]')
 
             $this   ->submitForm($browser,[
-//	                	['field_name' =>'','field_value'=>'', 'field_type'=>'']
                 ['field_name' =>'name',         'field_value'=>$restaurant2->name,          'field_type'=>'text'],
             ]);
 

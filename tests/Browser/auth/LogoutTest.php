@@ -29,17 +29,10 @@ class LogoutTest extends DuskTestCase
     public function user_can_logout_of_their_account()
     {
         $this->browse(function (Browser $browser) {
+
+	        $user1 = factory(User::class)->create();
             
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
-            
-            $browser->loginAs(User::find(1));
+            $browser->loginAs($user1);
             $browser->visit('/');
             $browser->assertSeeIn('#accountDropdown', $user1->name);
             $browser->element('#accountDropdown')->click();

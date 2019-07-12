@@ -121,13 +121,7 @@ class RegisterTest extends DuskTestCase
     public function user_cannot_register_an_account_with_exist_account_credentials()
     {
         $this->browse(function (Browser $browser) {
-            $user1 = User::create(
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        $user1 = factory(User::class)->create();
 
 	        $user2 = new User();
 	        $user2->name = $user1->name;

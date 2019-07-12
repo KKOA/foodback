@@ -23,7 +23,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
 	/**
 	 * @return void
 	 */
-	public function setUpCusines() :void
+	public function setUpCuisines() :void
     {
         //Create Cuisines
         Cuisine::create(['name'=>'French']);
@@ -70,7 +70,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             
-            $this->setUpCusines();
+            $this->setUpCuisines();
             
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
@@ -115,7 +115,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
 	public function test_restaurant_owner_can_update_their_own_restaurant_with_multiple_cuisine_type() :void
     {
         $this->browse(function (Browser $browser) {
-            $this->setUpCusines();
+            $this->setUpCuisines();
                 
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
@@ -163,7 +163,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
-            $this->setUpCusines();
+            $this->setUpCuisines();
                 
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);
@@ -215,7 +215,7 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             //Cuisines
-            $this->setUpCusines();
+            $this->setUpCuisines();
                 
             $cuisine1 = Cuisine::find(1);
             $cuisine2 = Cuisine::find(2);

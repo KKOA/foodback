@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Cuisine as Cuisine;
+use App\Models\Cuisine as Cuisine;
 
 $factory->define(Model::class, function (Faker $faker) {
     return [

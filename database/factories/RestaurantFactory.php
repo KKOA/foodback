@@ -2,7 +2,9 @@
 
 use Faker\Generator as Faker;
 Use Carbon\Carbon as Carbon;
-use App\Restaurant as Restaurant;
+
+use App\Models\Restaurant;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,7 @@ use App\Restaurant as Restaurant;
 
 $factory->define(Restaurant::class, function (Faker $faker) {
     return [
+//    	'user_id'       => $user->id,
         'name'          =>  $faker->company,
         'description'   =>  $faker->paragraph($nbSentences = $faker->numberBetween($min = 3, $max = 8), $variableNbSentences = true),
         'address1'      =>  $faker->buildingNumber.' '.$faker->streetName,

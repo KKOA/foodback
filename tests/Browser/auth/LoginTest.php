@@ -48,13 +48,10 @@ class LoginTest extends DuskTestCase
 
             //Need create user account
             $password = 'nisbets';
-            $user1 = User::create(
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt($password)
-                ]
-            );
+
+		    $user1 = factory(User::class)->create([
+			    'password'  =>  bcrypt($password)
+		    ]);
 
             $browser->visit('/')
                     ->element('#accountDropdown')->click();
@@ -87,13 +84,11 @@ class LoginTest extends DuskTestCase
     {
 
         $this->browse(function (Browser $browser) {
-            $user1 = User::create(
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        $password = "nisbets";
+
+        	$user1 = factory(User::class)->create([
+		        'password'  =>  bcrypt($password)
+	        ]);
 
             $browser->visit('/')->element('#accountDropdown')->click();
             $browser->element('#nav-login')->click();
