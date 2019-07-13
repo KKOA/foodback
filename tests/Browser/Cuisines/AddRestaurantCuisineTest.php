@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Browser\Cuisines;
 
+//Models
 use App\Models\Restaurant as Restaurant;
 use App\Models\Cuisine as Cuisine;
 use App\Models\User as User;
@@ -11,6 +12,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Throwable;
+use Tests\Browser\MyHelper\DuskFormHelper;
 
 
 /**
@@ -21,12 +23,26 @@ class AddRestaurantCuisineTest extends DuskTestCase
 {
 
     use DatabaseMigrations;
+	use DuskFormHelper;
+
+
+	/**
+	 * Performs the relevant action based field type and submit form
+	 * @param Browser $browser
+	 * @param array $fields
+	 */
+	public function submitForm(Browser $browser, array $fields)
+	{
+		$this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
+		$this->fillCheckBox($browser, array_filter($fields,[$this, "isCheckBox"]));
+		$browser->click('button[type="submit"]');
+	}
+
     /**
-     * A Dusk test example.
+     * Setup Cuisine
      *
      * @return void
      */
-
     public function SetUpCuisines() :void
     {
         //Create Cuisines
@@ -35,38 +51,6 @@ class AddRestaurantCuisineTest extends DuskTestCase
         Cuisine::create(['name'=>'Japanese']);
     }
 
-	/**
-	 * @param User $user
-	 */
-	public function SetUpRestaurants(User $user)
-    {
-        //Create Cuisines
-        Restaurant::create(
-            [
-                'user_id'       => $user->id,
-            	'name'          => 'Benny',
-                'description'   => 'Benny Text',
-                'address1'      =>  '47 North Baliey',
-                'city'          =>  'Durham',
-                'postcode'      =>  'DH1 3ET'
-            ]
-        );
-    }
-
-    
-    
-    // public function test_user_can_see_restaurant_default_cuisine_type()
-    // {
-    //     $this->browse(function (Browser $browser) {
-            
-    //         $this->SetUpRestaurants();
-    //         $browser->visit('/restaurants')
-    //         //Index
-    //         ->assertSeeIn('#restaurant1 .cuisine-value','Not specified');
-    //     });
-
-        
-    // }
 
 	/**
 	 * @throws Throwable
@@ -89,17 +73,19 @@ class AddRestaurantCuisineTest extends DuskTestCase
 	        $restaurant2 = factory(Restaurant::class)->make();
 
             $browser->loginAs($user1)
-                    ->visit('/restaurants/create')
-                    ->type('name', $restaurant2->name)
-                    ->type('description',$restaurant2->description)
-                    ->type('address1',$restaurant2->address1)
-                    ->type('city',$restaurant2->city)
-                    ->type('county',$restaurant2->county)
-                    ->type('postcode',$restaurant2->postcode)
-                    ->click('#'.$cuisine1->name)
-                    ->click('button[type="submit"]')
-                    //show
-                    ->assertSeeIn('.cuisine-value',$cuisine1->name)
+                    ->visit('/restaurants/create');
+	        $this->submitForm($browser,[
+		        ['field_name' =>'name',                 'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+		        ['field_name' =>'description',          'field_value'=>$restaurant2->description,   'field_type'=>'text'],
+		        ['field_name' =>'address1',             'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
+		        ['field_name' =>'address2',             'field_value'=>$restaurant2->address2,      'field_type'=>'text'],
+		        ['field_name' =>'city',                 'field_value'=>$restaurant2->city,          'field_type'=>'text'],
+		        ['field_name' =>'county',               'field_value'=>$restaurant2->county,        'field_type'=>'text'],
+		        ['field_name' =>'postcode',             'field_value'=>$restaurant2->postcode,      'field_type'=>'text'],
+		        ['field_name' =>$cuisine1->name,        'field_value'=>null,                        'field_type'=>'checkbox']
+	        ]);
+	        //show
+            $browser->assertSeeIn('.cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('.cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
                     ->press('#view-restaurants')
@@ -134,27 +120,30 @@ class AddRestaurantCuisineTest extends DuskTestCase
 	        $restaurant2 = factory(Restaurant::class)->make();
 
             $browser->loginAs($user1)
-                    ->visit('/restaurants/create')
-                    ->type('name', $restaurant2->name)
-                    ->type('description',$restaurant2->description)
-                    ->type('address1',$restaurant2->address1)
-                    ->type('city',$restaurant2->city)
-                    ->type('county',$restaurant2->county)
-                    ->type('postcode',$restaurant2->postcode)
-                    ->click('#'.$cuisine1->name)
-                    ->click('#'.$cuisine2->name)
-                    ->click('button[type="submit"]')
+                    ->visit('/restaurants/create');
+	        $this->submitForm($browser,[
+		        ['field_name' =>'name',                 'field_value'=>$restaurant2->name,          'field_type'=>'text'],
+		        ['field_name' =>'description',          'field_value'=>$restaurant2->description,   'field_type'=>'text'],
+		        ['field_name' =>'address1',             'field_value'=>$restaurant2->address1,      'field_type'=>'text'],
+		        ['field_name' =>'address2',             'field_value'=>$restaurant2->address2,      'field_type'=>'text'],
+		        ['field_name' =>'city',                 'field_value'=>$restaurant2->city,          'field_type'=>'text'],
+		        ['field_name' =>'county',               'field_value'=>$restaurant2->county,        'field_type'=>'text'],
+		        ['field_name' =>'postcode',             'field_value'=>$restaurant2->postcode,      'field_type'=>'text'],
+		        ['field_name' =>$cuisine1->name,        'field_value'=>null,                        'field_type'=>'checkbox'],
+		        ['field_name' =>$cuisine2->name,        'field_value'=>null,                        'field_type'=>'checkbox']
+	        ]);
+
             //Show
-            ->assertSeeIn('.cuisine-value',$cuisine1->name)
-            ->assertSeeIn('.cuisine-value',$cuisine2->name)
-            ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
-            ->press('#view-restaurants')
-            // Index
-            ->assertSeeIn('#restaurant1 .cuisine-value','Not specified')
-            ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
-            ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
-            ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
-            ->logout()
+            $browser->assertSeeIn('.cuisine-value',$cuisine1->name)
+		            ->assertSeeIn('.cuisine-value',$cuisine2->name)
+		            ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
+		            ->press('#view-restaurants')
+		            // Index
+		            ->assertSeeIn('#restaurant'.$restaurant1->id.' .cuisine-value','Not specified')
+		            ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine1->name)
+		            ->assertSeeIn('#restaurant2 .cuisine-value',$cuisine2->name)
+		            ->assertDontSeeIn('#restaurant2 .cuisine-value',$cuisine3->name)
+                    ->logout()
             ;
         });
     }

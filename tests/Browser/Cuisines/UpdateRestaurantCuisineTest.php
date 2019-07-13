@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Tests\Browser\Cuisines;
 
+//Models
 use App\Models\Restaurant;
 use App\Models\Cuisine;
 use App\Models\User;
@@ -10,7 +11,7 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Throwable;
-
+use Tests\Browser\MyHelper\DuskFormHelper;
 
 /**
  * Class UpdateRestaurantCuisineTest
@@ -19,6 +20,7 @@ use Throwable;
 class UpdateRestaurantCuisineTest extends DuskTestCase
 {
     use DatabaseMigrations;
+	use DuskFormHelper;
 
 	/**
 	 * @return void
@@ -32,34 +34,15 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
     }
 
 	/**
-	 * @param User $user
-	 * @return void
+	 * @param Browser $browser
+	 * @param array $fields
 	 */
-	public function SetUpRestaurants(User $user) :void
-    {
-        //Create Cuisines
-        Restaurant::create(
-            [
-            	'user_id'       =>$user->id,
-                'name'          => 'Benny',
-                'description'   => 'Benny Text',
-                'address1'      =>  '47 North Baliey',
-                'city'          =>  'Durham',
-                'postcode'      =>  'DH1 3ET'
-            ]
-        );
-        Restaurant::create(
-            [
-	            'user_id'       =>$user->id,
-            	'name'          =>  'bebo',
-                'description'   =>  'some random text',
-                'address1'      =>  '28 Church Road',
-                'city'          =>  'Hove',
-                'county'        =>  'East Sussex',
-                'postcode'      =>  'BN3 2FN'
-            ]
-        );
-    }
+	public function submitForm(Browser $browser, array $fields)
+	{
+		$this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
+		$this->fillCheckBox($browser, array_filter($fields,[$this, "isCheckBox"]));
+		$browser->click('button[type="submit"]');
+	}
 
     /**
      *
@@ -77,22 +60,19 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine3 = Cuisine::find(3);
             
             //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
-            $this->SetUpRestaurants($user1);
+	        $user1 = factory(User::class)->create();
+
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             $browser->loginAs($user1)
-                    ->visit('/restaurants/2/edit')
-                    ->click('#'.$cuisine1->name)
-                    ->click('button[type="submit"]')
-                    // show
-                    ->assertSeeIn('.cuisine-value',$cuisine1->name)
+                    ->visit('/restaurants/2/edit');
+	        $this->submitForm($browser,[
+		        ['field_name' =>$cuisine1->name, 'field_value'=>null, 'field_type'=>'checkbox']
+	        ]);
+            // show
+            $browser->assertSeeIn('.cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('.cuisine-value','Not specified')
                     ->assertDontSeeIn('.cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
@@ -121,25 +101,22 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
-            //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        //users
+	        $user1 = factory(User::class)->create();
 
-            $this->SetUpRestaurants($user1);
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             $browser->loginAs($user1)
-                    ->visit('/restaurants/2/edit')
-                    ->click('#'.$cuisine1->name)
-                    ->click('#'.$cuisine2->name)
-                    ->click('button[type="submit"]')
-                    //Show
-                    ->assertSeeIn('.cuisine-value',$cuisine1->name)
+                    ->visit('/restaurants/2/edit');
+	        $this->submitForm($browser,[
+		        ['field_name' =>$cuisine1->name, 'field_value'=>null, 'field_type'=>'checkbox'],
+		        ['field_name' =>$cuisine2->name, 'field_value'=>null, 'field_type'=>'checkbox']
+	        ]);
+
+            //Show
+            $browser->assertSeeIn('.cuisine-value',$cuisine1->name)
                     ->assertSeeIn('.cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('.cuisine-value','Not specified')
                     ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
@@ -169,29 +146,24 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
-            //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        //users
+	        $user1 = factory(User::class)->create();
 
-            //Restaurants
-            $this->SetUpRestaurants($user1);
-            $restaurant2 = Restaurant::find(2);
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             //Link Restaurant & cuisine
             $restaurant2->cuisines()->attach([$cuisine1->id,$cuisine2->id]);
 
             $browser->loginAs($user1)
-                    ->visit('/restaurants/2/edit')
-                    ->click('#'.$cuisine2->name)
-                    ->click('button[type="submit"]')
-                    // Show
-                    ->assertSeeIn('.cuisine-value',$cuisine1->name)
+                    ->visit('/restaurants/2/edit');
+	        $this->submitForm($browser,[
+		        ['field_name' =>$cuisine2->name, 'field_value'=>null, 'field_type'=>'checkbox']
+	        ]);
+
+            // Show
+            $browser->assertSeeIn('.cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('.cuisine-value','Not specified')
                     ->assertDontSeeIn('.cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
@@ -221,30 +193,25 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
             $cuisine2 = Cuisine::find(2);
             $cuisine3 = Cuisine::find(3);
 
-            //users
-            $user1 = User::firstOrCreate(
-                ['name'          =>  'Keith'],
-                [
-                    'name'          =>  'Keith',
-                    'email'         => 'keith@test.com',
-                    'password'  =>  bcrypt('nisbets')
-                ]
-            );
+	        //users
+	        $user1 = factory(User::class)->create();
 
-            //Restaurants
-            $this->SetUpRestaurants($user1);
-            $restaurant2 = Restaurant::find(2);
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             //Link Restaurant & cuisine
             $restaurant2->cuisines()->attach([$cuisine1->id,$cuisine2->id]);
 
             $browser->loginAs($user1)
-                    ->visit('/restaurants/2/edit')
-                    ->click('#'.$cuisine1->name)
-                    ->click('#'.$cuisine2->name)
-                    ->click('button[type="submit"]')
-                    // Show
-                    ->assertSeeIn('.cuisine-value','Not specified')
+                    ->visit('/restaurants/2/edit');
+	        $this->submitForm($browser,[
+		        ['field_name' =>$cuisine1->name, 'field_value'=>null, 'field_type'=>'checkbox'],
+		        ['field_name' =>$cuisine2->name, 'field_value'=>null, 'field_type'=>'checkbox']
+	        ]);
+
+            // Show
+            $browser->assertSeeIn('.cuisine-value','Not specified')
                     ->assertDontSeeIn('.cuisine-value',$cuisine1->name)
                     ->assertDontSeeIn('.cuisine-value',$cuisine2->name)
                     ->assertDontSeeIn('.cuisine-value',$cuisine3->name)
@@ -258,6 +225,5 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
                     ->logout()
                     ;
         });
-
     }
 }
