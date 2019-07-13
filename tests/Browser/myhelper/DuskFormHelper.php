@@ -16,15 +16,25 @@ use Laravel\Dusk\Browser;
 trait DuskFormHelper
 {
 	/**
-	 * Check field is of text
+	 * Check field is of type text
 	 * @param array $data
 	 * @return bool
 	 */
 	public function isTextField(array $data) :bool
 	{
 		$validFields =['text','password'];
-//		return $data['field_type'] === 'text';
 		return in_array($data['field_type'],$validFields);
+	}
+
+
+	/**
+	 * Check field is of type checkbox
+	 * @param array $data
+	 * @return bool
+	 */
+	public function isCheckBox(array $data) :bool
+	{
+		return $data['field_type'] === 'checkbox';
 	}
 
 	/**
@@ -54,6 +64,7 @@ trait DuskFormHelper
 			$browser->click('#'.$row['field_name']);
 		}
 	}
+
 
 
 
