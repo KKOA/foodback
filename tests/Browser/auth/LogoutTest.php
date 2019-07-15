@@ -34,11 +34,11 @@ class LogoutTest extends DuskTestCase
             
             $browser->loginAs($user1);
             $browser->visit('/');
-            $browser->assertSeeIn('#accountDropdown', $user1->name);
+            $browser->assertSeeIn('#accountDropdown', $user1->username);
             $browser->element('#accountDropdown')->click();
             $browser->element('#nav-logout')->click();
             $browser->element('#logout-btn')->click();
-            $browser->assertDontSeeIn('#accountDropdown', $user1->name);
+            $browser->assertDontSeeIn('#accountDropdown', $user1->username);
             $browser->element('#accountDropdown')->click();
             $browser->assertSeeIn('.main-nav', 'Login')
                     ->assertSeeIn('.main-nav', 'Sign Up');

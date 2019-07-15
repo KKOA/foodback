@@ -22,19 +22,6 @@ class LoginTest extends DuskTestCase
     use DatabaseMigrations;
 	use DuskFormHelper;
 
-	/**
-	 * Passes the details to fillLoginForm and click submit button on the form
-	 * @param Browser $browser
-	 * @param array $userDetails
-	 * @return void
-	 */
-	public function submitLoginForm(Browser $browser,array $userDetails) :void
-	{
-		$this->fillTextFields($browser, array_filter($userDetails,[$this, "isTextField"]));
-		$browser->click('button[type="submit"]');
-	}
-
-
     /**
      * Test as a user can log in into their account.
      * @test
@@ -57,7 +44,7 @@ class LoginTest extends DuskTestCase
                     ->element('#accountDropdown')->click();
             $browser->element('#nav-login')->click();
 
-	        $this->submitLoginForm($browser,
+	        $this->submitForm($browser,
 		        [
 			        ['field_name'=>'email',                 'field_value' =>$user1->email,      'field_type'=> 'text'],
 			        ['field_name'=>'password',              'field_value' =>$password,   'field_type'=> 'password']
@@ -65,7 +52,7 @@ class LoginTest extends DuskTestCase
 		        ]
 	        );
 
-            $browser->assertSeeIn('#accountName', $user1->name);
+            $browser->assertSeeIn('#accountName', $user1->username);
                 //Success login message - not yet implement
             $browser->element('#accountDropdown')->click();
             $browser->assertDontSeeIn('.main-nav', 'Login')
@@ -93,7 +80,7 @@ class LoginTest extends DuskTestCase
             $browser->visit('/')->element('#accountDropdown')->click();
             $browser->element('#nav-login')->click();
 
-	        $this->submitLoginForm($browser,
+	        $this->submitForm($browser,
 		        [
 			        ['field_name'=>'email',                 'field_value' =>$user1->email,      'field_type'=> 'text'],
 			        ['field_name'=>'password',              'field_value' =>'secret',   'field_type'=> 'password']
@@ -105,7 +92,7 @@ class LoginTest extends DuskTestCase
             $browser->element('#accountDropdown')->click();
             $browser->assertSeeIn('.main-nav', 'Login')
 	                ->assertSeeIn('.main-nav', 'Sign Up')
-                    ->assertDontSeeIn('.main-nav', $user1->name);
+                    ->assertDontSeeIn('.main-nav', $user1->username);
         });
     }
 }
