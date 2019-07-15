@@ -33,17 +33,6 @@ class UpdateRestaurantCuisineTest extends DuskTestCase
         Cuisine::create(['name'=>'Japanese']);
     }
 
-	/**
-	 * @param Browser $browser
-	 * @param array $fields
-	 */
-	public function submitForm(Browser $browser, array $fields)
-	{
-		$this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
-		$this->fillCheckBox($browser, array_filter($fields,[$this, "isCheckBox"]));
-		$browser->click('button[type="submit"]');
-	}
-
     /**
      *
      * @throws Throwable

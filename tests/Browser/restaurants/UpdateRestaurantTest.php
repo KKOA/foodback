@@ -23,16 +23,6 @@ class UpdateRestaurantTest extends DuskTestCase
     use DatabaseMigrations;
     use DuskFormHelper;
 
-	/**
-	 * @param Browser $browser
-	 * @param array $fields
-	 * @return void
-	 */
-	public function submitForm(Browser $browser, array $fields) :void
-	{
-		$this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
-		$browser->click('button[type="submit"]');
-	}
 
 	/**
 	 * Test owner cannot update their own restaurant with invalid details.

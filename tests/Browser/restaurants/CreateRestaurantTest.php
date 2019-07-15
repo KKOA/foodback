@@ -26,16 +26,6 @@ class CreateRestaurantTest extends DuskTestCase
     use DatabaseMigrations;
     use DuskFormHelper;
 
-	/**
-	 * @param Browser $browser
-	 * @param array $fields
-	 */
-	public function submitForm(Browser $browser, array $fields)
-    {
-	    $this->fillTextFields($browser, array_filter($fields,[$this, "isTextField"]));
-    	$browser->click('button[type="submit"]');
-    }
-
     /**
      * Test user cannot create a restaurant with invalid details 
      * @throws Throwable
