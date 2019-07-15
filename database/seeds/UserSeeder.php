@@ -18,16 +18,22 @@ class UserSeeder extends Seeder
      */
     public function run() :void
     {
-        $names = ['keith','tom','sarah','mary','aaron'];
+        $names = ['keith fairnie','tom humprey','sarah Stewart','mary mckenna','aaron amoah'];
 	    $password = bcrypt('secret');
 	    $domain =  'test.com';
         foreach($names as $name)
         {
-	        User::firstOrCreate(
-		        ['name'=>ucfirst($name)],
+	        list($firstName,$lastName) = explode(" ",$name);
+        	User::firstOrCreate(
 		        [
-			        'name'          =>  ucfirst($name),
-			        'email'         => $name.'@'.$domain,
+		        	'first_name'    =>  ucfirst($firstName),
+			        'last_name'     =>  ucfirst($lastName)
+		        ],
+		        [
+			        'first_name'    =>  ucfirst($firstName),
+			        'last_name'     =>  ucfirst($lastName),
+			        'username'      =>  $firstName.$lastName,
+			        'email'         => $firstName.'@'.$domain,
 			        'password'      =>  $password
 		        ]
 	        );
