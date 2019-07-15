@@ -11,7 +11,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Class User
  * @package App
  * @property int $id
- * @property string $name
+ * @property string $first_name
+ * @property string $last_Name
+ * @property string $username
  * @property string $email
  * @property string $password
  */
@@ -25,7 +27,7 @@ class User extends Authenticatable
      * @var array $fillable
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name','username','email', 'password',
     ];
 
     /**
