@@ -30,47 +30,21 @@ class DeleteRestaurantReviewTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
 
-            $faker = \Faker\Factory::create();
+	        //user
+	        $user1 = factory(User::class)->create();
 
-	        $user1 = User::firstOrCreate(
-		        ['name'          =>  'Keith'],
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+
+	        //review
+	        $review1 = factory(Review::class)->create(['restaurant_id' => $restaurant1->id]);
+	        $review2 = factory(Review::class)->create(
 		        [
-			        'name'          =>  'Keith',
-			        'email'         => 'keith@test.com',
-			        'password'  =>  bcrypt('nisbets')
+			        'restaurant_id' => $restaurant1->id,
+			        'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
 		        ]
 	        );
 
-            $restaurant1 = Restaurant::create(
-                [
-                    'user_id'       => $user1->id,
-                	'name'          =>  'Infamous Diner',
-                    'description'   =>  'Infamous Diner text',
-                    'address1'      =>  '3-5 Basil Chambers Nicholas Croft',
-                    'address2'      =>  '',
-                    'city'          =>  'Manchester',
-                    'county'        =>  '',
-                    'postcode'      =>  'M4 1EY'
-                ]
-            );
-    
-            $review1 = Review::create(
-                [
-                    'restaurant_id' => $restaurant1->id,
-                    'comment'       =>  $faker->paragraph,
-                    'rating'        =>  3
-                ]
-            );
-            $review2 = Review::create(
-                [
-                    'restaurant_id' => $restaurant1->id,
-                    'comment'       => $faker->paragraph,
-                    'rating'        =>  4,
-                    'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
-                ]
-            );
-
-            //$name = $restaurant1->name;
             $browser->visit('/restaurants/'.$restaurant1->id)
                     ->click('#delete-review'.$review1->id)
                     ->assertSee("Review deleted")
