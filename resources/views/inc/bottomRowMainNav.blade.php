@@ -76,7 +76,7 @@
                 @else
                     <li class="nav-item dropdown">
                         <a id="accountDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fas fa-user-circle"></i> <span id="accountName">{{ Auth::user()->name }}</span>
+                            <i class="fas fa-user-circle"></i> <span id="accountName">{{ Auth::user()->username }}</span>
                             <span class="caret"></span>
                         </a>
     
