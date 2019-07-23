@@ -27,6 +27,7 @@
             {{--  Name --}}
             {!! Form::textGroup(
                 [
+                'id' => 'name',
                 'name' => 'name',
                 'value' => old('name')?? $restaurant->name,
                 'placeholder'=>'E.g. Wild Thyme Cafe',
@@ -36,6 +37,7 @@
             {{-- Description --}}
             {!! Form::textAreaGroup(
                 [
+                'id' => 'description',
                 'name' => 'description',
                 'value' => old('description')?? $restaurant->description,
                 'placeholder'=>'Restaurant Description',
@@ -46,6 +48,7 @@
 
             {{-- Address1 --}}
             {!! Form::textGroup([
+                'id' => 'address1',
                 'name' => 'address1',
                 'value' => old('address1')?? $restaurant->address1,
                 'placeholder'=>'200 Cheam Road',
@@ -56,6 +59,7 @@
 
             {{-- Address2 --}}
             {!! Form::textGroup([
+                'id' => 'address2',
                 'name' => 'address2',
                 'value' => old('address2')?? $restaurant->address2,
                 'placeholder'=>'Sparcells'
@@ -66,6 +70,7 @@
 
             {{-- City --}}
             {!! Form::textGroup([
+                'id' => 'city',
                 'name' => 'city',
                 'value' => old('city')?? $restaurant->city,
                 'placeholder'=>'Bristol',
@@ -76,6 +81,7 @@
 
             {{-- County --}}
             {!! Form::textGroup([
+                'id' => 'county',
                 'name' => 'county',
                 'value' => old('county')?? $restaurant->county,
                 'placeholder'=>'Wiltshire'
@@ -86,6 +92,7 @@
 
             {{-- Postcode --}}
             {!! Form::textGroup([
+                'id' => 'postcode',
                 'name' => 'postcode',
                 'value' => old('postcode')?? $restaurant->postcode,
                 'placeholder'=>'EN1 DG2',
