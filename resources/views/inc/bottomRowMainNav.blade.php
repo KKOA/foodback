@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark navbar-laravel-dark bottom-row-navbar">
+<nav class="navbar navbar-expand-md navbar-dark navbar-laravel-dark bottom-row-navbar" aria-label="Bottom header navigation bar">
     <div class="container">
         <button id="help" class="navbar-toggler hamburger hamburger--minus" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="hamburger-box">
