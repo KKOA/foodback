@@ -1,1 +1,873 @@
-!function(t){var e={};function a(i){if(e[i])return e[i].exports;var s=e[i]={i:i,l:!1,exports:{}};return t[i].call(s.exports,s,s.exports,a),s.l=!0,s.exports}a.m=t,a.c=e,a.d=function(t,e,i){a.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},a.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},a.t=function(t,e){if(1&e&&(t=a(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(a.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var s in t)a.d(i,s,function(e){return t[e]}.bind(null,s));return i},a.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return a.d(e,"a",e),e},a.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},a.p="/",a(a.s=0)}({0:function(t,e,a){a("2Oqk"),a("5ts5"),a("bNVy"),a("i9W/"),t.exports=a("zw6H")},"2Oqk":function(t,e){function a(t){return(a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}!function(t){"use strict";var e={init:function(a){return this.each(function(){this.self=t(this),e.destroy.call(this.self),this.opt=t.extend(!0,{},t.fn.raty.defaults,a,this.self.data()),e._adjustCallback.call(this),e._adjustNumber.call(this),e._adjustHints.call(this),this.opt.score=e._adjustedScore.call(this,this.opt.score),"img"!==this.opt.starType&&e._adjustStarType.call(this),e._adjustPath.call(this),e._createStars.call(this),this.opt.cancel&&e._createCancel.call(this),this.opt.precision&&e._adjustPrecision.call(this),e._createScore.call(this),e._apply.call(this,this.opt.score),e._setTitle.call(this,this.opt.score),e._target.call(this,this.opt.score),this.opt.readOnly?e._lock.call(this):(this.style.cursor="pointer",e._binds.call(this))})},_adjustCallback:function(){for(var t=["number","readOnly","score","scoreName","target","path"],e=0;e<t.length;e++)"function"==typeof this.opt[t[e]]&&(this.opt[t[e]]=this.opt[t[e]].call(this))},_adjustedScore:function(t){return t?e._between(t,0,this.opt.number):t},_adjustHints:function(){if(this.opt.hints||(this.opt.hints=[]),this.opt.halfShow||this.opt.half)for(var t=this.opt.precision?10:2,e=0;e<this.opt.number;e++){var a=this.opt.hints[e];"[object Array]"!==Object.prototype.toString.call(a)&&(a=[a]),this.opt.hints[e]=[];for(var i=0;i<t;i++){var s=a[i],o=a[a.length-1];void 0===o&&(o=null),this.opt.hints[e][i]=void 0===s?o:s}}},_adjustNumber:function(){this.opt.number=e._between(this.opt.number,1,this.opt.numberMax)},_adjustPath:function(){this.opt.path=this.opt.path||"",this.opt.path&&"/"!==this.opt.path.charAt(this.opt.path.length-1)&&(this.opt.path+="/")},_adjustPrecision:function(){this.opt.half=!0},_adjustStarType:function(){var t=["cancelOff","cancelOn","starHalf","starOff","starOn"];this.opt.path="";for(var e=0;e<t.length;e++)this.opt[t[e]]=this.opt[t[e]].replace(".","-")},_apply:function(t){e._fill.call(this,t),t&&(t>0&&this.score.val(t),e._roundStars.call(this,t))},_between:function(t,e,a){return Math.min(Math.max(parseFloat(t),e),a)},_binds:function(){this.cancel&&(e._bindOverCancel.call(this),e._bindClickCancel.call(this),e._bindOutCancel.call(this)),e._bindOver.call(this),e._bindClick.call(this),e._bindOut.call(this)},_bindClick:function(){var a=this;a.stars.on("click.raty",function(i){var s=!0,o=a.opt.half||a.opt.precision?a.self.data("score"):this.alt||t(this).data("alt");a.opt.click&&(s=a.opt.click.call(a,+o,i)),(s||void 0===s)&&(a.opt.half&&!a.opt.precision&&(o=e._roundHalfScore.call(a,o)),e._apply.call(a,o))})},_bindClickCancel:function(){var t=this;t.cancel.on("click.raty",function(e){t.score.removeAttr("value"),t.opt.click&&t.opt.click.call(t,null,e)})},_bindOut:function(){var t=this;t.self.on("mouseleave.raty",function(a){var i=+t.score.val()||void 0;e._apply.call(t,i),e._target.call(t,i,a),e._resetTitle.call(t),t.opt.mouseout&&t.opt.mouseout.call(t,i,a)})},_bindOutCancel:function(){var t=this;t.cancel.on("mouseleave.raty",function(a){var i=t.opt.cancelOff;if("img"!==t.opt.starType&&(i=t.opt.cancelClass+" "+i),e._setIcon.call(t,this,i),t.opt.mouseout){var s=+t.score.val()||void 0;t.opt.mouseout.call(t,s,a)}})},_bindOver:function(){var t=this,a=t.opt.half?"mousemove.raty":"mouseover.raty";t.stars.on(a,function(a){var i=e._getScoreByPosition.call(t,a,this);e._fill.call(t,i),t.opt.half&&(e._roundStars.call(t,i,a),e._setTitle.call(t,i,a),t.self.data("score",i)),e._target.call(t,i,a),t.opt.mouseover&&t.opt.mouseover.call(t,i,a)})},_bindOverCancel:function(){var t=this;t.cancel.on("mouseover.raty",function(a){var i=t.opt.path+t.opt.starOff,s=t.opt.cancelOn;"img"===t.opt.starType?t.stars.attr("src",i):(s=t.opt.cancelClass+" "+s,t.stars.attr("class",i)),e._setIcon.call(t,this,s),e._target.call(t,null,a),t.opt.mouseover&&t.opt.mouseover.call(t,null)})},_buildScoreField:function(){return t("<input />",{name:this.opt.scoreName,type:"hidden"}).appendTo(this)},_createCancel:function(){var e=this.opt.path+this.opt.cancelOff,a=t("<"+this.opt.starType+" />",{title:this.opt.cancelHint,class:this.opt.cancelClass});"img"===this.opt.starType?a.attr({src:e,alt:"x"}):a.attr("data-alt","x").addClass(e),"left"===this.opt.cancelPlace?this.self.prepend("&#160;").prepend(a):this.self.append("&#160;").append(a),this.cancel=a},_createScore:function(){var a=t(this.opt.targetScore);this.score=a.length?a:e._buildScoreField.call(this)},_createStars:function(){for(var a=1;a<=this.opt.number;a++){var i=e._nameForIndex.call(this,a),s={alt:a,src:this.opt.path+this.opt[i]};"img"!==this.opt.starType&&(s={"data-alt":a,class:s.src}),s.title=e._getHint.call(this,a),t("<"+this.opt.starType+" />",s).appendTo(this),this.opt.space&&this.self.append(a<this.opt.number?"&#160;":"")}this.stars=this.self.children(this.opt.starType)},_error:function(e){t(this).text(e),t.error(e)},_fill:function(t){for(var a=0,i=1;i<=this.stars.length;i++){var s,o=this.stars[i-1],r=e._turnOn.call(this,i,t);if(this.opt.iconRange&&this.opt.iconRange.length>a){var n=this.opt.iconRange[a];s=e._getRangeIcon.call(this,n,r),i<=n.range&&e._setIcon.call(this,o,s),i===n.range&&a++}else s=this.opt[r?"starOn":"starOff"],e._setIcon.call(this,o,s)}},_getFirstDecimal:function(t){var e=t.toString().split(".")[1],a=0;return e&&(a=parseInt(e.charAt(0),10),"9999"===e.slice(1,5)&&a++),a},_getRangeIcon:function(t,e){return e?t.on||this.opt.starOn:t.off||this.opt.starOff},_getScoreByPosition:function(a,i){var s=parseInt(i.alt||i.getAttribute("data-alt"),10);if(this.opt.half){var o=e._getWidth.call(this);s=s-1+parseFloat((a.pageX-t(i).offset().left)/o)}return s},_getHint:function(t,a){if(0!==t&&!t)return this.opt.noRatedMsg;var i=e._getFirstDecimal.call(this,t),s=Math.ceil(t),o=this.opt.hints[(s||1)-1],r=o,n=!a||this.move;return this.opt.precision?(n&&(i=0===i?9:i-1),r=o[i]):(this.opt.halfShow||this.opt.half)&&(r=o[i=n&&0===i?1:i>5?1:0]),""===r?"":r||t},_getWidth:function(){var t=this.stars[0].width||parseFloat(this.stars.eq(0).css("font-size"));return t||e._error.call(this,"Could not get the icon width!"),t},_lock:function(){var t=e._getHint.call(this,this.score.val());this.style.cursor="",this.title=t,this.score.prop("readonly",!0),this.stars.prop("title",t),this.cancel&&this.cancel.hide(),this.self.data("readonly",!0)},_nameForIndex:function(t){return this.opt.score&&this.opt.score>=t?"starOn":"starOff"},_resetTitle:function(){for(var t=0;t<this.opt.number;t++)this.stars[t].title=e._getHint.call(this,t+1)},_roundHalfScore:function(t){var a=parseInt(t,10),i=e._getFirstDecimal.call(this,t);return 0!==i&&(i=i>5?1:.5),a+i},_roundStars:function(t,a){var i,s=(t%1).toFixed(2);if(a||this.move?i=s>.5?"starOn":"starHalf":s>this.opt.round.down&&(i="starOn",this.opt.halfShow&&s<this.opt.round.up?i="starHalf":s<this.opt.round.full&&(i="starOff")),i){var o=this.opt[i],r=this.stars[Math.ceil(t)-1];e._setIcon.call(this,r,o)}},_setIcon:function(t,e){t["img"===this.opt.starType?"src":"className"]=this.opt.path+e},_setTarget:function(t,e){e&&(e=this.opt.targetFormat.toString().replace("{score}",e)),t.is(":input")?t.val(e):t.html(e)},_setTitle:function(t,a){if(t){var i=parseInt(Math.ceil(t),10);this.stars[i-1].title=e._getHint.call(this,t,a)}},_target:function(a,i){if(this.opt.target){var s=t(this.opt.target);s.length||e._error.call(this,"Target selector invalid or missing!");var o=i&&"mouseover"===i.type;if(void 0===a)a=this.opt.targetText;else if(null===a)a=o?this.opt.cancelHint:this.opt.targetText;else{"hint"===this.opt.targetType?a=e._getHint.call(this,a,i):this.opt.precision&&(a=parseFloat(a).toFixed(1));var r=i&&"mousemove"===i.type;o||r||this.opt.targetKeep||(a=this.opt.targetText)}e._setTarget.call(this,s,a)}},_turnOn:function(t,e){return this.opt.single?t===e:t<=e},_unlock:function(){this.style.cursor="pointer",this.removeAttribute("title"),this.score.removeAttr("readonly"),this.self.data("readonly",!1);for(var t=0;t<this.opt.number;t++)this.stars[t].title=e._getHint.call(this,t+1);this.cancel&&this.cancel.css("display","")},cancel:function(a){return this.each(function(){var i=t(this);!0!==i.data("readonly")&&(e[a?"click":"score"].call(i,null),this.score.removeAttr("value"))})},click:function(a){return this.each(function(){!0!==t(this).data("readonly")&&(a=e._adjustedScore.call(this,a),e._apply.call(this,a),this.opt.click&&this.opt.click.call(this,a,t.Event("click")),e._target.call(this,a))})},destroy:function(){return this.each(function(){var e=t(this),a=e.data("raw");a?e.off(".raty").empty().css({cursor:a.style.cursor}).removeData("readonly"):e.data("raw",e.clone()[0])})},getScore:function(){var t,e=[];return this.each(function(){t=this.score.val(),e.push(t?+t:void 0)}),e.length>1?e:e[0]},move:function(a){return this.each(function(){var i=parseInt(a,10),s=e._getFirstDecimal.call(this,a);i>=this.opt.number&&(i=this.opt.number-1,s=10);var o=e._getWidth.call(this)/10,r=t(this.stars[i]),n=r.offset().left+o*s,l=t.Event("mousemove",{pageX:n});this.move=!0,r.trigger(l),this.move=!1})},readOnly:function(a){return this.each(function(){var i=t(this);i.data("readonly")!==a&&(a?(i.off(".raty").children(this.opt.starType).off(".raty"),e._lock.call(this)):(e._binds.call(this),e._unlock.call(this)),i.data("readonly",a))})},reload:function(){return e.set.call(this,{})},score:function(){var a=t(this);return arguments.length?e.setScore.apply(a,arguments):e.getScore.call(a)},set:function(e){return this.each(function(){t(this).raty(t.extend({},this.opt,e))})},setScore:function(a){return this.each(function(){!0!==t(this).data("readonly")&&(a=e._adjustedScore.call(this,a),e._apply.call(this,a),e._target.call(this,a))})}};t.fn.raty=function(i){return e[i]?e[i].apply(this,Array.prototype.slice.call(arguments,1)):"object"!==a(i)&&i?void t.error("Method "+i+" does not exist!"):e.init.apply(this,arguments)},t.fn.raty.defaults={cancel:!1,cancelClass:"raty-cancel",cancelHint:"Cancel this rating!",cancelOff:"cancel-off.png",cancelOn:"cancel-on.png",cancelPlace:"left",click:void 0,half:!1,halfShow:!0,hints:["bad","poor","regular","good","gorgeous"],iconRange:void 0,mouseout:void 0,mouseover:void 0,noRatedMsg:"Not rated yet!",number:5,numberMax:20,path:void 0,precision:!1,readOnly:!1,round:{down:.25,full:.6,up:.76},score:void 0,scoreName:"score",single:!1,space:!0,starHalf:"star-half.png",starOff:"star-off.png",starOn:"star-on.png",starType:"img",target:void 0,targetFormat:"{score}",targetKeep:!1,targetScore:void 0,targetText:"",targetType:"hint"}}(jQuery)},"5ts5":function(t,e){},bNVy:function(t,e){},"i9W/":function(t,e){},zw6H:function(t,e){}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./resources/assets/js/jquery.raty.js":
+/*!********************************************!*\
+  !*** ./resources/assets/js/jquery.raty.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/*!
+ * jQuery Raty - A Star Rating Plugin
+ *
+ * The MIT License
+ *
+ * author:  Washington Botelho
+ * github:  wbotelhos/raty
+ * version: 2.8.0
+ *
+ */
+(function ($) {
+  'use strict';
+
+  var methods = {
+    init: function init(options) {
+      return this.each(function () {
+        this.self = $(this);
+        methods.destroy.call(this.self);
+        this.opt = $.extend(true, {}, $.fn.raty.defaults, options, this.self.data());
+
+        methods._adjustCallback.call(this);
+
+        methods._adjustNumber.call(this);
+
+        methods._adjustHints.call(this);
+
+        this.opt.score = methods._adjustedScore.call(this, this.opt.score);
+
+        if (this.opt.starType !== 'img') {
+          methods._adjustStarType.call(this);
+        }
+
+        methods._adjustPath.call(this);
+
+        methods._createStars.call(this);
+
+        if (this.opt.cancel) {
+          methods._createCancel.call(this);
+        }
+
+        if (this.opt.precision) {
+          methods._adjustPrecision.call(this);
+        }
+
+        methods._createScore.call(this);
+
+        methods._apply.call(this, this.opt.score);
+
+        methods._setTitle.call(this, this.opt.score);
+
+        methods._target.call(this, this.opt.score);
+
+        if (this.opt.readOnly) {
+          methods._lock.call(this);
+        } else {
+          this.style.cursor = 'pointer';
+
+          methods._binds.call(this);
+        }
+      });
+    },
+    _adjustCallback: function _adjustCallback() {
+      var options = ['number', 'readOnly', 'score', 'scoreName', 'target', 'path'];
+
+      for (var i = 0; i < options.length; i++) {
+        if (typeof this.opt[options[i]] === 'function') {
+          this.opt[options[i]] = this.opt[options[i]].call(this);
+        }
+      }
+    },
+    _adjustedScore: function _adjustedScore(score) {
+      if (!score) {
+        return score;
+      }
+
+      return methods._between(score, 0, this.opt.number);
+    },
+    _adjustHints: function _adjustHints() {
+      if (!this.opt.hints) {
+        this.opt.hints = [];
+      }
+
+      if (!this.opt.halfShow && !this.opt.half) {
+        return;
+      }
+
+      var steps = this.opt.precision ? 10 : 2;
+
+      for (var i = 0; i < this.opt.number; i++) {
+        var group = this.opt.hints[i];
+
+        if (Object.prototype.toString.call(group) !== '[object Array]') {
+          group = [group];
+        }
+
+        this.opt.hints[i] = [];
+
+        for (var j = 0; j < steps; j++) {
+          var hint = group[j],
+              last = group[group.length - 1];
+
+          if (last === undefined) {
+            last = null;
+          }
+
+          this.opt.hints[i][j] = hint === undefined ? last : hint;
+        }
+      }
+    },
+    _adjustNumber: function _adjustNumber() {
+      this.opt.number = methods._between(this.opt.number, 1, this.opt.numberMax);
+    },
+    _adjustPath: function _adjustPath() {
+      this.opt.path = this.opt.path || '';
+
+      if (this.opt.path && this.opt.path.charAt(this.opt.path.length - 1) !== '/') {
+        this.opt.path += '/';
+      }
+    },
+    _adjustPrecision: function _adjustPrecision() {
+      this.opt.half = true;
+    },
+    _adjustStarType: function _adjustStarType() {
+      var replaces = ['cancelOff', 'cancelOn', 'starHalf', 'starOff', 'starOn'];
+      this.opt.path = '';
+
+      for (var i = 0; i < replaces.length; i++) {
+        this.opt[replaces[i]] = this.opt[replaces[i]].replace('.', '-');
+      }
+    },
+    _apply: function _apply(score) {
+      methods._fill.call(this, score);
+
+      if (score) {
+        if (score > 0) {
+          this.score.val(score);
+        }
+
+        methods._roundStars.call(this, score);
+      }
+    },
+    _between: function _between(value, min, max) {
+      return Math.min(Math.max(parseFloat(value), min), max);
+    },
+    _binds: function _binds() {
+      if (this.cancel) {
+        methods._bindOverCancel.call(this);
+
+        methods._bindClickCancel.call(this);
+
+        methods._bindOutCancel.call(this);
+      }
+
+      methods._bindOver.call(this);
+
+      methods._bindClick.call(this);
+
+      methods._bindOut.call(this);
+    },
+    _bindClick: function _bindClick() {
+      var that = this;
+      that.stars.on('click.raty', function (evt) {
+        var execute = true,
+            score = that.opt.half || that.opt.precision ? that.self.data('score') : this.alt || $(this).data('alt');
+
+        if (that.opt.click) {
+          execute = that.opt.click.call(that, +score, evt);
+        }
+
+        if (execute || execute === undefined) {
+          if (that.opt.half && !that.opt.precision) {
+            score = methods._roundHalfScore.call(that, score);
+          }
+
+          methods._apply.call(that, score);
+        }
+      });
+    },
+    _bindClickCancel: function _bindClickCancel() {
+      var that = this;
+      that.cancel.on('click.raty', function (evt) {
+        that.score.removeAttr('value');
+
+        if (that.opt.click) {
+          that.opt.click.call(that, null, evt);
+        }
+      });
+    },
+    _bindOut: function _bindOut() {
+      var that = this;
+      that.self.on('mouseleave.raty', function (evt) {
+        var score = +that.score.val() || undefined;
+
+        methods._apply.call(that, score);
+
+        methods._target.call(that, score, evt);
+
+        methods._resetTitle.call(that);
+
+        if (that.opt.mouseout) {
+          that.opt.mouseout.call(that, score, evt);
+        }
+      });
+    },
+    _bindOutCancel: function _bindOutCancel() {
+      var that = this;
+      that.cancel.on('mouseleave.raty', function (evt) {
+        var icon = that.opt.cancelOff;
+
+        if (that.opt.starType !== 'img') {
+          icon = that.opt.cancelClass + ' ' + icon;
+        }
+
+        methods._setIcon.call(that, this, icon);
+
+        if (that.opt.mouseout) {
+          var score = +that.score.val() || undefined;
+          that.opt.mouseout.call(that, score, evt);
+        }
+      });
+    },
+    _bindOver: function _bindOver() {
+      var that = this,
+          action = that.opt.half ? 'mousemove.raty' : 'mouseover.raty';
+      that.stars.on(action, function (evt) {
+        var score = methods._getScoreByPosition.call(that, evt, this);
+
+        methods._fill.call(that, score);
+
+        if (that.opt.half) {
+          methods._roundStars.call(that, score, evt);
+
+          methods._setTitle.call(that, score, evt);
+
+          that.self.data('score', score);
+        }
+
+        methods._target.call(that, score, evt);
+
+        if (that.opt.mouseover) {
+          that.opt.mouseover.call(that, score, evt);
+        }
+      });
+    },
+    _bindOverCancel: function _bindOverCancel() {
+      var that = this;
+      that.cancel.on('mouseover.raty', function (evt) {
+        var starOff = that.opt.path + that.opt.starOff,
+            icon = that.opt.cancelOn;
+
+        if (that.opt.starType === 'img') {
+          that.stars.attr('src', starOff);
+        } else {
+          icon = that.opt.cancelClass + ' ' + icon;
+          that.stars.attr('class', starOff);
+        }
+
+        methods._setIcon.call(that, this, icon);
+
+        methods._target.call(that, null, evt);
+
+        if (that.opt.mouseover) {
+          that.opt.mouseover.call(that, null);
+        }
+      });
+    },
+    _buildScoreField: function _buildScoreField() {
+      return $('<input />', {
+        name: this.opt.scoreName,
+        type: 'hidden'
+      }).appendTo(this);
+    },
+    _createCancel: function _createCancel() {
+      var icon = this.opt.path + this.opt.cancelOff,
+          cancel = $('<' + this.opt.starType + ' />', {
+        title: this.opt.cancelHint,
+        'class': this.opt.cancelClass
+      });
+
+      if (this.opt.starType === 'img') {
+        cancel.attr({
+          src: icon,
+          alt: 'x'
+        });
+      } else {
+        // TODO: use $.data
+        cancel.attr('data-alt', 'x').addClass(icon);
+      }
+
+      if (this.opt.cancelPlace === 'left') {
+        this.self.prepend('&#160;').prepend(cancel);
+      } else {
+        this.self.append('&#160;').append(cancel);
+      }
+
+      this.cancel = cancel;
+    },
+    _createScore: function _createScore() {
+      var score = $(this.opt.targetScore);
+      this.score = score.length ? score : methods._buildScoreField.call(this);
+    },
+    _createStars: function _createStars() {
+      for (var i = 1; i <= this.opt.number; i++) {
+        var name = methods._nameForIndex.call(this, i),
+            attrs = {
+          alt: i,
+          src: this.opt.path + this.opt[name]
+        };
+
+        if (this.opt.starType !== 'img') {
+          attrs = {
+            'data-alt': i,
+            'class': attrs.src
+          }; // TODO: use $.data.
+        }
+
+        attrs.title = methods._getHint.call(this, i);
+        $('<' + this.opt.starType + ' />', attrs).appendTo(this);
+
+        if (this.opt.space) {
+          this.self.append(i < this.opt.number ? '&#160;' : '');
+        }
+      }
+
+      this.stars = this.self.children(this.opt.starType);
+    },
+    _error: function _error(message) {
+      $(this).text(message);
+      $.error(message);
+    },
+    _fill: function _fill(score) {
+      var hash = 0;
+
+      for (var i = 1; i <= this.stars.length; i++) {
+        var icon,
+            star = this.stars[i - 1],
+            turnOn = methods._turnOn.call(this, i, score);
+
+        if (this.opt.iconRange && this.opt.iconRange.length > hash) {
+          var irange = this.opt.iconRange[hash];
+          icon = methods._getRangeIcon.call(this, irange, turnOn);
+
+          if (i <= irange.range) {
+            methods._setIcon.call(this, star, icon);
+          }
+
+          if (i === irange.range) {
+            hash++;
+          }
+        } else {
+          icon = this.opt[turnOn ? 'starOn' : 'starOff'];
+
+          methods._setIcon.call(this, star, icon);
+        }
+      }
+    },
+    _getFirstDecimal: function _getFirstDecimal(number) {
+      var decimal = number.toString().split('.')[1],
+          result = 0;
+
+      if (decimal) {
+        result = parseInt(decimal.charAt(0), 10);
+
+        if (decimal.slice(1, 5) === '9999') {
+          result++;
+        }
+      }
+
+      return result;
+    },
+    _getRangeIcon: function _getRangeIcon(irange, turnOn) {
+      return turnOn ? irange.on || this.opt.starOn : irange.off || this.opt.starOff;
+    },
+    _getScoreByPosition: function _getScoreByPosition(evt, icon) {
+      var score = parseInt(icon.alt || icon.getAttribute('data-alt'), 10);
+
+      if (this.opt.half) {
+        var size = methods._getWidth.call(this),
+            percent = parseFloat((evt.pageX - $(icon).offset().left) / size);
+
+        score = score - 1 + percent;
+      }
+
+      return score;
+    },
+    _getHint: function _getHint(score, evt) {
+      if (score !== 0 && !score) {
+        return this.opt.noRatedMsg;
+      }
+
+      var decimal = methods._getFirstDecimal.call(this, score),
+          integer = Math.ceil(score),
+          group = this.opt.hints[(integer || 1) - 1],
+          hint = group,
+          set = !evt || this.move;
+
+      if (this.opt.precision) {
+        if (set) {
+          decimal = decimal === 0 ? 9 : decimal - 1;
+        }
+
+        hint = group[decimal];
+      } else if (this.opt.halfShow || this.opt.half) {
+        decimal = set && decimal === 0 ? 1 : decimal > 5 ? 1 : 0;
+        hint = group[decimal];
+      }
+
+      return hint === '' ? '' : hint || score;
+    },
+    _getWidth: function _getWidth() {
+      var width = this.stars[0].width || parseFloat(this.stars.eq(0).css('font-size'));
+
+      if (!width) {
+        methods._error.call(this, 'Could not get the icon width!');
+      }
+
+      return width;
+    },
+    _lock: function _lock() {
+      var hint = methods._getHint.call(this, this.score.val());
+
+      this.style.cursor = '';
+      this.title = hint;
+      this.score.prop('readonly', true);
+      this.stars.prop('title', hint);
+
+      if (this.cancel) {
+        this.cancel.hide();
+      }
+
+      this.self.data('readonly', true);
+    },
+    _nameForIndex: function _nameForIndex(i) {
+      return this.opt.score && this.opt.score >= i ? 'starOn' : 'starOff';
+    },
+    _resetTitle: function _resetTitle() {
+      for (var i = 0; i < this.opt.number; i++) {
+        this.stars[i].title = methods._getHint.call(this, i + 1);
+      }
+    },
+    _roundHalfScore: function _roundHalfScore(score) {
+      var integer = parseInt(score, 10),
+          decimal = methods._getFirstDecimal.call(this, score);
+
+      if (decimal !== 0) {
+        decimal = decimal > 5 ? 1 : 0.5;
+      }
+
+      return integer + decimal;
+    },
+    _roundStars: function _roundStars(score, evt) {
+      var decimal = (score % 1).toFixed(2),
+          name;
+
+      if (evt || this.move) {
+        name = decimal > 0.5 ? 'starOn' : 'starHalf';
+      } else if (decimal > this.opt.round.down) {
+        // Up: [x.76 .. x.99]
+        name = 'starOn';
+
+        if (this.opt.halfShow && decimal < this.opt.round.up) {
+          // Half: [x.26 .. x.75]
+          name = 'starHalf';
+        } else if (decimal < this.opt.round.full) {
+          // Down: [x.00 .. x.5]
+          name = 'starOff';
+        }
+      }
+
+      if (name) {
+        var icon = this.opt[name],
+            star = this.stars[Math.ceil(score) - 1];
+
+        methods._setIcon.call(this, star, icon);
+      } // Full down: [x.00 .. x.25]
+
+    },
+    _setIcon: function _setIcon(star, icon) {
+      star[this.opt.starType === 'img' ? 'src' : 'className'] = this.opt.path + icon;
+    },
+    _setTarget: function _setTarget(target, score) {
+      if (score) {
+        score = this.opt.targetFormat.toString().replace('{score}', score);
+      }
+
+      if (target.is(':input')) {
+        target.val(score);
+      } else {
+        target.html(score);
+      }
+    },
+    _setTitle: function _setTitle(score, evt) {
+      if (score) {
+        var integer = parseInt(Math.ceil(score), 10),
+            star = this.stars[integer - 1];
+        star.title = methods._getHint.call(this, score, evt);
+      }
+    },
+    _target: function _target(score, evt) {
+      if (this.opt.target) {
+        var target = $(this.opt.target);
+
+        if (!target.length) {
+          methods._error.call(this, 'Target selector invalid or missing!');
+        }
+
+        var mouseover = evt && evt.type === 'mouseover';
+
+        if (score === undefined) {
+          score = this.opt.targetText;
+        } else if (score === null) {
+          score = mouseover ? this.opt.cancelHint : this.opt.targetText;
+        } else {
+          if (this.opt.targetType === 'hint') {
+            score = methods._getHint.call(this, score, evt);
+          } else if (this.opt.precision) {
+            score = parseFloat(score).toFixed(1);
+          }
+
+          var mousemove = evt && evt.type === 'mousemove';
+
+          if (!mouseover && !mousemove && !this.opt.targetKeep) {
+            score = this.opt.targetText;
+          }
+        }
+
+        methods._setTarget.call(this, target, score);
+      }
+    },
+    _turnOn: function _turnOn(i, score) {
+      return this.opt.single ? i === score : i <= score;
+    },
+    _unlock: function _unlock() {
+      this.style.cursor = 'pointer';
+      this.removeAttribute('title');
+      this.score.removeAttr('readonly');
+      this.self.data('readonly', false);
+
+      for (var i = 0; i < this.opt.number; i++) {
+        this.stars[i].title = methods._getHint.call(this, i + 1);
+      }
+
+      if (this.cancel) {
+        this.cancel.css('display', '');
+      }
+    },
+    cancel: function cancel(click) {
+      return this.each(function () {
+        var self = $(this);
+
+        if (self.data('readonly') !== true) {
+          methods[click ? 'click' : 'score'].call(self, null);
+          this.score.removeAttr('value');
+        }
+      });
+    },
+    click: function click(score) {
+      return this.each(function () {
+        if ($(this).data('readonly') !== true) {
+          score = methods._adjustedScore.call(this, score);
+
+          methods._apply.call(this, score);
+
+          if (this.opt.click) {
+            this.opt.click.call(this, score, $.Event('click'));
+          }
+
+          methods._target.call(this, score);
+        }
+      });
+    },
+    destroy: function destroy() {
+      return this.each(function () {
+        var self = $(this),
+            raw = self.data('raw');
+
+        if (raw) {
+          self.off('.raty').empty().css({
+            cursor: raw.style.cursor
+          }).removeData('readonly');
+        } else {
+          self.data('raw', self.clone()[0]);
+        }
+      });
+    },
+    getScore: function getScore() {
+      var score = [],
+          value;
+      this.each(function () {
+        value = this.score.val();
+        score.push(value ? +value : undefined);
+      });
+      return score.length > 1 ? score : score[0];
+    },
+    move: function move(score) {
+      return this.each(function () {
+        var integer = parseInt(score, 10),
+            decimal = methods._getFirstDecimal.call(this, score);
+
+        if (integer >= this.opt.number) {
+          integer = this.opt.number - 1;
+          decimal = 10;
+        }
+
+        var width = methods._getWidth.call(this),
+            steps = width / 10,
+            star = $(this.stars[integer]),
+            percent = star.offset().left + steps * decimal,
+            evt = $.Event('mousemove', {
+          pageX: percent
+        });
+
+        this.move = true;
+        star.trigger(evt);
+        this.move = false;
+      });
+    },
+    readOnly: function readOnly(readonly) {
+      return this.each(function () {
+        var self = $(this);
+
+        if (self.data('readonly') !== readonly) {
+          if (readonly) {
+            self.off('.raty').children(this.opt.starType).off('.raty');
+
+            methods._lock.call(this);
+          } else {
+            methods._binds.call(this);
+
+            methods._unlock.call(this);
+          }
+
+          self.data('readonly', readonly);
+        }
+      });
+    },
+    reload: function reload() {
+      return methods.set.call(this, {});
+    },
+    score: function score() {
+      var self = $(this);
+      return arguments.length ? methods.setScore.apply(self, arguments) : methods.getScore.call(self);
+    },
+    set: function set(options) {
+      return this.each(function () {
+        $(this).raty($.extend({}, this.opt, options));
+      });
+    },
+    setScore: function setScore(score) {
+      return this.each(function () {
+        if ($(this).data('readonly') !== true) {
+          score = methods._adjustedScore.call(this, score);
+
+          methods._apply.call(this, score);
+
+          methods._target.call(this, score);
+        }
+      });
+    }
+  };
+
+  $.fn.raty = function (method) {
+    if (methods[method]) {
+      return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+    } else if (_typeof(method) === 'object' || !method) {
+      return methods.init.apply(this, arguments);
+    } else {
+      $.error('Method ' + method + ' does not exist!');
+    }
+  };
+
+  $.fn.raty.defaults = {
+    cancel: false,
+    cancelClass: 'raty-cancel',
+    cancelHint: 'Cancel this rating!',
+    cancelOff: 'cancel-off.png',
+    cancelOn: 'cancel-on.png',
+    cancelPlace: 'left',
+    click: undefined,
+    half: false,
+    halfShow: true,
+    hints: ['bad', 'poor', 'regular', 'good', 'gorgeous'],
+    iconRange: undefined,
+    mouseout: undefined,
+    mouseover: undefined,
+    noRatedMsg: 'Not rated yet!',
+    number: 5,
+    numberMax: 20,
+    path: undefined,
+    precision: false,
+    readOnly: false,
+    round: {
+      down: 0.25,
+      full: 0.6,
+      up: 0.76
+    },
+    score: undefined,
+    scoreName: 'score',
+    single: false,
+    space: true,
+    starHalf: 'star-half.png',
+    starOff: 'star-off.png',
+    starOn: 'star-on.png',
+    starType: 'img',
+    target: undefined,
+    targetFormat: '{score}',
+    targetKeep: false,
+    targetScore: undefined,
+    targetText: '',
+    targetType: 'hint'
+  };
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/assets/sass/filter.scss":
+/*!*******************************************!*\
+  !*** ./resources/assets/sass/filter.scss ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/assets/sass/jquery.simpler-sidebar.scss":
+/*!***********************************************************!*\
+  !*** ./resources/assets/sass/jquery.simpler-sidebar.scss ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/assets/sass/master.scss":
+/*!*******************************************!*\
+  !*** ./resources/assets/sass/master.scss ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/assets/sass/vendor/jquery.raty.scss":
+/*!*******************************************************!*\
+  !*** ./resources/assets/sass/vendor/jquery.raty.scss ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/assets/js/jquery.raty.js ./resources/assets/sass/master.scss ./resources/assets/sass/filter.scss ./resources/assets/sass/vendor/jquery.raty.scss ./resources/assets/sass/jquery.simpler-sidebar.scss ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! C:\Users\keith\Desktop\programming\test\php\laravel\foodback2\resources\assets\js\jquery.raty.js */"./resources/assets/js/jquery.raty.js");
+__webpack_require__(/*! C:\Users\keith\Desktop\programming\test\php\laravel\foodback2\resources\assets\sass\master.scss */"./resources/assets/sass/master.scss");
+__webpack_require__(/*! C:\Users\keith\Desktop\programming\test\php\laravel\foodback2\resources\assets\sass\filter.scss */"./resources/assets/sass/filter.scss");
+__webpack_require__(/*! C:\Users\keith\Desktop\programming\test\php\laravel\foodback2\resources\assets\sass\vendor\jquery.raty.scss */"./resources/assets/sass/vendor/jquery.raty.scss");
+module.exports = __webpack_require__(/*! C:\Users\keith\Desktop\programming\test\php\laravel\foodback2\resources\assets\sass\jquery.simpler-sidebar.scss */"./resources/assets/sass/jquery.simpler-sidebar.scss");
+
+
+/***/ })
+
+/******/ });
