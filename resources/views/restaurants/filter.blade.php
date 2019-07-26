@@ -69,7 +69,7 @@ $myCount = 1;
         </diV>
     </div>
     
-    <div class="sidebar main left myfilter" id="sidebar-main">
+    <div id="sidebar-main" class="sidebar main right myfilter" >
         <header class="bg-blue-header">
             <h2>Filter</h2>
             <button class="close rounded-circle quitter" title="Hide filters menu"><i class="fas fa-times"></i></button>

@@ -154,7 +154,7 @@
 		// Sliding men filter menu
         let $mainSidebar = $( "#sidebar-main" );
         $mainSidebar.simplerSidebar( {
-            align: "left",
+            align: "right",
             attr: "sidebar-main",
             selectors: {
                 trigger: "#sidebar-main-trigger",
