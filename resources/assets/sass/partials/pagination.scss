@@ -1,0 +1,11 @@
+.pagination
+{
+	font-weight:bold;
+
+	li.page-item:first-of-type a.page-link,
+    li.page-item:last-of-type a.page-link
+    {
+		padding:0;
+		border:0;
+	}
+}
