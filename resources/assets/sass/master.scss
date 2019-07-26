@@ -1,10 +1,10 @@
 
 
 // Variables
-@import "modules/myvariables";
+@import "modules/myVariables";
 
 // Mixins
-@import "modules/mymixins";
+@import "modules/myMixins";
 
 // Fonts
 // @import "modules/myfonts";
@@ -27,7 +27,7 @@
  Header
 ============================================= */
   //@import 'partials/header';
-	@import 'vendor/hamburgers/hamburgers.scss';
+	@import 'vendor/hamburgers/hamburgers';
 	@import 'partials/mainNav';
 /* ===========================================
  Messages & Modal
@@ -281,7 +281,7 @@
 /* ==========================================================
 ! Pagination
 ========================================================== */
-
+@import 'partials/pagination';
 
 
 
