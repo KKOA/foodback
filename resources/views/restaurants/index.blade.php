@@ -68,7 +68,9 @@
 					@include('inc.result_info')
 
 					<div class='col-12 text-center font-weight-bold mt-2 mb-2'>
-						@include('inc.pagination')
+						<nav aria-label="Top pagination navigation" class="d-inline-block text-center">
+							<span class='d-inline-block text-center'>{{$restaurants->onEachSide(1)->links()}}</span>
+						</nav>
 					</div>
 
 					<ul class='row restaurants'>
@@ -78,7 +80,9 @@
 					</ul>
 					<div class='row'>
 						<div class='col-12 text-center mt-3 mb-4'>
-							@include('inc.pagination')
+							<nav  aria-label="Bottom pagination Navigation" class="d-inline-block text-center">
+								<span class='d-inline-block text-center'>{{$restaurants->onEachSide(1)->links()}}</span>
+							</nav>
 						</div>
 					</div>
 
