@@ -12,6 +12,7 @@ use Carbon\Carbon as Carbon;
  * Class Review
  * @package App\Models
  * @property int $id
+ * @property int $user_id
  * @property int $restaurant_id
  * @property string $comment
  * @property int $rating
@@ -27,7 +28,8 @@ class Review extends Model
      * */
     protected $fillable = 
     [
-	    'restaurant_id',
+		'user_id',
+		'restaurant_id',
         'comment',
         'rating',
         'updated_at'
@@ -70,5 +72,13 @@ class Review extends Model
 	 */
 	public function restaurant() :BelongsTo {
         return $this->belongsTo('App\Models\Restaurant');
+	}
+	
+	/**
+	 * @return BelongsTo
+	 */
+	public function user() :BelongsTo
+    {
+      return $this->belongsTo('App\Models\User');
     }
 }
