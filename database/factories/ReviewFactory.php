@@ -19,12 +19,7 @@ use App\Models\Review as Review;
 
 
 $factory->define(Review::class, function (Faker $faker) {
-
-    $restaurants = Restaurant::all()->pluck('id')->toArray();//
-    array_shift ( $restaurants );// Remove the first entry
-    
     return [
-        'restaurant_id' =>  $faker->randomElement($restaurants),
         'comment'       =>  $faker->paragraph($nbSentences = $faker->numberBetween($min=3, $max=8), $variableNbSentences = true),
         'rating'        =>  $faker->numberBetween($min=0, $max=5),
         'updated_at'    =>  Carbon::now()->subMinutes($faker->numberBetween($min=0, $max=200))
