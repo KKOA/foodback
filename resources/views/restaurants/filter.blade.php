@@ -25,7 +25,7 @@ $myCount = 1;
 
 ?>
 
-<div class="row justify-content-center text-center">
+{{-- <div class="row justify-content-center text-center">
     <div class="col-12 mr-1 col-md-10">
         <button id="sidebar-main-trigger" class="mt-2 mb-2 btn btn-secondary" title="Show filters">
                 Show Filters 
@@ -34,7 +34,7 @@ $myCount = 1;
             Active Filters 
         </button>
     </div>
-</div>
+</div> --}}
     
 <div class="row active-filters-wrapper justify-content-center text-center">
     <div class="col-12 offset-md-1 col-md-10 my-card active-filters-card pb-3">
@@ -72,8 +72,9 @@ $myCount = 1;
 <div id="sidebar-main" class="sidebar main right myfilter" >
     <header class="bg-blue-header">
         <h2>Filter</h2>
-        <button class="close rounded-circle quitter" title="Hide filters menu">
+        <button class="close rounded-circle quitter" title="Hide filters menu" arira-label="Close Filter menu">
             <i class="fas fa-times"></i>
+            <span class="sr-only">Close Filter Menu</span>
         </button>
     </header>
     <div class="wrapper">

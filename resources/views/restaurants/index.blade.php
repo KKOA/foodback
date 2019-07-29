@@ -10,10 +10,22 @@
 
 	<div class='row mb-3'>
         <h2 class="text-center col-12">Restaurants</h2>
-        <div class="text-center col-12">
-			<a href="{{route('restaurants.create')}}" class="btn btn-primary add-restaurant">
-				New Restaurant <i class="fa fa-plus"></i>
-			</a>
+        <div class="text-center offset-md-1 col-md-10 d-sm-flex" style="justify-content: space-between">
+			<div class="d-md-inline-block" style="margin-right:5px">
+				<a href="{{route('restaurants.create')}}" class="btn btn-primary add-restaurant">
+					New Restaurant <i class="fa fa-plus"></i>
+				</a>
+			</div>
+			<div class="d-md-inline-block" style="margin-left:5px">
+				<button class="mt-2 mb-2  ml-1 btn btn-secondary current-filter-btn show-current-filter" title="Show selected filters"> 
+					Active Filters 
+				</button>
+				<button id="sidebar-main-trigger" class="mt-2 mb-2 btn btn-secondary" title="Show filters">
+						Show Filters 
+				</button>
+
+			</div>
+
         </div>
 	</div>
 		@include('restaurants.filter', ['cuisines' => $cuisines])

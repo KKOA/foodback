@@ -15,8 +15,8 @@
   margin: 0.25rem;
   border-radius: 5px;
   display: inline-block;
-  color: white;
-  background: #006FFB;
+  color: #fff;
+  background: #004ECC;
   white-space: nowrap;
   text-decoration: none;
 }
