@@ -132,5 +132,13 @@ php artisan dusk
 All the test(s) will fail if
 - you have not start a server in right environment before running the test
 - you have two or more servers running that are using the same port and ip address
+- Wrong version of chromedriver installed. If Laravel Dusk throws an error message like this
+
+**"Facebook\WebDriver\Exception\SessionNotCreatedException: session not created: Chrome version must be between 70 and 73"**
+
+when you run it, then use the following command to resolve the issue, **replacing x with the relevant version required.**
+```
+php artisan dusk:chrome-driver x
+```
 
 This may take a while to run all the tests.
