@@ -27,7 +27,7 @@
             <div class="card-header">
                 <div class='row'>
                     <div class='col-12 col-md-6 text-center text-md-left'>
-                        username
+                        <span class="username">{{$review->user->username}}</span>
                     </div>
                     <div class='col-12 col-md-6 text-center text-md-right'>
                         {{$review->updated_at}}
