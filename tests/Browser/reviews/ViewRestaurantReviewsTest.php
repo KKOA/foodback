@@ -42,10 +42,11 @@ class ViewRestaurantReviewsTest extends DuskTestCase
 	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
 	        //review
-	        $review1 = factory(Review::class)->create(['restaurant_id' => $restaurant2->id, 'rating'=>2]);
+	        $review1 = factory(Review::class)->create(['user_id'=>$user1->id, 'restaurant_id' => $restaurant2->id, 'rating'=>2]);
 
             $browser->visit('/restaurants/'.$restaurant1->id)
-                ->assertSee('No reviews available for this restaurant')
+				->assertSee('No reviews available for this restaurant')
+				->assertDontSee($user1->username)
                 ->assertDontSee('( '.$review1->rating.' )')
                 ->assertDontSee($review1->comment)
                 ->assertDontSee($review1->updated_at)
@@ -63,27 +64,34 @@ class ViewRestaurantReviewsTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
 	        //user
-	        $user1 = factory(User::class)->create();
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
 
 	        //restaurant
 	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 	        $restaurant2 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
             //Create Reviews
-	        $review1 = factory(Review::class)->create(['restaurant_id' => $restaurant1->id]);
+	        $review1 = factory(Review::class)->create(['user_id'=>$user1->id,'restaurant_id' => $restaurant1->id]);
 
 	        $review2 = factory(Review::class)->create([
+				'user_id'=>$user2->id,
 		        'restaurant_id' => $restaurant2->id,
 		        'rating'        =>  4,
 		        'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
 	        ]);
 
             // View page
-            $browser->visit('/restaurants/'.$restaurant1->id)
+			$browser->visit('/restaurants/'.$restaurant1->id)
+			// ->assertSeeIn('.no-of-reviews','1')
+			->assertSeeIn('.no-of-reviews',count(Review::where('restaurant_id',$restaurant1->id)->get()))
+			->assertSeeIn('.restaurant-avg-rating', $review1->rating)
+			->assertSeeIn('#review'.$review1->id.' .username',$user1->username)
             ->assertSee($review1->comment)
             ->assertSee($review1->rating)
             ->assertSee($review1->updated_at)
-            ->assertSeeIn('.no-of-reviews','1')
+			
+			->assertDontSeeIn('#review'.$review1->id.' .username',$user2->username)
             ->assertDontSee($review2->comment)
             ->assertDontSee($review2->updated_at)
             ->assertDontSee('No reviews available for this restaurant')
@@ -122,7 +130,9 @@ class ViewRestaurantReviewsTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
 	        //user
-	        $user1 = factory(User::class)->create();
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
+			$user3 = factory(User::class)->create();
 
 	        //restaurant
 	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
@@ -130,15 +140,18 @@ class ViewRestaurantReviewsTest extends DuskTestCase
 
             //reviews
 	        factory(Review::class)->create([
+				'user_id'=>$user2->id,
 	        	'restaurant_id' => $restaurant1->id,
 		        'rating' => 3
 	        ]);
 	        factory(Review::class)->create([
+				'user_id'=>$user3->id,
 	        	'restaurant_id' => $restaurant1->id,
 		        'rating' => 5,
 		        'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
 	        ]);
 	        factory(Review::class)->create([
+				'user_id'=>$user2->id,
 		        'restaurant_id' => $restaurant2->id,
 		        'rating' => 2,
 		        'updated_at'    => Carbon::now()->addMinutes(30) //Set date to now + 30 minutes
