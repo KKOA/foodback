@@ -67,7 +67,7 @@ class ReviewSeeder extends Seeder
         
         //Prevent random restaurant from having review
         shuffle($restaurants);
-        dump(array_pop($restaurants));
+        // dump(array_pop($restaurants));
 
         $amount =count($restaurants) * $this->faker->numberBetween($min = 1, $max = 4);
         $now = Carbon::now();
