@@ -34,7 +34,8 @@ class CreateRestaurantReviewTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
 			//user
-	        $user1 = factory(User::class)->create();
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
 
 	        //restaurants
 	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
@@ -42,7 +43,12 @@ class CreateRestaurantReviewTest extends DuskTestCase
 	        //Review
 	        $review1 = factory(Review::class)->make(['comment' => 'a']);
 
-            $browser->visit('restaurants/'.$restaurant1->id.'/reviews/create');
+			
+			$browser->loginAs($user2)
+					->visit('restaurants/'.$restaurant1->id)
+					->click('#write-restaurant-review');
+
+					// ->visit('restaurants/'.$restaurant1->id.'/reviews/create');
 	        $this->submitForm($browser,[
 		        ['field_name' =>'comment',  'field_value'=>$review1->comment,   'field_type'=>'text'],
 	        ]);
@@ -50,7 +56,9 @@ class CreateRestaurantReviewTest extends DuskTestCase
             $browser->assertSee('The comment must be at least 3 characters.')
                     ->visit('restaurants/'.$restaurant1->id)
                     ->assertMissing('#review1')
-                    ->assertSee('No reviews available for this restaurant');
+					->assertSee('No reviews available for this restaurant')
+					->logout()	
+					;
         });
     }
 
@@ -65,7 +73,8 @@ class CreateRestaurantReviewTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
 	        //user
-	        $user1 = factory(User::class)->create();
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
 
 	        //restaurants
 	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
@@ -73,7 +82,10 @@ class CreateRestaurantReviewTest extends DuskTestCase
 	        //Review
 	        $review1 = factory(Review::class)->make(['comment'   => 'My text', 'rating'    => '3']);
 
-            $browser->visit('restaurants/'.$restaurant1->id.'/reviews/create');
+			$browser->loginAs($user2)
+					->visit('restaurants/'.$restaurant1->id)
+					->click('#write-restaurant-review');
+
             $this->submitForm($browser,[
                 ['field_name' =>'comment',  'field_value'=>$review1->comment,   'field_type'=>'text'],
 	            ['field_name' =>'rating',  'field_value'=>$review1->rating,   'field_type'=>'text']
@@ -84,7 +96,40 @@ class CreateRestaurantReviewTest extends DuskTestCase
                     ->assertSeeIn('#review1',floor(floatval($review1->rating)))
                     ->assertSeeIn('#review1',3);
 //                    ->assertDontSee('No reviews available for this restaurant');
-            $browser->assertDontSee('No reviews available for this restaurant');
+			$browser->assertDontSee('No reviews available for this restaurant')
+					->logout()
+			;
+        });
+	}
+
+		/**
+	 * @test
+	 * @throws Throwable
+	 * @return void
+	 */
+	public function restaurant_owner_cannot_create_a_review_on_their_restaurant() :void
+    {
+        $this->browse(function (Browser $browser) {
+
+	        //user
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
+
+	        //restaurants
+	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+
+	        //Review
+	        $review1 = factory(Review::class)->make(['comment'   => 'My text', 'rating'    => '3']);
+
+			$browser->loginAs($user1)
+					->assertMissing('#write-restaurant-review')
+					->visit('restaurants/'.$restaurant1->id.'/reviews/create')
+					->assertPathIs('/restaurants/'.$restaurant1->id)
+					->logout()
+					;
+            
         });
     }
+	
+
 }

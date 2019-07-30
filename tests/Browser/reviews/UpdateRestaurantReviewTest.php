@@ -33,31 +33,36 @@ class UpdateRestaurantReviewTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
 	        //user
-	        $user1 = factory(User::class)->create();
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
 
 	        //restaurants
 	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
 	        //review
 	        $review1 = factory(Review::class)->create([
-	        	'restaurant_id' => $restaurant1->id,
+				'user_id'		=> $user2->id,
+				'restaurant_id' => $restaurant1->id,
 		        'rating'        =>  3
 	        ]);
-	        $review2 = factory(Review::class)->create(                [
+	        $review2 = factory(Review::class)->create([
+				'user_id'		=> $user2->id,                
 		        'restaurant_id' => $restaurant1->id,
 		        'rating'        =>  4,
 		        'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
 	        ]);
 
-            $comment = 'a';
-            $browser->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit');
+			$comment = 'a';
+			
+			$browser->loginAs($user2);
+			// $browser->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit');
+			$browser->visit('restaurants/'.$restaurant1->id)
+			->click('#edit-restaurant-review'.$review1->id);
 
 	        $this->submitForm($browser,[
 		        ['field_name' =>'comment',  'field_value'=>'a',   'field_type'=>'text'],
 	        ]);
-	        /*
-                    ->type('comment',$comment)
-                    ->click('.edit-review')*/
+
             $browser->assertSee('The comment must be at least 3 characters.');
                     // Vist restaurant show
                     $browser->visit('restaurants/'.$restaurant1->id)
@@ -68,7 +73,8 @@ class UpdateRestaurantReviewTest extends DuskTestCase
                     //Check number of reviews count for restaurant
                     ->assertSeeIn('.no-of-reviews','2')
                     ->assertDontSee('No reviews available for this restaurant')
-                    ;
+					->logout()
+					;
         });
     }
 
@@ -82,27 +88,34 @@ class UpdateRestaurantReviewTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
 
 	        //user
-	        $user1 = factory(User::class)->create();
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
+			$user3 = factory(User::class)->create();
 
 	        //restaurants
 	        $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
 	        //review
 	        $review1 = factory(Review::class)->create([
-		        'restaurant_id' => $restaurant1->id,
+				'user_id'		=> $user2->id, 
+				'restaurant_id' => $restaurant1->id,
 		        'rating'        =>  3
 	        ]);
-	        $review2 = factory(Review::class)->create(                [
-		        'restaurant_id' => $restaurant1->id,
+	        $review2 = factory(Review::class)->create([
+				'user_id'		=> $user3->id, 
+				'restaurant_id' => $restaurant1->id,
 		        'rating'        =>  4,
 		        'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
 	        ]);
-	        $review3 = factory(Review::class)->make(                [
+	        $review3 = factory(Review::class)->make([
 	        	'rating'        =>  3,
 		        'updated_at'    =>  Carbon::now()->subMinutes(90) //Set date to now - 90 minutes
 	        ]);
 
-            $browser->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit');
+			$browser->loginAs($user2);
+			// $browser->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit');
+			$browser->visit('restaurants/'.$restaurant1->id)
+					->click('#edit-restaurant-review'.$review1->id);
             $this->submitForm($browser,[
                 ['field_name' =>'comment',  'field_value'=>$review3->comment,   'field_type'=>'text'],
                 ['field_name' =>'rating',  'field_value'=>$review3->rating,   'field_type'=>'text']
@@ -113,42 +126,92 @@ class UpdateRestaurantReviewTest extends DuskTestCase
                     ->assertSeeIn('#review'.$review2->id,$review2->rating)
                     //Check number of reviews count for restaurant
                     ->assertSeeIn('.no-of-reviews','2')
-                    ->assertDontSee('No reviews available for this restaurant');
+					->assertDontSee('No reviews available for this restaurant')
+					->logout()
+					;
         });
     }
 
-    /*
+    /**
      * @test
 	 * @throws Throwable
 	 * @return void
      *
-     *//*
-     public function guest_cannot_update_a_user_review(){
+     */
+	public function user_cannot_update_another_users_review()
+	{
+		$this->browse(function (Browser $browser) {
+			//user
+			$user1 = factory(User::class)->create();
+			$user2 = factory(User::class)->create();
+			$user3 = factory(User::class)->create();
+
+			//restaurants
+			$restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
+
+			//review
+			$review1 = factory(Review::class)->create([
+			   'user_id'       => $user2->id,
+			   'restaurant_id' => $restaurant1->id,
+				
+			]);
+
+			$browser	->visit('/restaurants/'.$restaurant1->id)
+			
+
+			//Test guest
+						->assertMissing('#edit-restaurant-review'.$review1->id)
+			//edit page
+		    			->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit')
+						->assertPathIs('/login')
+
+			//Test User3
+						->visit('/restaurants/'.$restaurant1->id)
+						->loginAs($user3)
+						->assertMissing('#edit-restaurant-review'.$review1->id)
+			//edit page
+		    			->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit')
+						->assertPathIs('/restaurants/'.$restaurant1->id)
+
+			//Test Restaurant Owner ($user1)
+						->visit('/restaurants/'.$restaurant1->id)
+						->loginAs($user1)
+						->assertMissing('#edit-restaurant-review'.$review1->id)
+			//edit page
+		     			->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit')
+			 			->assertPathIs('/restaurants/'.$restaurant1->id)
+						->logout()														
+			;
+		});
+	}
+
+    /*public function guest_cannot_update_a_user_review(){
 	     $this->browse(function (Browser $browser) {
 		     //user
-	     	$user1 = factory(User::class)->create();
+			 $user1 = factory(User::class)->create();
+			 $user2 = factory(User::class)->create();
 
 		     //restaurants
 		     $restaurant1 = factory(Restaurant::class)->create(['user_id'=>$user1->id]);
 
 		     //review
 		     $review1 = factory(Review::class)->create([
-
-			     'restaurant_id' => $restaurant1->id,
-			     'user_id'       => $user1->id,
+				'user_id'       => $user2->id,
+			    'restaurant_id' => $restaurant1->id,
+			     
 		     ]);
 
 		     $browser   ->visit('/restaurants/'.$restaurant1->id);
 		     //show page
 		     $browser   ->assertMissing('edit-review'.$review1->id);
 		     //edit page
-		     $browser   ->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit')
-			            ->assertUrlIs('/login');
+		    //  $browser   ->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit')
+			            // ->assertUrlIs('/login');
 	     });
-     }*/
+	}*/
 
 
-    /*
+    /**
      * @test
      * @throws Throwable;
      * @return void
@@ -167,8 +230,8 @@ class UpdateRestaurantReviewTest extends DuskTestCase
 			//review
 			$review1 = factory(Review::class)->create([
 
-				'restaurant_id' => $restaurant1->id,
 				'user_id'       => $user2->id,
+				'restaurant_id' => $restaurant1->id,
 			]);
 
 
@@ -177,10 +240,10 @@ class UpdateRestaurantReviewTest extends DuskTestCase
 			//show page
 			$browser->assertMissing('edit-review'.$review1->id);
 			//edit page
-			$browser->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit')
-				->assertUrlIs('/restaurants/'.$restaurant1->id)
-				->assertSee("Restaurant owner cannot edit a user's review on their restaurant.");
-			;
+			//$browser->visit('restaurants/'.$restaurant1->id.'/reviews/'.$review1->id.'/edit')
+			//	->assertUrlIs('/restaurants/'.$restaurant1->id)
+			//	->assertSee("Restaurant owner cannot edit a user's review on their restaurant.");
+			//;
 
 
 		});
