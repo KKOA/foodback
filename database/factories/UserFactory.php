@@ -1,8 +1,9 @@
 <?php
-
 use Faker\Generator as Faker;
 use App\Models\User;
 use Illuminate\Support\Str;
+
+/** @var Illuminate\Database\Eloquent\Factory $factory */
 
 /*
 |--------------------------------------------------------------------------

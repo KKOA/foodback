@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
 
 use Faker\Generator as Faker;
 Use Carbon\Carbon as Carbon;
 
 use App\Models\Restaurant as Restaurant;
 use App\Models\Review as Review;
+
+/** @var Illuminate\Database\Eloquent\Factory $factory */
 
 /*
 |--------------------------------------------------------------------------

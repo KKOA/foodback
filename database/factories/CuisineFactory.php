@@ -1,10 +1,13 @@
 <?php
+declare(strict_types=1);
 
 use Faker\Generator as Faker;
 use App\Models\Cuisine as Cuisine;
 
-$factory->define(Model::class, function (Faker $faker) {
+/** @var Illuminate\Database\Eloquent\Factory $factory */
+
+$factory->define(Cuisine::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName()->unique()
+        'name' => $faker->unique()->firstName(),
     ];
 });
