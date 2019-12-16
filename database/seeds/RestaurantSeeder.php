@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-//Models
-use App\Models\Restaurant;
-use App\Models\User;
-
 use Illuminate\Database\Seeder;
 use Faker\Factory;
 
+
+//Models
+use App\Models\Restaurant;
+use App\Models\User;
 
 /**
  * Class RestaurantSeeder

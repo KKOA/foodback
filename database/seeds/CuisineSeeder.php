@@ -1,12 +1,10 @@
 <?php
 declare(strict_types=1);
 
-//Models
-use App\Models\Cuisine;
-
 use Illuminate\Database\Seeder;
 
-
+//Models
+use App\Models\Cuisine;
 
 /**
  * Class CuisineSeeder

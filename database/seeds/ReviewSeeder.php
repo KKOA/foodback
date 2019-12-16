@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
+use Illuminate\Database\Seeder;
+use Carbon\Carbon as Carbon;
+use Faker\Factory;
+
 //Models
 use App\Models\Review;
 use App\Models\Restaurant;
 use App\Models\User;
-
-use Illuminate\Database\Seeder;
-use Carbon\Carbon as Carbon;
-use Faker\Factory;
 
 /**
  * Class ReviewSeeder
@@ -21,17 +21,21 @@ class ReviewSeeder extends Seeder
     const SECONDS_PER_DAY = Carbon::SECONDS_PER_MINUTE * Carbon::MINUTES_PER_HOUR * Carbon::HOURS_PER_DAY;
 
 
-    /**
-     * Generate random create_at date based on current date
-     * @param Carbon $create_at
-     * @return Carbon
-     */
+	/**
+	 * Generate random create_at date based on current date
+	 * @param Carbon $now
+	 * @return Carbon
+	 */
     public function set_create_at(Carbon $now) :Carbon
     {
-        $create_at = $now->subYear($this->faker->numberBetween($min = 5, $max = 7))
-            ->addMonths($this->faker->numberBetween($min = 0, $max = Carbon::MONTHS_PER_YEAR))
-            ->addDays($this->faker->numberBetween($min = 0, $max = 365))
-            ->addSeconds($this->faker->numberBetween($min = 0, $max = self::SECONDS_PER_DAY))
+        $years= $this->faker->numberBetween($min = 5, $max = 7);
+        $months = $this->faker->numberBetween($min = 0, $max = Carbon::MONTHS_PER_YEAR);
+        $days = $this->faker->numberBetween($min = 0, $max = 365);
+        $seconds = $this->faker->numberBetween($min = 0, $max = self::SECONDS_PER_DAY);
+    	$create_at = $now->subYears($years)
+            ->addMonths($months)
+            ->addDays($days)
+            ->addSeconds($seconds)
             ;
         return $create_at;
     }
@@ -43,17 +47,22 @@ class ReviewSeeder extends Seeder
      */
     public function set_update_at(Carbon $create_at) :Carbon
     {
-        $update_at = $create_at->addYears($this->faker->numberBetween($min = 0, $max = 3))
-            ->addMonths($this->faker->numberBetween($min = 0, $max = Carbon::MONTHS_PER_YEAR))
-            ->addDays($this->faker->numberBetween($min = 0, $max = 365))
-            ->addSeconds($this->faker->numberBetween($min = 0, $max = self::SECONDS_PER_DAY))
+	    $years = $this->faker->numberBetween($min = 0, $max = 3);
+	    $months = $this->faker->numberBetween($min = 0, $max = Carbon::MONTHS_PER_YEAR);
+	    $days = $this->faker->numberBetween($min = 0, $max = 365);
+	    $seconds = $this->faker->numberBetween($min = 0, $max = self::SECONDS_PER_DAY);
+
+    	$update_at = $create_at->addYears($years)
+            ->addMonths($months)
+            ->addDays($days)
+            ->addSeconds($seconds)
             ;
         return $update_at;
     }
     
     /**
      * Run the database seeds.
-     *
+     * @throws
      * @return void
      */
     public function run() :void

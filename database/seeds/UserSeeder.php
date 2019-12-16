@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
+use Illuminate\Database\Seeder;
+
 //Models
 use App\Models\User;
-
-use Illuminate\Database\Seeder;
 
 /**
  * Class UserSeeder
@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run() :void
     {
-        $names = ['keith fairnie','tom humprey','sarah Stewart','mary mckenna','aaron amoah'];
+        $names = ['Keith Fairnie','Tom Humprey','Sarah Stewart','Mary Mckenna','Aaron Amoah'];
 	    $password = bcrypt('secret');
 	    $domain =  'test.com';
         foreach($names as $name)
