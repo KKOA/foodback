@@ -27,7 +27,7 @@ Dummy user Login details for live version:
 ## Set up Application
 This installation assumes have 
 - MySQL
-- PHP7
+- PHP 7.3 or greater
 - Composer
 
 installed.
