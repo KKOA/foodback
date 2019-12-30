@@ -11,6 +11,10 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Throwable;
 
+/**
+ * Class DeleteRestaurantTest
+ * @package Tests\Browser\Restaurants
+ */
 class DeleteRestaurantTest extends DuskTestCase
 {
     use DatabaseMigrations;

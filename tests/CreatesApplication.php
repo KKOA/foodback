@@ -2,15 +2,21 @@
 
 namespace Tests;
 
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Application;
 
+/**
+ * Trait CreatesApplication
+ * @package Tests
+ */
 trait CreatesApplication
 {
     /**
      * Creates the application.
      *
-     * @return \Illuminate\Foundation\Application
+     * @return Application
      */
     public function createApplication()
     {

@@ -4,6 +4,10 @@ namespace Tests\Browser\Pages;
 
 use Laravel\Dusk\Page as BasePage;
 
+/**
+ * Class Page
+ * @package Tests\Browser\Pages
+ */
 abstract class Page extends BasePage
 {
     /**
@@ -11,7 +15,7 @@ abstract class Page extends BasePage
      *
      * @return array
      */
-    public static function siteElements()
+    public static function siteElements() :array
     {
         return [
             '@element' => '#selector',

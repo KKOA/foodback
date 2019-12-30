@@ -11,6 +11,10 @@ use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use \Throwable;
 
+/**
+ * Class ShowRestaurantTest
+ * @package Tests\Browser\Restaurants
+ */
 class ShowRestaurantTest extends DuskTestCase
 {
 	use DatabaseMigrations;
