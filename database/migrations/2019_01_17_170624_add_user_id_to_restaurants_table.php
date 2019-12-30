@@ -19,10 +19,10 @@ class AddUserIdToRestaurantsTable extends Migration
     public function up() :void
     {
         Schema::table('restaurants', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->default(1)->after('id');
+            $table->bigInteger('user_id')->unsigned()->default(1)->after('id');
         });
         Schema::table('restaurants', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->default(null)->change();
+            $table->bigInteger('user_id')->unsigned()->default(null)->change();
         });
 
         Schema::table('restaurants', function (Blueprint $table) {

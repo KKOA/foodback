@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class AddUserIdToReviewsTable
+ */
 class AddUserIdToReviewsTable extends Migration
 {
     /**
@@ -18,10 +21,10 @@ class AddUserIdToReviewsTable extends Migration
         // });
 
         Schema::table('reviews', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->default(1)->after('id');
+            $table->bigInteger('user_id')->unsigned()->default(1)->after('id');
         });
         Schema::table('reviews', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned()->default(null)->change();
+            $table->bigInteger('user_id')->unsigned()->default(null)->change();
         });
 
         Schema::table('reviews', function (Blueprint $table) {

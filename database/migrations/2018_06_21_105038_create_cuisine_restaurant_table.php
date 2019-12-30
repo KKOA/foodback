@@ -19,9 +19,9 @@ class CreateCuisineRestaurantTable extends Migration
     public function up() :void
     {
         Schema::create('cuisine_restaurant', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('cuisine_id')->unsigned();
-            $table->integer('restaurant_id')->unsigned();
+            $table->bigIncrements('id');
+            $table->bigInteger('cuisine_id')->unsigned();
+            $table->bigInteger('restaurant_id')->unsigned();
             $table->timestamps();
         });
 

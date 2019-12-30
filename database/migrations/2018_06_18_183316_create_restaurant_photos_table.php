@@ -19,7 +19,7 @@ class CreateRestaurantPhotosTable extends Migration
     public function up()
     {
         Schema::create('restaurant_photos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('filename');
             $table->timestamps();
         });

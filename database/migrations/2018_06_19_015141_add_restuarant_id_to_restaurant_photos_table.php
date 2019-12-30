@@ -18,11 +18,11 @@ class AddRestuarantIdToRestaurantPhotosTable extends Migration
     public function up() :void
     {
         Schema::table('restaurant_photos', function (Blueprint $table) {
-            $table->integer('restaurant_id')->unsigned()->default(1)->after('id');
+            $table->bigInteger('restaurant_id')->unsigned()->default(1)->after('id');
         });
 
         Schema::table('restaurant_photos', function (Blueprint $table) {
-            $table->integer('restaurant_id')->unsigned()->default(null)->change();
+            $table->bigInteger('restaurant_id')->unsigned()->default(null)->change();
         });
 
         Schema::table('restaurant_photos', function (Blueprint $table) {
