@@ -5,7 +5,7 @@ $host= getenv('DB_HOST');
 $database = getenv('DB_DATABASE');
 $username = getenv('DB_USERNAME');
 $password = getenv('DB_PASSWORD');
-
+// var_dump($database);
 
 if (getenv('APP_ENV') == 'production') {
     $url = env("CLEARDB_DATABASE_URL_STAGE") ?  parse_url(env("CLEARDB_DATABASE_URL_STAGE")) : parse_url(env("CLEARDB_DATABASE_URL_PROD"));
@@ -55,6 +55,21 @@ return [
         ],
 
         'mysql' => [
+            'driver' => 'mysql',
+            'port' => env('DB_PORT', '3306'),
+            'host' => $host,
+            'database' => $database,
+            'username' => $username,
+            'password' => $password,
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
+        'test' => [
             'driver' => 'mysql',
             'port' => env('DB_PORT', '3306'),
             'host' => $host,
